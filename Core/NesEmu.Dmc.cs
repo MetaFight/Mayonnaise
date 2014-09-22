@@ -58,7 +58,7 @@ namespace MyNes.Core
         {
 
         }
-        private static void DMCHardReset()
+        private void DMCHardReset()
         {
             DeltaIrqOccur = false;
             DMCIrqEnabled = false;
@@ -76,7 +76,7 @@ namespace MyNes.Core
             dmc_freqTimer = 0;
             dmc_cycles = DMCFrequencyTable[systemIndex][dmc_freqTimer];
         }
-        private static void DMCClockSingle()
+        private void DMCClockSingle()
         {
             if (--dmc_cycles <= 0)
             {

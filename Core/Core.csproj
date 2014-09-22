@@ -375,9 +375,8 @@
     <Compile Include="NesEmu.Dmc.cs" />
     <Compile Include="NesEmu.VSUnisystem.cs" />
     <Compile Include="NesEmu.Input.cs" />
-    <Compile Include="NesEmu.Noise.cs" />
-    <Compile Include="NesEmu.Pulse1.cs" />
-    <Compile Include="NesEmu.Pulse2.cs" />
+    <Compile Include="SoundChannels\Noise.cs" />
+    <Compile Include="SoundChannels\Pulse.cs" />
     <Compile Include="NesEmu.State.cs" />
     <Compile Include="NesEmu.Triangle.cs" />
     <Compile Include="Palettes\PaletteFileWrapper.cs" />

@@ -58,7 +58,7 @@ namespace MyNes.Core
         /// Save current game state as
         /// </summary>
         /// <param name="fileName">The complete path where to save the file</param>
-        public static void SaveStateAs(string fileName)
+        public void SaveStateAs(string fileName)
         {
             if (state_is_loading_state)
             {
@@ -93,7 +93,7 @@ namespace MyNes.Core
             bin.Write(Cycles);
             bin.Write(SequencingMode);
             bin.Write(CurrentSeq);
-            bin.Write(isClockingDuration);
+            bin.Write(IsClockingDuration);
             bin.Write(FrameIrqEnabled);
             bin.Write(FrameIrqFlag);
             bin.Write(oddCycle);
@@ -184,23 +184,7 @@ namespace MyNes.Core
             bin.Write(temp_4017);
             #endregion
             #region Noise
-            bin.Write(noz_envelope);
-            bin.Write(noz_env_startflag);
-            bin.Write(noz_env_counter);
-            bin.Write(noz_env_devider);
-            bin.Write(noz_length_counter_halt_flag);
-            bin.Write(noz_constant_volume_flag);
-            bin.Write(noz_volume_decay_time);
-            bin.Write(noz_duration_haltRequset);
-            bin.Write(noz_duration_counter);
-            bin.Write(noz_duration_reloadEnabled);
-            bin.Write(noz_duration_reload);
-            bin.Write(noz_duration_reloadRequst);
-            bin.Write(noz_modeFlag);
-            bin.Write(noz_shiftRegister);
-            bin.Write(noz_feedback);
-            bin.Write(noz_freqTimer);
-            bin.Write(noz_cycles);
+			this.noiseChannel.SaveState(bin);
             #endregion
             #region PPU
             bin.Write(VClock);
@@ -260,56 +244,10 @@ namespace MyNes.Core
             bin.Write(spr_render_temp_pixel);
             #endregion
             #region Pulse 1
-            bin.Write(sq1_envelope);
-            bin.Write(sq1_env_startflag);
-            bin.Write(sq1_env_counter);
-            bin.Write(sq1_env_devider);
-            bin.Write(sq1_length_counter_halt_flag);
-            bin.Write(sq1_constant_volume_flag);
-            bin.Write(sq1_volume_decay_time);
-            bin.Write(sq1_duration_haltRequset);
-            bin.Write(sq1_duration_counter);
-            bin.Write(sq1_duration_reloadEnabled);
-            bin.Write(sq1_duration_reload);
-            bin.Write(sq1_duration_reloadRequst);
-            bin.Write(sq1_dutyForm);
-            bin.Write(sq1_dutyStep);
-            bin.Write(sq1_sweepDeviderPeriod);
-            bin.Write(sq1_sweepShiftCount);
-            bin.Write(sq1_sweepCounter);
-            bin.Write(sq1_sweepEnable);
-            bin.Write(sq1_sweepReload);
-            bin.Write(sq1_sweepNegateFlag);
-            bin.Write(sq1_frequency);
-            bin.Write(sq1_output);
-            bin.Write(sq1_sweep);
-            bin.Write(sq1_cycles);
+			this.pulse1Channel.Write(bin);
             #endregion
             #region Pulse 2
-            bin.Write(sq2_envelope);
-            bin.Write(sq2_env_startflag);
-            bin.Write(sq2_env_counter);
-            bin.Write(sq2_env_devider);
-            bin.Write(sq2_length_counter_halt_flag);
-            bin.Write(sq2_constant_volume_flag);
-            bin.Write(sq2_volume_decay_time);
-            bin.Write(sq2_duration_haltRequset);
-            bin.Write(sq2_duration_counter);
-            bin.Write(sq2_duration_reloadEnabled);
-            bin.Write(sq2_duration_reload);
-            bin.Write(sq2_duration_reloadRequst);
-            bin.Write(sq2_dutyForm);
-            bin.Write(sq2_dutyStep);
-            bin.Write(sq2_sweepDeviderPeriod);
-            bin.Write(sq2_sweepShiftCount);
-            bin.Write(sq2_sweepCounter);
-            bin.Write(sq2_sweepEnable);
-            bin.Write(sq2_sweepReload);
-            bin.Write(sq2_sweepNegateFlag);
-            bin.Write(sq2_frequency);
-            bin.Write(sq2_output);
-            bin.Write(sq2_sweep);
-            bin.Write(sq2_cycles);
+			this.pulse2Channel.Write(bin);
             #endregion
             #region Triangle
             bin.Write(trl_length_counter_halt_flag);
@@ -350,7 +288,7 @@ namespace MyNes.Core
         /// Load current game state from file
         /// </summary>
         /// <param name="fileName">The complete path to the state file</param>
-        public static void LoadStateAs(string fileName)
+        public void LoadStateAs(string fileName)
         {
             if (state_is_saving_state)
             {
@@ -414,7 +352,7 @@ namespace MyNes.Core
             Cycles = bin.ReadInt32();
             SequencingMode = bin.ReadBoolean();
             CurrentSeq = bin.ReadByte();
-            isClockingDuration = bin.ReadBoolean();
+            IsClockingDuration = bin.ReadBoolean();
             FrameIrqEnabled = bin.ReadBoolean();
             FrameIrqFlag = bin.ReadBoolean();
             oddCycle = bin.ReadBoolean();
@@ -505,23 +443,7 @@ namespace MyNes.Core
             temp_4017 = bin.ReadByte();
             #endregion
             #region Noise
-            noz_envelope = bin.ReadInt32();
-            noz_env_startflag = bin.ReadBoolean();
-            noz_env_counter = bin.ReadInt32();
-            noz_env_devider = bin.ReadInt32();
-            noz_length_counter_halt_flag = bin.ReadBoolean();
-            noz_constant_volume_flag = bin.ReadBoolean();
-            noz_volume_decay_time = bin.ReadInt32();
-            noz_duration_haltRequset = bin.ReadBoolean();
-            noz_duration_counter = bin.ReadByte();
-            noz_duration_reloadEnabled = bin.ReadBoolean();
-            noz_duration_reload = bin.ReadByte();
-            noz_duration_reloadRequst = bin.ReadBoolean();
-            noz_modeFlag = bin.ReadBoolean();
-            noz_shiftRegister = bin.ReadInt32();
-            noz_feedback = bin.ReadInt32();
-            noz_freqTimer = bin.ReadInt32();
-            noz_cycles = bin.ReadInt32();
+			this.noiseChannel.ReadState(bin);
             #endregion
             #region PPU
             VClock = bin.ReadInt32();
@@ -580,57 +502,9 @@ namespace MyNes.Core
             spr_evaluation_i = bin.ReadInt32();
             spr_render_temp_pixel = bin.ReadInt32();
             #endregion
-            #region Pulse 1
-            sq1_envelope = bin.ReadInt32();
-            sq1_env_startflag = bin.ReadBoolean();
-            sq1_env_counter = bin.ReadInt32();
-            sq1_env_devider = bin.ReadInt32();
-            sq1_length_counter_halt_flag = bin.ReadBoolean();
-            sq1_constant_volume_flag = bin.ReadBoolean();
-            sq1_volume_decay_time = bin.ReadInt32();
-            sq1_duration_haltRequset = bin.ReadBoolean();
-            sq1_duration_counter = bin.ReadByte();
-            sq1_duration_reloadEnabled = bin.ReadBoolean();
-            sq1_duration_reload = bin.ReadByte();
-            sq1_duration_reloadRequst = bin.ReadBoolean();
-            sq1_dutyForm = bin.ReadInt32();
-            sq1_dutyStep = bin.ReadInt32();
-            sq1_sweepDeviderPeriod = bin.ReadInt32();
-            sq1_sweepShiftCount = bin.ReadInt32();
-            sq1_sweepCounter = bin.ReadInt32();
-            sq1_sweepEnable = bin.ReadBoolean();
-            sq1_sweepReload = bin.ReadBoolean();
-            sq1_sweepNegateFlag = bin.ReadBoolean();
-            sq1_frequency = bin.ReadInt32();
-            sq1_output = bin.ReadByte();
-            sq1_sweep = bin.ReadInt32();
-            sq1_cycles = bin.ReadInt32();
-            #endregion
-            #region Pulse 2
-            sq2_envelope = bin.ReadInt32();
-            sq2_env_startflag = bin.ReadBoolean();
-            sq2_env_counter = bin.ReadInt32();
-            sq2_env_devider = bin.ReadInt32();
-            sq2_length_counter_halt_flag = bin.ReadBoolean();
-            sq2_constant_volume_flag = bin.ReadBoolean();
-            sq2_volume_decay_time = bin.ReadInt32();
-            sq2_duration_haltRequset = bin.ReadBoolean();
-            sq2_duration_counter = bin.ReadByte();
-            sq2_duration_reloadEnabled = bin.ReadBoolean();
-            sq2_duration_reload = bin.ReadByte();
-            sq2_duration_reloadRequst = bin.ReadBoolean();
-            sq2_dutyForm = bin.ReadInt32();
-            sq2_dutyStep = bin.ReadInt32();
-            sq2_sweepDeviderPeriod = bin.ReadInt32();
-            sq2_sweepShiftCount = bin.ReadInt32();
-            sq2_sweepCounter = bin.ReadInt32();
-            sq2_sweepEnable = bin.ReadBoolean();
-            sq2_sweepReload = bin.ReadBoolean();
-            sq2_sweepNegateFlag = bin.ReadBoolean();
-            sq2_frequency = bin.ReadInt32();
-            sq2_output = bin.ReadByte();
-            sq2_sweep = bin.ReadInt32();
-            sq2_cycles = bin.ReadInt32();
+            #region Pulse
+			this.pulse1Channel.ReadState(bin);
+			this.pulse2Channel.ReadState(bin);
             #endregion
             #region Triangle
             trl_length_counter_halt_flag = bin.ReadBoolean();

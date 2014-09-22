@@ -1,2 +1,14 @@
 /.svn
 /_Builds
+
+/Core/bin
+/Core/obj
+/MLV/bin
+/MLV/obj
+/MMB/bin
+/MMB/obj
+/MyNes/bin
+/MyNes/obj
+
+*.suo
+*.user

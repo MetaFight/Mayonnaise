@@ -42,12 +42,16 @@ namespace MyNes
             InitializeVideoRenderer();
             InitializeSoundRenderer();
             InitializeInputRenderer();
+
+			this.emulator = new NesEmu();
+
             NesEmu.EMUShutdown += NesEmu_EMUShutdown;
         }
 
         public DirectXVideo video;
         public DirectSoundRenderer audio;
         public ZapperConnecter zapper;
+		private NesEmu emulator;
 
         private void LoadSettings()
         {
@@ -190,7 +194,7 @@ namespace MyNes
                     ApplyEmuSettings();
 
                     // Create new
-                    NesEmu.CreateNew(fileName, Program.Settings.TVSystemSetting, true);
+					this.emulator.CreateNew(fileName, Program.Settings.TVSystemSetting, true);
                     // Stop video for a while
                     video.threadPAUSED = true;
                     // Apply video stretch
@@ -747,7 +751,7 @@ namespace MyNes
                     sav.Title = Program.ResourceManager.GetString("Title_SaveStateAs");
                     sav.Filter = Program.ResourceManager.GetString("Filter_MyNesState");
                     if (sav.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
-                        NesEmu.SaveStateAs(sav.FileName);
+						this.emulator.SaveStateAs(sav.FileName);
                 }
                 catch (Exception ex)
                 {
@@ -767,7 +771,7 @@ namespace MyNes
                     op.Title = Program.ResourceManager.GetString("Title_LoadStateAs");
                     op.Filter = Program.ResourceManager.GetString("Filter_MyNesState");
                     if (op.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
-                        NesEmu.LoadStateAs(op.FileName);
+						this.emulator.LoadStateAs(op.FileName);
                 }
                 catch (Exception ex)
                 {

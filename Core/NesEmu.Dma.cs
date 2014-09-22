@@ -132,7 +132,7 @@ namespace MyNes.Core
             dmaOAMOn = true;
             dmaOAMFinishCounter = 0;
         }
-        private static void DMAClock()
+        private void DMAClock()
         {
             if (dmaOAMFinishCounter > 0)
                 dmaOAMFinishCounter--;

@@ -23,6 +23,7 @@ using System.IO;
 using System.Threading;
 using System.Diagnostics;
 using System.Reflection;
+using MyNes.Core.SoundChannels;
 /*
  * Using one big partial class may increase performance in C#
 */
@@ -33,20 +34,34 @@ namespace MyNes.Core
     /// </summary>
     public partial class NesEmu
     {
-        static NesEmu()
-        {
-            InputInitialize();
-            switch (TVFormat)
-            {
-                case TVSystem.NTSC: systemIndex = 0; audio_playback_samplePeriod = 1789772.67f; break;
-                case TVSystem.PALB: systemIndex = 1; audio_playback_samplePeriod = 1662607f; break;
-                case TVSystem.DENDY: systemIndex = 2; audio_playback_samplePeriod = 1773448f; break;
-            }
-            if (TVFormat == TVSystem.NTSC)
-                FramePeriod = (1.0 / (FPS = 60.0));
-            else//PALB, DENDY
-                FramePeriod = (1.0 / (FPS = 50.0));
-        }
+		public NesEmu()
+		{
+			InputInitialize();
+			switch (TVFormat)
+			{
+				case TVSystem.NTSC:
+					systemIndex = 0;
+					audio_playback_samplePeriod = 1789772.67f;
+					break;
+				case TVSystem.PALB:
+					systemIndex = 1;
+					audio_playback_samplePeriod = 1662607f;
+					break;
+				case TVSystem.DENDY:
+					systemIndex = 2;
+					audio_playback_samplePeriod = 1773448f;
+					break;
+			}
+			if (TVFormat == TVSystem.NTSC)
+				FramePeriod = (1.0 / (FPS = 60.0));
+			else//PALB, DENDY
+				FramePeriod = (1.0 / (FPS = 50.0));
+
+			this.noiseChannel = new Noise(this);
+			this.pulse1Channel = new Pulse(this, 0x4000);
+			this.pulse2Channel = new Pulse(this, 0x4004);
+		}
+
         public static TVSystemSetting TVFormatSetting;
         public static TVSystem TVFormat;
         public static Thread EmulationThread;
@@ -90,6 +105,10 @@ namespace MyNes.Core
         /// Raised when the emu engine finished shutdown.
         /// </summary>
         public static event EventHandler EMUShutdown;
+		
+		private Noise noiseChannel;
+		private Pulse pulse1Channel;
+		private Pulse pulse2Channel;
 
         /// <summary>
         /// Call this at application start up to set nes default stuff
@@ -161,7 +180,7 @@ namespace MyNes.Core
         /// <param name="fileName">The rom complete path. Not compressed</param>
         /// <param name="tvsetting">The tv system setting to use</param>
         /// <param name="makeThread">Indicates if the emulation engine should make an internal thread and run through it. Otherwise you should make a thread and use EMUClock to run the loop.</param>
-        public static void CreateNew(string fileName, TVSystemSetting tvsetting, bool makeThread)
+        public void CreateNew(string fileName, TVSystemSetting tvsetting, bool makeThread)
         {
             switch (Path.GetExtension(fileName).ToLower())
             {
@@ -186,7 +205,7 @@ namespace MyNes.Core
                             TVFormatSetting = tvsetting;
 
                             // Hard reset
-                            hardReset();
+                            HardReset();
                             // Run emu
                             EmulationPaused = true;
                             EmulationON = true;
@@ -207,6 +226,7 @@ namespace MyNes.Core
                     }
             }
         }
+
         public static void ApplySettings(bool saveSramOnSutdown, string sramFolder, string stateFolder,
             string snapshotsFolder, string snapFormat, bool replaceSnap)
         {
@@ -220,7 +240,7 @@ namespace MyNes.Core
         /// <summary>
         /// Run the emulation loop while EmulationON is true.
         /// </summary>
-        public static void EMUClock()
+        public void EMUClock()
         {
             while (EmulationON)
             {
@@ -244,13 +264,13 @@ namespace MyNes.Core
                     if (request_hardReset)
                     {
                         request_hardReset = false;
-                        hardReset();
+                        HardReset();
                         EmulationPaused = false;
                     }
                     if (request_softReset)
                     {
                         request_softReset = false;
-                        softReset();
+                        SoftReset();
                         EmulationPaused = false;
                     }
                     if (request_state_save)
@@ -344,7 +364,7 @@ namespace MyNes.Core
         public static NesCartDatabaseCartridgeInfo GameCartInfo
         { get { return board.GameCartInfo; } }
         // Internal methods
-        private static void ClockComponents()
+        private void ClockComponents()
         {
             PPUClock();
             /*
@@ -402,7 +422,8 @@ namespace MyNes.Core
                 EmulationPaused = true;
             }
         }
-        private static void hardReset()
+
+        private void HardReset()
         {
             switch (TVFormatSetting)
             {
@@ -464,7 +485,8 @@ namespace MyNes.Core
             APUHardReset();
             DMAHardReset();
         }
-        private static void softReset()
+
+        private void SoftReset()
         {
             MEMSoftReset();
             CPUSoftReset();
@@ -472,13 +494,10 @@ namespace MyNes.Core
             APUSoftReset();
             DMASoftReset();
         }
+
         private static double GetTime()
         {
             return (double)Stopwatch.GetTimestamp() / (double)Stopwatch.Frequency;
-        }
-        private static void takeSnapshot()
-        {
-
         }
     }
 }

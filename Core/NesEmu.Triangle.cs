@@ -85,10 +85,10 @@ namespace MyNes.Core
                 }
             }
         }
-        private static void TrlClockSingle()
+        private void TrlClockSingle()
         {
             trl_length_counter_halt_flag = trl_duration_haltRequset;
-            if (isClockingDuration && trl_duration_counter > 0)
+            if (IsClockingDuration && trl_duration_counter > 0)
                 trl_duration_reloadRequst = false;
             if (trl_duration_reloadRequst)
             {
