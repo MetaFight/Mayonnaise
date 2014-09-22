@@ -44,100 +44,96 @@ namespace MyNes.Core.SoundChannels
 			this.addressOffset = addressOffset;
 		}
 
-		private int sq1_envelope;
-		private bool sq1_env_startflag;
-		private int sq1_env_counter;
-		private int sq1_env_devider;
-		private bool sq1_length_counter_halt_flag;
-		private bool sq1_constant_volume_flag;
-		private int sq1_volume_decay_time;
-		private bool sq1_duration_haltRequset = false;
+		private int envelope;
+		private bool env_startflag;
+		private int env_counter;
+		private int env_devider;
+		private bool length_counter_halt_flag;
+		private bool constant_volume_flag;
+		private int volume_decay_time;
+		private bool duration_haltRequset = false;
 		[Obsolete("Replace with property")]
 		public byte Duration_counter;
 		[Obsolete("Replace with property")]
 		public bool Duration_reloadEnabled;
-		private byte sq1_duration_reload = 0;
-		private bool sq1_duration_reloadRequst = false;
+		private byte duration_reload = 0;
+		private bool duration_reloadRequst = false;
 
-		private int sq1_dutyForm;
-		private int sq1_dutyStep;
-		private int sq1_sweepDeviderPeriod = 0;
-		private int sq1_sweepShiftCount = 0;
-		private int sq1_sweepCounter = 0;
-		private bool sq1_sweepEnable = false;
-		private bool sq1_sweepReload = false;
-		private bool sq1_sweepNegateFlag = false;
-		private int sq1_frequency;
+		private int dutyForm;
+		private int dutyStep;
+		private int sweepDeviderPeriod = 0;
+		private int sweepShiftCount = 0;
+		private int sweepCounter = 0;
+		private bool sweepEnable = false;
+		private bool sweepReload = false;
+		private bool sweepNegateFlag = false;
+		private int frequency;
 		[Obsolete("Replace with property")]
 		public byte Output;
-		private int sq1_sweep;
-		private int sq1_cycles;
+		private int sweep;
+		private int cycles;
 		private NesEmu core;
 		private int addressOffset;
 
-		private void Sq1Shutdown()
-		{
-
-		}
 		public void HardReset()
 		{
-			sq1_envelope = 0;
-			sq1_env_startflag = false;
-			sq1_env_counter = 0;
-			sq1_env_devider = 0;
-			sq1_length_counter_halt_flag = false;
-			sq1_constant_volume_flag = false;
-			sq1_volume_decay_time = 0;
-			sq1_duration_haltRequset = false;
+			envelope = 0;
+			env_startflag = false;
+			env_counter = 0;
+			env_devider = 0;
+			length_counter_halt_flag = false;
+			constant_volume_flag = false;
+			volume_decay_time = 0;
+			duration_haltRequset = false;
 			Duration_counter = 0;
 			Duration_reloadEnabled = false;
-			sq1_duration_reload = 0;
-			sq1_duration_reloadRequst = false;
-			sq1_dutyForm = 0;
-			sq1_dutyStep = 0;
-			sq1_sweepDeviderPeriod = 0;
-			sq1_sweepShiftCount = 0;
-			sq1_sweepCounter = 0;
-			sq1_sweepEnable = false;
-			sq1_sweepReload = false;
-			sq1_sweepNegateFlag = false;
+			duration_reload = 0;
+			duration_reloadRequst = false;
+			dutyForm = 0;
+			dutyStep = 0;
+			sweepDeviderPeriod = 0;
+			sweepShiftCount = 0;
+			sweepCounter = 0;
+			sweepEnable = false;
+			sweepReload = false;
+			sweepNegateFlag = false;
 			Output = 0;
-			sq1_cycles = 0;
-			sq1_sweep = 0;
-			sq1_frequency = 0;
+			cycles = 0;
+			sweep = 0;
+			frequency = 0;
 		}
-		private bool Sq1IsValidFrequency()
+		private bool IsValidFrequency()
 		{
 			return
-				(sq1_frequency >= 0x8) &&
-				((sq1_sweepNegateFlag) || (((sq1_frequency + (sq1_frequency >> sq1_sweepShiftCount)) & 0x800) == 0));
+				(frequency >= 0x8) &&
+				((sweepNegateFlag) || (((frequency + (frequency >> sweepShiftCount)) & 0x800) == 0));
 		}
 		public void ClockEnvelope()
 		{
-			if (sq1_env_startflag)
+			if (env_startflag)
 			{
-				sq1_env_startflag = false;
-				sq1_env_counter = 0xF;
-				sq1_env_devider = sq1_volume_decay_time + 1;
+				env_startflag = false;
+				env_counter = 0xF;
+				env_devider = volume_decay_time + 1;
 			}
 			else
 			{
-				if (sq1_env_devider > 0)
-					sq1_env_devider--;
+				if (env_devider > 0)
+					env_devider--;
 				else
 				{
-					sq1_env_devider = sq1_volume_decay_time + 1;
-					if (sq1_env_counter > 0)
-						sq1_env_counter--;
-					else if (sq1_length_counter_halt_flag)
-						sq1_env_counter = 0xF;
+					env_devider = volume_decay_time + 1;
+					if (env_counter > 0)
+						env_counter--;
+					else if (length_counter_halt_flag)
+						env_counter = 0xF;
 				}
 			}
-			sq1_envelope = sq1_constant_volume_flag ? sq1_volume_decay_time : sq1_env_counter;
+			envelope = constant_volume_flag ? volume_decay_time : env_counter;
 		}
 		public void ClockLengthCounter()
 		{
-			if (!sq1_length_counter_halt_flag)
+			if (!length_counter_halt_flag)
 			{
 				if (Duration_counter > 0)
 				{
@@ -145,64 +141,64 @@ namespace MyNes.Core.SoundChannels
 				}
 			}
 
-			sq1_sweepCounter--;
-			if (sq1_sweepCounter == 0)
+			sweepCounter--;
+			if (sweepCounter == 0)
 			{
-				sq1_sweepCounter = sq1_sweepDeviderPeriod + 1;
-				if (sq1_sweepEnable && (sq1_sweepShiftCount > 0) && Sq1IsValidFrequency())
+				sweepCounter = sweepDeviderPeriod + 1;
+				if (sweepEnable && (sweepShiftCount > 0) && IsValidFrequency())
 
 				{
-				sq1_sweep = sq1_frequency >> sq1_sweepShiftCount;
+				sweep = frequency >> sweepShiftCount;
 // HACK
 if (this.addressOffset == 0x4000)
 {
-					sq1_frequency += sq1_sweepNegateFlag ? ~sq1_sweep : sq1_sweep;
+					frequency += sweepNegateFlag ? ~sweep : sweep;
 }
 else
 {
-					sq1_frequency += sq1_sweepNegateFlag ? -sq1_sweep : sq1_sweep;
+					frequency += sweepNegateFlag ? -sweep : sweep;
 }
 
 				}
 			}
-			if (sq1_sweepReload)
+			if (sweepReload)
 			{
-				sq1_sweepReload = false;
-				sq1_sweepCounter = sq1_sweepDeviderPeriod + 1;
+				sweepReload = false;
+				sweepCounter = sweepDeviderPeriod + 1;
 			}
 		}
 		public void ClockSingle()
 		{
-			sq1_length_counter_halt_flag = sq1_duration_haltRequset;
+			length_counter_halt_flag = duration_haltRequset;
 			if (this.core.IsClockingDuration && Duration_counter > 0)
-				sq1_duration_reloadRequst = false;
-			if (sq1_duration_reloadRequst)
+				duration_reloadRequst = false;
+			if (duration_reloadRequst)
 			{
 				if (Duration_reloadEnabled)
-					Duration_counter = sq1_duration_reload;
-				sq1_duration_reloadRequst = false;
+					Duration_counter = duration_reload;
+				duration_reloadRequst = false;
 			}
 
 // HACK
 if (this.addressOffset == 0x4000)
 {
-					if (sq1_frequency == 0)
+					if (frequency == 0)
 					{
 						Output = 0;
 						return;
 					}
 }
 			
-			if (sq1_cycles > 0)
-				sq1_cycles--;
+			if (cycles > 0)
+				cycles--;
 			else
 			{
-				sq1_cycles = (sq1_frequency << 1) + 2;
-				sq1_dutyStep--;
-				if (sq1_dutyStep < 0)
-					sq1_dutyStep = 0x7;
-				if (Duration_counter > 0 && Sq1IsValidFrequency())
-					Output = (byte)(PulseSoundChannel.DutyForms[sq1_dutyForm][sq1_dutyStep] * sq1_envelope);
+				cycles = (frequency << 1) + 2;
+				dutyStep--;
+				if (dutyStep < 0)
+					dutyStep = 0x7;
+				if (Duration_counter > 0 && IsValidFrequency())
+					Output = (byte)(PulseSoundChannel.DutyForms[dutyForm][dutyStep] * envelope);
 				else
 					Output = 0;
 			}
@@ -210,58 +206,58 @@ if (this.addressOffset == 0x4000)
 
 		internal void SaveState(BinaryWriter bin)
 		{
-			bin.Write(sq1_envelope);
-			bin.Write(sq1_env_startflag);
-			bin.Write(sq1_env_counter);
-			bin.Write(sq1_env_devider);
-			bin.Write(sq1_length_counter_halt_flag);
-			bin.Write(sq1_constant_volume_flag);
-			bin.Write(sq1_volume_decay_time);
-			bin.Write(sq1_duration_haltRequset);
+			bin.Write(envelope);
+			bin.Write(env_startflag);
+			bin.Write(env_counter);
+			bin.Write(env_devider);
+			bin.Write(length_counter_halt_flag);
+			bin.Write(constant_volume_flag);
+			bin.Write(volume_decay_time);
+			bin.Write(duration_haltRequset);
 			bin.Write(Duration_counter);
 			bin.Write(Duration_reloadEnabled);
-			bin.Write(sq1_duration_reload);
-			bin.Write(sq1_duration_reloadRequst);
-			bin.Write(sq1_dutyForm);
-			bin.Write(sq1_dutyStep);
-			bin.Write(sq1_sweepDeviderPeriod);
-			bin.Write(sq1_sweepShiftCount);
-			bin.Write(sq1_sweepCounter);
-			bin.Write(sq1_sweepEnable);
-			bin.Write(sq1_sweepReload);
-			bin.Write(sq1_sweepNegateFlag);
-			bin.Write(sq1_frequency);
+			bin.Write(duration_reload);
+			bin.Write(duration_reloadRequst);
+			bin.Write(dutyForm);
+			bin.Write(dutyStep);
+			bin.Write(sweepDeviderPeriod);
+			bin.Write(sweepShiftCount);
+			bin.Write(sweepCounter);
+			bin.Write(sweepEnable);
+			bin.Write(sweepReload);
+			bin.Write(sweepNegateFlag);
+			bin.Write(frequency);
 			bin.Write(Output);
-			bin.Write(sq1_sweep);
-			bin.Write(sq1_cycles);
+			bin.Write(sweep);
+			bin.Write(cycles);
 		}
 
 		internal void LoadState(BinaryReader bin)
 		{
-			sq1_envelope = bin.ReadInt32();
-			sq1_env_startflag = bin.ReadBoolean();
-			sq1_env_counter = bin.ReadInt32();
-			sq1_env_devider = bin.ReadInt32();
-			sq1_length_counter_halt_flag = bin.ReadBoolean();
-			sq1_constant_volume_flag = bin.ReadBoolean();
-			sq1_volume_decay_time = bin.ReadInt32();
-			sq1_duration_haltRequset = bin.ReadBoolean();
+			envelope = bin.ReadInt32();
+			env_startflag = bin.ReadBoolean();
+			env_counter = bin.ReadInt32();
+			env_devider = bin.ReadInt32();
+			length_counter_halt_flag = bin.ReadBoolean();
+			constant_volume_flag = bin.ReadBoolean();
+			volume_decay_time = bin.ReadInt32();
+			duration_haltRequset = bin.ReadBoolean();
 			Duration_counter = bin.ReadByte();
 			Duration_reloadEnabled = bin.ReadBoolean();
-			sq1_duration_reload = bin.ReadByte();
-			sq1_duration_reloadRequst = bin.ReadBoolean();
-			sq1_dutyForm = bin.ReadInt32();
-			sq1_dutyStep = bin.ReadInt32();
-			sq1_sweepDeviderPeriod = bin.ReadInt32();
-			sq1_sweepShiftCount = bin.ReadInt32();
-			sq1_sweepCounter = bin.ReadInt32();
-			sq1_sweepEnable = bin.ReadBoolean();
-			sq1_sweepReload = bin.ReadBoolean();
-			sq1_sweepNegateFlag = bin.ReadBoolean();
-			sq1_frequency = bin.ReadInt32();
+			duration_reload = bin.ReadByte();
+			duration_reloadRequst = bin.ReadBoolean();
+			dutyForm = bin.ReadInt32();
+			dutyStep = bin.ReadInt32();
+			sweepDeviderPeriod = bin.ReadInt32();
+			sweepShiftCount = bin.ReadInt32();
+			sweepCounter = bin.ReadInt32();
+			sweepEnable = bin.ReadBoolean();
+			sweepReload = bin.ReadBoolean();
+			sweepNegateFlag = bin.ReadBoolean();
+			frequency = bin.ReadInt32();
 			Output = bin.ReadByte();
-			sq1_sweep = bin.ReadInt32();
-			sq1_cycles = bin.ReadInt32();
+			sweep = bin.ReadInt32();
+			cycles = bin.ReadInt32();
 		}
 
 		internal void WriteByte(int address, byte value)
@@ -271,31 +267,31 @@ if (this.addressOffset == 0x4000)
 			switch (address)
 			{
 				case 0x0000:
-					sq1_volume_decay_time = value & 0xF;
-					sq1_duration_haltRequset = (value & 0x20) != 0;
-					sq1_constant_volume_flag = (value & 0x10) != 0;
-					sq1_envelope = sq1_constant_volume_flag ? sq1_volume_decay_time : sq1_env_counter;
-					sq1_dutyForm = (value & 0xC0) >> 6;
+					volume_decay_time = value & 0xF;
+					duration_haltRequset = (value & 0x20) != 0;
+					constant_volume_flag = (value & 0x10) != 0;
+					envelope = constant_volume_flag ? volume_decay_time : env_counter;
+					dutyForm = (value & 0xC0) >> 6;
 					break;
 
 				case 0x0001:
-					sq1_sweepEnable = (value & 0x80) == 0x80;
-					sq1_sweepDeviderPeriod = (value >> 4) & 7;
-					sq1_sweepNegateFlag = (value & 0x8) == 0x8;
-					sq1_sweepShiftCount = value & 7;
-					sq1_sweepReload = true;
+					sweepEnable = (value & 0x80) == 0x80;
+					sweepDeviderPeriod = (value >> 4) & 7;
+					sweepNegateFlag = (value & 0x8) == 0x8;
+					sweepShiftCount = value & 7;
+					sweepReload = true;
 					break;
 
 				case 0x0002:
-					sq1_frequency = (sq1_frequency & 0x0700) | value;
+					frequency = (frequency & 0x0700) | value;
 					break;
 
 				case 0x0003:
-					sq1_duration_reload = NesEmu.DurationTable[value >> 3];
-					sq1_duration_reloadRequst = true;
-					sq1_frequency = (sq1_frequency & 0x00FF) | ((value & 7) << 8);
-					sq1_dutyStep = 0;
-					sq1_env_startflag = true;
+					duration_reload = NesEmu.DurationTable[value >> 3];
+					duration_reloadRequst = true;
+					frequency = (frequency & 0x00FF) | ((value & 7) << 8);
+					dutyStep = 0;
+					env_startflag = true;
 					break;
 
 				default:

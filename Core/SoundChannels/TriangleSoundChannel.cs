@@ -36,62 +36,58 @@ namespace MyNes.Core.SoundChannels
 			this.core = core;
 		}
 
-		private static bool trl_length_counter_halt_flag;
-		private static bool trl_duration_haltRequset = false;
+		private bool length_counter_halt_flag;
+		private bool duration_haltRequset = false;
 		public byte Duration_counter;
 		public bool Duration_reloadEnabled;
-		private static byte trl_duration_reload = 0;
-		private static bool trl_duration_reloadRequst = false;
-		private static byte trl_linearCounter = 0;
-		private static byte trl_linearCounterReload;
-		private static byte trl_step;
-		private static bool trl_linearCounterHalt;
-		private static bool trl_halt;
-		private static int trl_frequency;
+		private byte duration_reload = 0;
+		private bool duration_reloadRequst = false;
+		private byte linearCounter = 0;
+		private byte linearCounterReload;
+		private byte step;
+		private bool linearCounterHalt;
+		private bool halt;
+		private int frequency;
 		public byte Output;
-		private static int trl_cycles;
+		private int cycles;
 		private NesEmu core;
 
-		private static void TrlShutdown()
-		{
-
-		}
 		public void HardReset()
 		{
-			trl_length_counter_halt_flag = false;
-			trl_duration_haltRequset = false;
+			length_counter_halt_flag = false;
+			duration_haltRequset = false;
 			Duration_counter = 0;
 			Duration_reloadEnabled = false;
-			trl_duration_reload = 0;
-			trl_duration_reloadRequst = false;
-			trl_linearCounter = 0;
-			trl_linearCounterReload = 0;
+			duration_reload = 0;
+			duration_reloadRequst = false;
+			linearCounter = 0;
+			linearCounterReload = 0;
 			Output = 0;
-			trl_step = 0;
-			trl_linearCounterHalt = false;
-			trl_halt = true;
-			trl_frequency = 0;
-			trl_cycles = 0;
+			step = 0;
+			linearCounterHalt = false;
+			halt = true;
+			frequency = 0;
+			cycles = 0;
 		}
 		public void ClockEnvelope()
 		{
-			if (trl_halt)
+			if (halt)
 			{
-				trl_linearCounter = trl_linearCounterReload;
+				linearCounter = linearCounterReload;
 			}
 			else
 			{
-				if (trl_linearCounter != 0)
+				if (linearCounter != 0)
 				{
-					trl_linearCounter--;
+					linearCounter--;
 				}
 			}
 
-			trl_halt &= trl_linearCounterHalt;
+			halt &= linearCounterHalt;
 		}
 		public void ClockLengthCounter()
 		{
-			if (!trl_length_counter_halt_flag)
+			if (!length_counter_halt_flag)
 			{
 				if (Duration_counter > 0)
 				{
@@ -101,25 +97,25 @@ namespace MyNes.Core.SoundChannels
 		}
 		public void ClockSingle()
 		{
-			trl_length_counter_halt_flag = trl_duration_haltRequset;
+			length_counter_halt_flag = duration_haltRequset;
 			if (this.core.IsClockingDuration && Duration_counter > 0)
-				trl_duration_reloadRequst = false;
-			if (trl_duration_reloadRequst)
+				duration_reloadRequst = false;
+			if (duration_reloadRequst)
 			{
 				if (Duration_reloadEnabled)
-					Duration_counter = trl_duration_reload;
-				trl_duration_reloadRequst = false;
+					Duration_counter = duration_reload;
+				duration_reloadRequst = false;
 			}
-			if (--trl_cycles <= 0)
+			if (--cycles <= 0)
 			{
-				trl_cycles = trl_frequency + 1;
-				if (Duration_counter > 0 && trl_linearCounter > 0)
+				cycles = frequency + 1;
+				if (Duration_counter > 0 && linearCounter > 0)
 				{
-					if (trl_frequency >= 4)
+					if (frequency >= 4)
 					{
-						trl_step++;
-						trl_step &= 0x1F;
-						Output = StepSequence[trl_step];
+						step++;
+						step &= 0x1F;
+						Output = StepSequence[step];
 					}
 				}
 			}
@@ -127,20 +123,20 @@ namespace MyNes.Core.SoundChannels
 
 		internal void SaveState(BinaryWriter bin)
 		{
-			bin.Write(trl_length_counter_halt_flag);
-			bin.Write(trl_duration_haltRequset);
+			bin.Write(length_counter_halt_flag);
+			bin.Write(duration_haltRequset);
 			bin.Write(this.Duration_counter);
 			bin.Write(Duration_reloadEnabled);
-			bin.Write(trl_duration_reload);
-			bin.Write(trl_duration_reloadRequst);
-			bin.Write(trl_linearCounter);
-			bin.Write(trl_linearCounterReload);
-			bin.Write(trl_step);
-			bin.Write(trl_linearCounterHalt);
-			bin.Write(trl_halt);
-			bin.Write(trl_frequency);
+			bin.Write(duration_reload);
+			bin.Write(duration_reloadRequst);
+			bin.Write(linearCounter);
+			bin.Write(linearCounterReload);
+			bin.Write(step);
+			bin.Write(linearCounterHalt);
+			bin.Write(halt);
+			bin.Write(frequency);
 			bin.Write(this.Output);
-			bin.Write(trl_cycles);
+			bin.Write(cycles);
 		}
 
 		internal void WriteByte(int address, byte value)
@@ -148,20 +144,20 @@ namespace MyNes.Core.SoundChannels
 			switch (address)
 			{
 				case 0x4008:
-					trl_linearCounterHalt = trl_duration_haltRequset = (value & 0x80) != 0;
-					trl_linearCounterReload = (byte)(value & 0x7F);
+					linearCounterHalt = duration_haltRequset = (value & 0x80) != 0;
+					linearCounterReload = (byte)(value & 0x7F);
 					break;
 
 				case 0x400A:
-					trl_frequency = (trl_frequency & 0x700) | value;
+					frequency = (frequency & 0x700) | value;
 					break;
 
 				case 0x400B:
-					trl_frequency = (trl_frequency & 0x00FF) | ((value & 7) << 8);
+					frequency = (frequency & 0x00FF) | ((value & 7) << 8);
 
-					trl_duration_reload = NesEmu.DurationTable[value >> 3];
-					trl_duration_reloadRequst = true;
-					trl_halt = true;
+					duration_reload = NesEmu.DurationTable[value >> 3];
+					duration_reloadRequst = true;
+					halt = true;
 					break;
 
 				default:
@@ -171,20 +167,20 @@ namespace MyNes.Core.SoundChannels
 
 		internal void LoadState(BinaryReader bin)
 		{
-			trl_length_counter_halt_flag = bin.ReadBoolean();
-			trl_duration_haltRequset = bin.ReadBoolean();
+			length_counter_halt_flag = bin.ReadBoolean();
+			duration_haltRequset = bin.ReadBoolean();
 			this.Duration_counter = bin.ReadByte();
 			Duration_reloadEnabled = bin.ReadBoolean();
-			trl_duration_reload = bin.ReadByte();
-			trl_duration_reloadRequst = bin.ReadBoolean();
-			trl_linearCounter = bin.ReadByte();
-			trl_linearCounterReload = bin.ReadByte();
-			trl_step = bin.ReadByte();
-			trl_linearCounterHalt = bin.ReadBoolean();
-			trl_halt = bin.ReadBoolean();
-			trl_frequency = bin.ReadInt32();
+			duration_reload = bin.ReadByte();
+			duration_reloadRequst = bin.ReadBoolean();
+			linearCounter = bin.ReadByte();
+			linearCounterReload = bin.ReadByte();
+			step = bin.ReadByte();
+			linearCounterHalt = bin.ReadBoolean();
+			halt = bin.ReadBoolean();
+			frequency = bin.ReadInt32();
 			this.Output = bin.ReadByte();
-			trl_cycles = bin.ReadInt32();
+			cycles = bin.ReadInt32();
 		}
 	}
 }

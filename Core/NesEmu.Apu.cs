@@ -226,7 +226,7 @@ namespace MyNes.Core
             this.pulse1Channel.ClockEnvelope();
             this.pulse2Channel.ClockEnvelope();
             this.triangleChannel.ClockEnvelope();
-            this.noiseChannel.NozClockEnvelope();
+            this.noiseChannel.ClockEnvelope();
             if (board.enable_external_sound)
                 board.OnAPUClockEnvelope();
         }

@@ -30,7 +30,7 @@ namespace MyNes.Core.SoundChannels
 			this.core = core;
 		}
 
-		private static int[][] NozFrequencyTable = 
+		private static readonly int[][] FrequencyTable = 
         { 
             new int [] //NTSC
             {  
@@ -45,72 +45,72 @@ namespace MyNes.Core.SoundChannels
                 4, 8, 16, 32, 64, 96, 128, 160, 202, 254, 380, 508, 762, 1016, 2034, 4068
             }
         };
-		private static int noz_envelope;
-		private static bool noz_env_startflag;
-		private static int noz_env_counter;
-		private static int noz_env_devider;
-		private static bool noz_length_counter_halt_flag;
-		private static bool noz_constant_volume_flag;
-		private static int noz_volume_decay_time;
-		private static bool noz_duration_haltRequset = false;
+		private int envelope;
+		private bool env_startflag;
+		private int env_counter;
+		private int env_devider;
+		private bool length_counter_halt_flag;
+		private bool constant_volume_flag;
+		private int volume_decay_time;
+		private bool duration_haltRequset = false;
 		public byte Duration_counter;
 		public bool Duration_reloadEnabled;
-		private static byte noz_duration_reload = 0;
-		private static bool noz_duration_reloadRequst = false;
-		private static bool noz_modeFlag = false;
-		private static int noz_shiftRegister = 1;
-		private static int noz_feedback;
-		private static int noz_freqTimer;
-		private static int noz_cycles;
+		private byte duration_reload = 0;
+		private bool duration_reloadRequst = false;
+		private bool modeFlag = false;
+		private int shiftRegister = 1;
+		private int feedback;
+		private int freqTimer;
+		private int cycles;
 		public int Output;
 		private NesEmu core;
 
 		public void HardReset()
 		{
-			noz_envelope = 0;
-			noz_env_startflag = false;
-			noz_env_counter = 0;
-			noz_env_devider = 0;
-			noz_length_counter_halt_flag = false;
-			noz_constant_volume_flag = false;
-			noz_volume_decay_time = 0;
-			noz_duration_haltRequset = false;
+			envelope = 0;
+			env_startflag = false;
+			env_counter = 0;
+			env_devider = 0;
+			length_counter_halt_flag = false;
+			constant_volume_flag = false;
+			volume_decay_time = 0;
+			duration_haltRequset = false;
 			Duration_counter = 0;
 			Duration_reloadEnabled = false;
-			noz_duration_reload = 0;
-			noz_duration_reloadRequst = false;
-			noz_modeFlag = false;
-			noz_shiftRegister = 1;
-			noz_cycles = 0;
-			noz_freqTimer = 0;
-			noz_feedback = 0;
+			duration_reload = 0;
+			duration_reloadRequst = false;
+			modeFlag = false;
+			shiftRegister = 1;
+			cycles = 0;
+			freqTimer = 0;
+			feedback = 0;
 		}
-		public void NozClockEnvelope()
+		public void ClockEnvelope()
 		{
-			if (noz_env_startflag)
+			if (env_startflag)
 			{
-				noz_env_startflag = false;
-				noz_env_counter = 0xF;
-				noz_env_devider = noz_volume_decay_time + 1;
+				env_startflag = false;
+				env_counter = 0xF;
+				env_devider = volume_decay_time + 1;
 			}
 			else
 			{
-				if (noz_env_devider > 0)
-					noz_env_devider--;
+				if (env_devider > 0)
+					env_devider--;
 				else
 				{
-					noz_env_devider = noz_volume_decay_time + 1;
-					if (noz_env_counter > 0)
-						noz_env_counter--;
-					else if (noz_length_counter_halt_flag)
-						noz_env_counter = 0xF;
+					env_devider = volume_decay_time + 1;
+					if (env_counter > 0)
+						env_counter--;
+					else if (length_counter_halt_flag)
+						env_counter = 0xF;
 				}
 			}
-			noz_envelope = noz_constant_volume_flag ? noz_volume_decay_time : noz_env_counter;
+			envelope = constant_volume_flag ? volume_decay_time : env_counter;
 		}
 		public void ClockLengthCounter()
 		{
-			if (!noz_length_counter_halt_flag)
+			if (!length_counter_halt_flag)
 			{
 				if (Duration_counter > 0)
 				{
@@ -120,28 +120,28 @@ namespace MyNes.Core.SoundChannels
 		}
 		public void ClockSingle()
 		{
-			noz_length_counter_halt_flag = noz_duration_haltRequset;
+			length_counter_halt_flag = duration_haltRequset;
 			if (this.core.IsClockingDuration && Duration_counter > 0)
-				noz_duration_reloadRequst = false;
-			if (noz_duration_reloadRequst)
+				duration_reloadRequst = false;
+			if (duration_reloadRequst)
 			{
 				if (Duration_reloadEnabled)
-					Duration_counter = noz_duration_reload;
-				noz_duration_reloadRequst = false;
+					Duration_counter = duration_reload;
+				duration_reloadRequst = false;
 			}
 
-			if (--noz_cycles <= 0)
+			if (--cycles <= 0)
 			{
-				noz_cycles = NozFrequencyTable[this.core.systemIndex][noz_freqTimer];
-				if (noz_modeFlag)
-					noz_feedback = (noz_shiftRegister >> 6 & 0x1) ^ (noz_shiftRegister & 0x1);
+				cycles = FrequencyTable[this.core.systemIndex][freqTimer];
+				if (modeFlag)
+					feedback = (shiftRegister >> 6 & 0x1) ^ (shiftRegister & 0x1);
 				else
-					noz_feedback = (noz_shiftRegister >> 1 & 0x1) ^ (noz_shiftRegister & 0x1);
-				noz_shiftRegister >>= 1;
-				noz_shiftRegister = ((noz_shiftRegister & 0x3FFF) | (noz_feedback << 14));
+					feedback = (shiftRegister >> 1 & 0x1) ^ (shiftRegister & 0x1);
+				shiftRegister >>= 1;
+				shiftRegister = ((shiftRegister & 0x3FFF) | (feedback << 14));
 
-				if (Duration_counter > 0 && (noz_shiftRegister & 1) == 0)
-					Output = noz_envelope;
+				if (Duration_counter > 0 && (shiftRegister & 1) == 0)
+					Output = envelope;
 				else
 					Output = 0;
 			}
@@ -149,44 +149,44 @@ namespace MyNes.Core.SoundChannels
 
 		internal void SaveState(BinaryWriter bin)
 		{
-			bin.Write(noz_envelope);
-			bin.Write(noz_env_startflag);
-			bin.Write(noz_env_counter);
-			bin.Write(noz_env_devider);
-			bin.Write(noz_length_counter_halt_flag);
-			bin.Write(noz_constant_volume_flag);
-			bin.Write(noz_volume_decay_time);
-			bin.Write(noz_duration_haltRequset);
+			bin.Write(envelope);
+			bin.Write(env_startflag);
+			bin.Write(env_counter);
+			bin.Write(env_devider);
+			bin.Write(length_counter_halt_flag);
+			bin.Write(constant_volume_flag);
+			bin.Write(volume_decay_time);
+			bin.Write(duration_haltRequset);
 			bin.Write(Duration_counter);
 			bin.Write(Duration_reloadEnabled);
-			bin.Write(noz_duration_reload);
-			bin.Write(noz_duration_reloadRequst);
-			bin.Write(noz_modeFlag);
-			bin.Write(noz_shiftRegister);
-			bin.Write(noz_feedback);
-			bin.Write(noz_freqTimer);
-			bin.Write(noz_cycles);
+			bin.Write(duration_reload);
+			bin.Write(duration_reloadRequst);
+			bin.Write(modeFlag);
+			bin.Write(shiftRegister);
+			bin.Write(feedback);
+			bin.Write(freqTimer);
+			bin.Write(cycles);
 		}
 
 		internal void LoadState(BinaryReader bin)
 		{
-			noz_envelope = bin.ReadInt32();
-			noz_env_startflag = bin.ReadBoolean();
-			noz_env_counter = bin.ReadInt32();
-			noz_env_devider = bin.ReadInt32();
-			noz_length_counter_halt_flag = bin.ReadBoolean();
-			noz_constant_volume_flag = bin.ReadBoolean();
-			noz_volume_decay_time = bin.ReadInt32();
-			noz_duration_haltRequset = bin.ReadBoolean();
+			envelope = bin.ReadInt32();
+			env_startflag = bin.ReadBoolean();
+			env_counter = bin.ReadInt32();
+			env_devider = bin.ReadInt32();
+			length_counter_halt_flag = bin.ReadBoolean();
+			constant_volume_flag = bin.ReadBoolean();
+			volume_decay_time = bin.ReadInt32();
+			duration_haltRequset = bin.ReadBoolean();
 			Duration_counter = bin.ReadByte();
 			Duration_reloadEnabled = bin.ReadBoolean();
-			noz_duration_reload = bin.ReadByte();
-			noz_duration_reloadRequst = bin.ReadBoolean();
-			noz_modeFlag = bin.ReadBoolean();
-			noz_shiftRegister = bin.ReadInt32();
-			noz_feedback = bin.ReadInt32();
-			noz_freqTimer = bin.ReadInt32();
-			noz_cycles = bin.ReadInt32();
+			duration_reload = bin.ReadByte();
+			duration_reloadRequst = bin.ReadBoolean();
+			modeFlag = bin.ReadBoolean();
+			shiftRegister = bin.ReadInt32();
+			feedback = bin.ReadInt32();
+			freqTimer = bin.ReadInt32();
+			cycles = bin.ReadInt32();
 		}
 
 		internal void WriteByte(int address, byte value)
@@ -194,21 +194,21 @@ namespace MyNes.Core.SoundChannels
 			switch (address)
 			{
 				case 0x400C:
-					noz_volume_decay_time = value & 0xF;
-					noz_duration_haltRequset = (value & 0x20) != 0;
-					noz_constant_volume_flag = (value & 0x10) != 0;
-					noz_envelope = noz_constant_volume_flag ? noz_volume_decay_time : noz_env_counter;
+					volume_decay_time = value & 0xF;
+					duration_haltRequset = (value & 0x20) != 0;
+					constant_volume_flag = (value & 0x10) != 0;
+					envelope = constant_volume_flag ? volume_decay_time : env_counter;
 					break;
 
 				case 0x400E:
-					noz_freqTimer = value & 0x0F;
-					noz_modeFlag = (value & 0x80) == 0x80;
+					freqTimer = value & 0x0F;
+					modeFlag = (value & 0x80) == 0x80;
 					break;
 
 				case 0x400F:
-					noz_duration_reload = NesEmu.DurationTable[value >> 3];
-					noz_duration_reloadRequst = true;
-					noz_env_startflag = true;
+					duration_reload = NesEmu.DurationTable[value >> 3];
+					duration_reloadRequst = true;
+					env_startflag = true;
 					break;
 
 				default:
