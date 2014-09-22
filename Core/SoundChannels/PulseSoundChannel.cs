@@ -23,7 +23,7 @@
 using System.IO;
 namespace MyNes.Core.SoundChannels
 {
-	public class Pulse
+	public class PulseSoundChannel
 	{
 		private static readonly byte[][] DutyForms =
         {
@@ -33,7 +33,7 @@ namespace MyNes.Core.SoundChannels
             new byte[] {  1, 0, 0, 1, 1, 1, 1, 1 }, // 75.0% (25.0% negated)
         };
 
-		public Pulse(NesEmu core, int addressOffset)
+		public PulseSoundChannel(NesEmu core, int addressOffset)
 		{
 			if (addressOffset != 0x4000 && addressOffset != 0x4004)
 			{
@@ -44,42 +44,42 @@ namespace MyNes.Core.SoundChannels
 			this.addressOffset = addressOffset;
 		}
 
-		private static int sq1_envelope;
-		private static bool sq1_env_startflag;
-		private static int sq1_env_counter;
-		private static int sq1_env_devider;
-		private static bool sq1_length_counter_halt_flag;
-		private static bool sq1_constant_volume_flag;
-		private static int sq1_volume_decay_time;
-		private static bool sq1_duration_haltRequset = false;
+		private int sq1_envelope;
+		private bool sq1_env_startflag;
+		private int sq1_env_counter;
+		private int sq1_env_devider;
+		private bool sq1_length_counter_halt_flag;
+		private bool sq1_constant_volume_flag;
+		private int sq1_volume_decay_time;
+		private bool sq1_duration_haltRequset = false;
 		[Obsolete("Replace with property")]
-		public byte Sq_duration_counter;
+		public byte Duration_counter;
 		[Obsolete("Replace with property")]
-		public bool Sq_duration_reloadEnabled;
-		private static byte sq1_duration_reload = 0;
-		private static bool sq1_duration_reloadRequst = false;
+		public bool Duration_reloadEnabled;
+		private byte sq1_duration_reload = 0;
+		private bool sq1_duration_reloadRequst = false;
 
-		private static int sq1_dutyForm;
-		private static int sq1_dutyStep;
-		private static int sq1_sweepDeviderPeriod = 0;
-		private static int sq1_sweepShiftCount = 0;
-		private static int sq1_sweepCounter = 0;
-		private static bool sq1_sweepEnable = false;
-		private static bool sq1_sweepReload = false;
-		private static bool sq1_sweepNegateFlag = false;
-		private static int sq1_frequency;
+		private int sq1_dutyForm;
+		private int sq1_dutyStep;
+		private int sq1_sweepDeviderPeriod = 0;
+		private int sq1_sweepShiftCount = 0;
+		private int sq1_sweepCounter = 0;
+		private bool sq1_sweepEnable = false;
+		private bool sq1_sweepReload = false;
+		private bool sq1_sweepNegateFlag = false;
+		private int sq1_frequency;
 		[Obsolete("Replace with property")]
-		public byte Sq_output;
-		private static int sq1_sweep;
-		private static int sq1_cycles;
+		public byte Output;
+		private int sq1_sweep;
+		private int sq1_cycles;
 		private NesEmu core;
 		private int addressOffset;
 
-		private static void Sq1Shutdown()
+		private void Sq1Shutdown()
 		{
 
 		}
-		public void SqHardReset()
+		public void HardReset()
 		{
 			sq1_envelope = 0;
 			sq1_env_startflag = false;
@@ -89,8 +89,8 @@ namespace MyNes.Core.SoundChannels
 			sq1_constant_volume_flag = false;
 			sq1_volume_decay_time = 0;
 			sq1_duration_haltRequset = false;
-			Sq_duration_counter = 0;
-			Sq_duration_reloadEnabled = false;
+			Duration_counter = 0;
+			Duration_reloadEnabled = false;
 			sq1_duration_reload = 0;
 			sq1_duration_reloadRequst = false;
 			sq1_dutyForm = 0;
@@ -101,18 +101,18 @@ namespace MyNes.Core.SoundChannels
 			sq1_sweepEnable = false;
 			sq1_sweepReload = false;
 			sq1_sweepNegateFlag = false;
-			Sq_output = 0;
+			Output = 0;
 			sq1_cycles = 0;
 			sq1_sweep = 0;
 			sq1_frequency = 0;
 		}
-		private static bool Sq1IsValidFrequency()
+		private bool Sq1IsValidFrequency()
 		{
 			return
 				(sq1_frequency >= 0x8) &&
 				((sq1_sweepNegateFlag) || (((sq1_frequency + (sq1_frequency >> sq1_sweepShiftCount)) & 0x800) == 0));
 		}
-		public void SqClockEnvelope()
+		public void ClockEnvelope()
 		{
 			if (sq1_env_startflag)
 			{
@@ -135,13 +135,13 @@ namespace MyNes.Core.SoundChannels
 			}
 			sq1_envelope = sq1_constant_volume_flag ? sq1_volume_decay_time : sq1_env_counter;
 		}
-		public void SqClockLengthCounter()
+		public void ClockLengthCounter()
 		{
 			if (!sq1_length_counter_halt_flag)
 			{
-				if (Sq_duration_counter > 0)
+				if (Duration_counter > 0)
 				{
-					Sq_duration_counter--;
+					Duration_counter--;
 				}
 			}
 
@@ -150,9 +150,19 @@ namespace MyNes.Core.SoundChannels
 			{
 				sq1_sweepCounter = sq1_sweepDeviderPeriod + 1;
 				if (sq1_sweepEnable && (sq1_sweepShiftCount > 0) && Sq1IsValidFrequency())
+
 				{
-					sq1_sweep = sq1_frequency >> sq1_sweepShiftCount;
+				sq1_sweep = sq1_frequency >> sq1_sweepShiftCount;
+// HACK
+if (this.addressOffset == 0x4000)
+{
 					sq1_frequency += sq1_sweepNegateFlag ? ~sq1_sweep : sq1_sweep;
+}
+else
+{
+					sq1_frequency += sq1_sweepNegateFlag ? -sq1_sweep : sq1_sweep;
+}
+
 				}
 			}
 			if (sq1_sweepReload)
@@ -161,23 +171,28 @@ namespace MyNes.Core.SoundChannels
 				sq1_sweepCounter = sq1_sweepDeviderPeriod + 1;
 			}
 		}
-		public void SqClockSingle()
+		public void ClockSingle()
 		{
 			sq1_length_counter_halt_flag = sq1_duration_haltRequset;
-			if (this.core.IsClockingDuration && Sq_duration_counter > 0)
+			if (this.core.IsClockingDuration && Duration_counter > 0)
 				sq1_duration_reloadRequst = false;
 			if (sq1_duration_reloadRequst)
 			{
-				if (Sq_duration_reloadEnabled)
-					Sq_duration_counter = sq1_duration_reload;
+				if (Duration_reloadEnabled)
+					Duration_counter = sq1_duration_reload;
 				sq1_duration_reloadRequst = false;
 			}
 
-			if (sq1_frequency == 0)
-			{
-				Sq_output = 0;
-				return;
-			}
+// HACK
+if (this.addressOffset == 0x4000)
+{
+					if (sq1_frequency == 0)
+					{
+						Output = 0;
+						return;
+					}
+}
+			
 			if (sq1_cycles > 0)
 				sq1_cycles--;
 			else
@@ -186,14 +201,14 @@ namespace MyNes.Core.SoundChannels
 				sq1_dutyStep--;
 				if (sq1_dutyStep < 0)
 					sq1_dutyStep = 0x7;
-				if (Sq_duration_counter > 0 && Sq1IsValidFrequency())
-					Sq_output = (byte)(Pulse.DutyForms[sq1_dutyForm][sq1_dutyStep] * sq1_envelope);
+				if (Duration_counter > 0 && Sq1IsValidFrequency())
+					Output = (byte)(PulseSoundChannel.DutyForms[sq1_dutyForm][sq1_dutyStep] * sq1_envelope);
 				else
-					Sq_output = 0;
+					Output = 0;
 			}
 		}
 
-		internal void Write(BinaryWriter bin)
+		internal void SaveState(BinaryWriter bin)
 		{
 			bin.Write(sq1_envelope);
 			bin.Write(sq1_env_startflag);
@@ -203,8 +218,8 @@ namespace MyNes.Core.SoundChannels
 			bin.Write(sq1_constant_volume_flag);
 			bin.Write(sq1_volume_decay_time);
 			bin.Write(sq1_duration_haltRequset);
-			bin.Write(Sq_duration_counter);
-			bin.Write(Sq_duration_reloadEnabled);
+			bin.Write(Duration_counter);
+			bin.Write(Duration_reloadEnabled);
 			bin.Write(sq1_duration_reload);
 			bin.Write(sq1_duration_reloadRequst);
 			bin.Write(sq1_dutyForm);
@@ -216,12 +231,12 @@ namespace MyNes.Core.SoundChannels
 			bin.Write(sq1_sweepReload);
 			bin.Write(sq1_sweepNegateFlag);
 			bin.Write(sq1_frequency);
-			bin.Write(Sq_output);
+			bin.Write(Output);
 			bin.Write(sq1_sweep);
 			bin.Write(sq1_cycles);
 		}
 
-		internal void ReadState(BinaryReader bin)
+		internal void LoadState(BinaryReader bin)
 		{
 			sq1_envelope = bin.ReadInt32();
 			sq1_env_startflag = bin.ReadBoolean();
@@ -231,8 +246,8 @@ namespace MyNes.Core.SoundChannels
 			sq1_constant_volume_flag = bin.ReadBoolean();
 			sq1_volume_decay_time = bin.ReadInt32();
 			sq1_duration_haltRequset = bin.ReadBoolean();
-			Sq_duration_counter = bin.ReadByte();
-			Sq_duration_reloadEnabled = bin.ReadBoolean();
+			Duration_counter = bin.ReadByte();
+			Duration_reloadEnabled = bin.ReadBoolean();
 			sq1_duration_reload = bin.ReadByte();
 			sq1_duration_reloadRequst = bin.ReadBoolean();
 			sq1_dutyForm = bin.ReadInt32();
@@ -244,7 +259,7 @@ namespace MyNes.Core.SoundChannels
 			sq1_sweepReload = bin.ReadBoolean();
 			sq1_sweepNegateFlag = bin.ReadBoolean();
 			sq1_frequency = bin.ReadInt32();
-			Sq_output = bin.ReadByte();
+			Output = bin.ReadByte();
 			sq1_sweep = bin.ReadInt32();
 			sq1_cycles = bin.ReadInt32();
 		}

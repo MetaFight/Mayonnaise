@@ -42,11 +42,6 @@ namespace MyNes.Core
             0x0A, 0xFE, 0x14, 0x02, 0x28, 0x04, 0x50, 0x06, 0xA0, 0x08, 0x3C, 0x0A, 0x0E, 0x0C, 0x1A, 0x0E,
             0x0C, 0x10, 0x18, 0x12, 0x30, 0x14, 0x60, 0x16, 0xC0, 0x18, 0x48, 0x1A, 0x10, 0x1C, 0x20, 0x1E,
         };
-        private static byte[] TrlStepSequence =
-        {
-            0x0F, 0x0E, 0x0D, 0x0C, 0x0B, 0x0A, 0x09, 0x08, 0x07, 0x06, 0x05, 0x04, 0x03, 0x02, 0x01, 0x00,
-            0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F,
-        };
         private static int Cycles = 0;
         private static bool SequencingMode;
         private static byte CurrentSeq = 0;
@@ -92,10 +87,10 @@ namespace MyNes.Core
             oddCycle = false;
             IsClockingDuration = false;
 
-            this.pulse1Channel.SqHardReset();
-			this.pulse2Channel.SqHardReset();
-            TrlHardReset();
-            this.noiseChannel.NozHardReset();
+            this.pulse1Channel.HardReset();
+			this.pulse2Channel.HardReset();
+            this.triangleChannel.HardReset();
+            this.noiseChannel.HardReset();
             DMCHardReset();
         }
         private void APUSoftReset()
@@ -108,10 +103,10 @@ namespace MyNes.Core
             oddCycle = false;
             IsClockingDuration = false;
 
-            this.pulse1Channel.SqHardReset();
-			this.pulse2Channel.SqHardReset();
-            TrlHardReset();
-            this.noiseChannel.NozHardReset();
+            this.pulse1Channel.HardReset();
+			this.pulse2Channel.HardReset();
+            this.triangleChannel.HardReset();
+            this.noiseChannel.HardReset();
             DMCHardReset();
         }
         private static void APUShutdown()
@@ -175,10 +170,10 @@ namespace MyNes.Core
             {
                 audio_playback_sampleCycles += audio_playback_sampleReload;
                 // DC Blocker Filter
-                x = mix_table[this.pulse1Channel.Sq_output]
-							 [this.pulse2Channel.Sq_output]
-                             [trl_output]
-                             [this.noiseChannel.noz_output]
+                x = mix_table[this.pulse1Channel.Output]
+							 [this.pulse2Channel.Output]
+                             [this.triangleChannel.Output]
+                             [this.noiseChannel.Output]
                              [dmc_output] + (board.enable_external_sound ? board.APUGetSamples() : 0);
                 y = x - x_1 + (0.995 * y_1);// y[n] = x[n] - x[n - 1] + R * y[n - 1]; R = 0.995 for 44100 Hz
 
@@ -219,18 +214,18 @@ namespace MyNes.Core
         {
             APUClockEnvelope();
 
-            this.pulse1Channel.SqClockLengthCounter();
-            this.pulse2Channel.SqClockLengthCounter();
-            TrlClockLengthCounter();
-            this.noiseChannel.NozClockLengthCounter();
+            this.pulse1Channel.ClockLengthCounter();
+            this.pulse2Channel.ClockLengthCounter();
+            this.triangleChannel.ClockLengthCounter();
+            this.noiseChannel.ClockLengthCounter();
             if (board.enable_external_sound)
                 board.OnAPUClockDuration();
         }
         private void APUClockEnvelope()
         {
-            this.pulse1Channel.SqClockEnvelope();
-            this.pulse2Channel.SqClockEnvelope();
-            TrlClockEnvelope();
+            this.pulse1Channel.ClockEnvelope();
+            this.pulse2Channel.ClockEnvelope();
+            this.triangleChannel.ClockEnvelope();
             this.noiseChannel.NozClockEnvelope();
             if (board.enable_external_sound)
                 board.OnAPUClockEnvelope();
@@ -283,10 +278,10 @@ namespace MyNes.Core
                 }
             }
             // Clock single
-            this.pulse1Channel.SqClockSingle();
-            this.pulse2Channel.SqClockSingle();
-            TrlClockSingle();
-            this.noiseChannel.NozClockSingle();
+            this.pulse1Channel.ClockSingle();
+            this.pulse2Channel.ClockSingle();
+            this.triangleChannel.ClockSingle();
+            this.noiseChannel.ClockSingle();
             DMCClockSingle();
             if (board.enable_external_sound)
                 board.OnAPUClockSingle(ref IsClockingDuration);

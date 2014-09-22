@@ -26,13 +26,15 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <OutputPath>..\_Builds\DEBUG\</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <PlatformTarget>x86</PlatformTarget>
@@ -375,10 +377,10 @@
     <Compile Include="NesEmu.Dmc.cs" />
     <Compile Include="NesEmu.VSUnisystem.cs" />
     <Compile Include="NesEmu.Input.cs" />
-    <Compile Include="SoundChannels\Noise.cs" />
-    <Compile Include="SoundChannels\Pulse.cs" />
+    <Compile Include="SoundChannels\NoiseSoundChannel.cs" />
+    <Compile Include="SoundChannels\PulseSoundChannel.cs" />
     <Compile Include="NesEmu.State.cs" />
-    <Compile Include="NesEmu.Triangle.cs" />
+    <Compile Include="SoundChannels\TriangleSoundChannel.cs" />
     <Compile Include="Palettes\PaletteFileWrapper.cs" />
     <Compile Include="Types\ZlipWrapper.cs" />
     <Compile Include="ZLIP\Adler32.cs" />

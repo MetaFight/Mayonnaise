@@ -23,9 +23,9 @@
 using System.IO;
 namespace MyNes.Core.SoundChannels
 {
-	public class Noise
+	public class NoiseSoundChannel
 	{
-		public Noise(NesEmu core)
+		public NoiseSoundChannel(NesEmu core)
 		{
 			this.core = core;
 		}
@@ -53,8 +53,8 @@ namespace MyNes.Core.SoundChannels
 		private static bool noz_constant_volume_flag;
 		private static int noz_volume_decay_time;
 		private static bool noz_duration_haltRequset = false;
-		public byte noz_duration_counter;
-		public bool noz_duration_reloadEnabled;
+		public byte Duration_counter;
+		public bool Duration_reloadEnabled;
 		private static byte noz_duration_reload = 0;
 		private static bool noz_duration_reloadRequst = false;
 		private static bool noz_modeFlag = false;
@@ -62,15 +62,10 @@ namespace MyNes.Core.SoundChannels
 		private static int noz_feedback;
 		private static int noz_freqTimer;
 		private static int noz_cycles;
-		public int noz_output;
+		public int Output;
 		private NesEmu core;
 
-		private static void NOZShutdown()
-		{
-
-		}
-
-		public void NozHardReset()
+		public void HardReset()
 		{
 			noz_envelope = 0;
 			noz_env_startflag = false;
@@ -80,8 +75,8 @@ namespace MyNes.Core.SoundChannels
 			noz_constant_volume_flag = false;
 			noz_volume_decay_time = 0;
 			noz_duration_haltRequset = false;
-			noz_duration_counter = 0;
-			noz_duration_reloadEnabled = false;
+			Duration_counter = 0;
+			Duration_reloadEnabled = false;
 			noz_duration_reload = 0;
 			noz_duration_reloadRequst = false;
 			noz_modeFlag = false;
@@ -113,25 +108,25 @@ namespace MyNes.Core.SoundChannels
 			}
 			noz_envelope = noz_constant_volume_flag ? noz_volume_decay_time : noz_env_counter;
 		}
-		public void NozClockLengthCounter()
+		public void ClockLengthCounter()
 		{
 			if (!noz_length_counter_halt_flag)
 			{
-				if (noz_duration_counter > 0)
+				if (Duration_counter > 0)
 				{
-					noz_duration_counter--;
+					Duration_counter--;
 				}
 			}
 		}
-		public void NozClockSingle()
+		public void ClockSingle()
 		{
 			noz_length_counter_halt_flag = noz_duration_haltRequset;
-			if (this.core.IsClockingDuration && noz_duration_counter > 0)
+			if (this.core.IsClockingDuration && Duration_counter > 0)
 				noz_duration_reloadRequst = false;
 			if (noz_duration_reloadRequst)
 			{
-				if (noz_duration_reloadEnabled)
-					noz_duration_counter = noz_duration_reload;
+				if (Duration_reloadEnabled)
+					Duration_counter = noz_duration_reload;
 				noz_duration_reloadRequst = false;
 			}
 
@@ -145,10 +140,10 @@ namespace MyNes.Core.SoundChannels
 				noz_shiftRegister >>= 1;
 				noz_shiftRegister = ((noz_shiftRegister & 0x3FFF) | (noz_feedback << 14));
 
-				if (noz_duration_counter > 0 && (noz_shiftRegister & 1) == 0)
-					noz_output = noz_envelope;
+				if (Duration_counter > 0 && (noz_shiftRegister & 1) == 0)
+					Output = noz_envelope;
 				else
-					noz_output = 0;
+					Output = 0;
 			}
 		}
 
@@ -162,8 +157,8 @@ namespace MyNes.Core.SoundChannels
 			bin.Write(noz_constant_volume_flag);
 			bin.Write(noz_volume_decay_time);
 			bin.Write(noz_duration_haltRequset);
-			bin.Write(noz_duration_counter);
-			bin.Write(noz_duration_reloadEnabled);
+			bin.Write(Duration_counter);
+			bin.Write(Duration_reloadEnabled);
 			bin.Write(noz_duration_reload);
 			bin.Write(noz_duration_reloadRequst);
 			bin.Write(noz_modeFlag);
@@ -173,7 +168,7 @@ namespace MyNes.Core.SoundChannels
 			bin.Write(noz_cycles);
 		}
 
-		internal void ReadState(BinaryReader bin)
+		internal void LoadState(BinaryReader bin)
 		{
 			noz_envelope = bin.ReadInt32();
 			noz_env_startflag = bin.ReadBoolean();
@@ -183,8 +178,8 @@ namespace MyNes.Core.SoundChannels
 			noz_constant_volume_flag = bin.ReadBoolean();
 			noz_volume_decay_time = bin.ReadInt32();
 			noz_duration_haltRequset = bin.ReadBoolean();
-			noz_duration_counter = bin.ReadByte();
-			noz_duration_reloadEnabled = bin.ReadBoolean();
+			Duration_counter = bin.ReadByte();
+			Duration_reloadEnabled = bin.ReadBoolean();
 			noz_duration_reload = bin.ReadByte();
 			noz_duration_reloadRequst = bin.ReadBoolean();
 			noz_modeFlag = bin.ReadBoolean();

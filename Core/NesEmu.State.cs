@@ -244,26 +244,13 @@ namespace MyNes.Core
             bin.Write(spr_render_temp_pixel);
             #endregion
             #region Pulse 1
-			this.pulse1Channel.Write(bin);
+			this.pulse1Channel.SaveState(bin);
             #endregion
             #region Pulse 2
-			this.pulse2Channel.Write(bin);
+			this.pulse2Channel.SaveState(bin);
             #endregion
             #region Triangle
-            bin.Write(trl_length_counter_halt_flag);
-            bin.Write(trl_duration_haltRequset);
-            bin.Write(trl_duration_counter);
-            bin.Write(trl_duration_reloadEnabled);
-            bin.Write(trl_duration_reload);
-            bin.Write(trl_duration_reloadRequst);
-            bin.Write(trl_linearCounter);
-            bin.Write(trl_linearCounterReload);
-            bin.Write(trl_step);
-            bin.Write(trl_linearCounterHalt);
-            bin.Write(trl_halt);
-            bin.Write(trl_frequency);
-            bin.Write(trl_output);
-            bin.Write(trl_cycles);
+			this.triangleChannel.SaveState(bin);
             #endregion
 
             // Compress data !
@@ -443,7 +430,7 @@ namespace MyNes.Core
             temp_4017 = bin.ReadByte();
             #endregion
             #region Noise
-			this.noiseChannel.ReadState(bin);
+			this.noiseChannel.LoadState(bin);
             #endregion
             #region PPU
             VClock = bin.ReadInt32();
@@ -503,24 +490,11 @@ namespace MyNes.Core
             spr_render_temp_pixel = bin.ReadInt32();
             #endregion
             #region Pulse
-			this.pulse1Channel.ReadState(bin);
-			this.pulse2Channel.ReadState(bin);
+			this.pulse1Channel.LoadState(bin);
+			this.pulse2Channel.LoadState(bin);
             #endregion
             #region Triangle
-            trl_length_counter_halt_flag = bin.ReadBoolean();
-            trl_duration_haltRequset = bin.ReadBoolean();
-            trl_duration_counter = bin.ReadByte();
-            trl_duration_reloadEnabled = bin.ReadBoolean();
-            trl_duration_reload = bin.ReadByte();
-            trl_duration_reloadRequst = bin.ReadBoolean();
-            trl_linearCounter = bin.ReadByte();
-            trl_linearCounterReload = bin.ReadByte();
-            trl_step = bin.ReadByte();
-            trl_linearCounterHalt = bin.ReadBoolean();
-            trl_halt = bin.ReadBoolean();
-            trl_frequency = bin.ReadInt32();
-            trl_output = bin.ReadByte();
-            trl_cycles = bin.ReadInt32();
+			this.triangleChannel.LoadState(bin);
             #endregion
 
             // Finished !

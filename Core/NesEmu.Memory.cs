@@ -264,13 +264,13 @@ namespace MyNes.Core
 						{
 							temp_4015 = 0;
 							// Channels enable
-							if (this.pulse1Channel.Sq_duration_counter > 0)
+							if (this.pulse1Channel.Duration_counter > 0)
 								temp_4015 |= 0x01;
-							if (this.pulse2Channel.Sq_duration_counter > 0)
+							if (this.pulse2Channel.Duration_counter > 0)
 								temp_4015 |= 0x02;
-							if (trl_duration_counter > 0)
+							if (this.triangleChannel.Duration_counter > 0)
 								temp_4015 |= 0x04;
-							if (this.noiseChannel.noz_duration_counter > 0)
+							if (this.noiseChannel.Duration_counter > 0)
 								temp_4015 |= 0x08;
 							if (dmc_dmaSize > 0)
 								temp_4015 |= 0x10;
@@ -487,23 +487,10 @@ namespace MyNes.Core
 						}
 					/*Triangle*/
 					case 0x4008:
-						{
-							trl_linearCounterHalt = trl_duration_haltRequset = (value & 0x80) != 0;
-							trl_linearCounterReload = (byte)(value & 0x7F);
-							break;
-						}
 					case 0x400A:
-						{
-							trl_frequency = (trl_frequency & 0x700) | value;
-							break;
-						}
 					case 0x400B:
 						{
-							trl_frequency = (trl_frequency & 0x00FF) | ((value & 7) << 8);
-
-							trl_duration_reload = DurationTable[value >> 3];
-							trl_duration_reloadRequst = true;
-							trl_halt = true;
+							this.triangleChannel.WriteByte(address, value);
 							break;
 						}
 					/*Noise*/
@@ -552,21 +539,21 @@ namespace MyNes.Core
 					case 0x4015:
 						{
 							// SQ1
-							this.pulse1Channel.Sq_duration_reloadEnabled = (value & 0x01) != 0;
-							if (!this.pulse1Channel.Sq_duration_reloadEnabled)
-								this.pulse1Channel.Sq_duration_counter = 0;
+							this.pulse1Channel.Duration_reloadEnabled = (value & 0x01) != 0;
+							if (!this.pulse1Channel.Duration_reloadEnabled)
+								this.pulse1Channel.Duration_counter = 0;
 							// SQ2
-							this.pulse2Channel.Sq_duration_reloadEnabled = (value & 0x02) != 0;
-							if (!this.pulse2Channel.Sq_duration_reloadEnabled)
-								this.pulse2Channel.Sq_duration_counter = 0;
+							this.pulse2Channel.Duration_reloadEnabled = (value & 0x02) != 0;
+							if (!this.pulse2Channel.Duration_reloadEnabled)
+								this.pulse2Channel.Duration_counter = 0;
 							// TRL
-							trl_duration_reloadEnabled = (value & 0x04) != 0;
-							if (!trl_duration_reloadEnabled)
-								trl_duration_counter = 0;
+							this.triangleChannel.Duration_reloadEnabled = (value & 0x04) != 0;
+							if (!this.triangleChannel.Duration_reloadEnabled)
+								this.triangleChannel.Duration_counter = 0;
 							// NOZ
-							this.noiseChannel.noz_duration_reloadEnabled = (value & 0x08) != 0;
-							if (!this.noiseChannel.noz_duration_reloadEnabled)
-								this.noiseChannel.noz_duration_counter = 0;
+							this.noiseChannel.Duration_reloadEnabled = (value & 0x08) != 0;
+							if (!this.noiseChannel.Duration_reloadEnabled)
+								this.noiseChannel.Duration_counter = 0;
 							// DMC
 							if ((value & 0x10) != 0)
 							{

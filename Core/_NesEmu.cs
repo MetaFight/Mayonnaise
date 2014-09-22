@@ -57,9 +57,10 @@ namespace MyNes.Core
 			else//PALB, DENDY
 				FramePeriod = (1.0 / (FPS = 50.0));
 
-			this.noiseChannel = new Noise(this);
-			this.pulse1Channel = new Pulse(this, 0x4000);
-			this.pulse2Channel = new Pulse(this, 0x4004);
+			this.noiseChannel = new NoiseSoundChannel(this);
+			this.pulse1Channel = new PulseSoundChannel(this, 0x4000);
+			this.pulse2Channel = new PulseSoundChannel(this, 0x4004);
+			this.triangleChannel = new TriangleSoundChannel(this);
 		}
 
         public static TVSystemSetting TVFormatSetting;
@@ -106,9 +107,10 @@ namespace MyNes.Core
         /// </summary>
         public static event EventHandler EMUShutdown;
 		
-		private Noise noiseChannel;
-		private Pulse pulse1Channel;
-		private Pulse pulse2Channel;
+		private NoiseSoundChannel noiseChannel;
+		private PulseSoundChannel pulse1Channel;
+		private PulseSoundChannel pulse2Channel;
+		private TriangleSoundChannel triangleChannel;
 
         /// <summary>
         /// Call this at application start up to set nes default stuff
