@@ -72,8 +72,8 @@ namespace MyNes.Core.SoundChannels
 		public byte Output;
 		private int sweep;
 		private int cycles;
-		private NesEmu core;
-		private int addressOffset;
+		private readonly NesEmu core;
+		private readonly int addressOffset;
 
 		public void HardReset()
 		{

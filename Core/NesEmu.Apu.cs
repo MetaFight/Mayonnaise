@@ -49,7 +49,8 @@ namespace MyNes.Core
         public bool IsClockingDuration = false;
         private static bool FrameIrqEnabled;
         private static bool FrameIrqFlag;
-        private static bool oddCycle;
+		[Obsolete("Convert this to property")]
+        public bool oddCycle;
         /*Playback*/
         private static IAudioProvider AudioOut;
         private static double[][][][][] mix_table;
@@ -65,7 +66,8 @@ namespace MyNes.Core
         public static int audio_playback_w_pos = 0;//Write position
         public static int audio_playback_latency = 0;//Write position
         private static int audio_playback_out;
-        public int systemIndex;
+		[Obsolete("This should be a property.")]
+        public int SystemIndex;
         private static double x, x_1, y, y_1;
         private const double R = 1;// 0.995 for 44100 Hz
         private static double amplitude = 160;
@@ -74,12 +76,12 @@ namespace MyNes.Core
         {
             switch (TVFormat)
             {
-                case TVSystem.NTSC: systemIndex = 0; audio_playback_samplePeriod = 1789772.67f; break;
-                case TVSystem.PALB: systemIndex = 1; audio_playback_samplePeriod = 1662607f; break;
-                case TVSystem.DENDY: systemIndex = 2; audio_playback_samplePeriod = 1773448f; break;
+                case TVSystem.NTSC: SystemIndex = 0; audio_playback_samplePeriod = 1789772.67f; break;
+                case TVSystem.PALB: SystemIndex = 1; audio_playback_samplePeriod = 1662607f; break;
+                case TVSystem.DENDY: SystemIndex = 2; audio_playback_samplePeriod = 1773448f; break;
             }
             audio_playback_sampleReload = audio_playback_samplePeriod / audio_playback_frequency;
-            Cycles = SequenceMode0[systemIndex][0] - 10;
+            Cycles = SequenceMode0[SystemIndex][0] - 10;
             FrameIrqFlag = false;
             FrameIrqEnabled = true;
             SequencingMode = false;
@@ -91,11 +93,11 @@ namespace MyNes.Core
 			this.pulse2Channel.HardReset();
             this.triangleChannel.HardReset();
             this.noiseChannel.HardReset();
-            DMCHardReset();
+            this.dmcChannel.HardReset();
         }
         private void APUSoftReset()
         {
-            Cycles = SequenceMode0[systemIndex][0] - 10;
+            Cycles = SequenceMode0[SystemIndex][0] - 10;
             FrameIrqFlag = false;
             FrameIrqEnabled = true;
             SequencingMode = false;
@@ -107,7 +109,7 @@ namespace MyNes.Core
 			this.pulse2Channel.HardReset();
             this.triangleChannel.HardReset();
             this.noiseChannel.HardReset();
-            DMCHardReset();
+            this.dmcChannel.HardReset();
         }
         private static void APUShutdown()
         {
@@ -174,7 +176,7 @@ namespace MyNes.Core
 							 [this.pulse2Channel.Output]
                              [this.triangleChannel.Output]
                              [this.noiseChannel.Output]
-                             [dmc_output] + (board.enable_external_sound ? board.APUGetSamples() : 0);
+                             [this.dmcChannel.Output] + (board.enable_external_sound ? board.APUGetSamples() : 0);
                 y = x - x_1 + (0.995 * y_1);// y[n] = x[n] - x[n - 1] + R * y[n - 1]; R = 0.995 for 44100 Hz
 
                 x_1 = x;
@@ -258,7 +260,7 @@ namespace MyNes.Core
                         case 5: APUCheckIrq(); break;
                     }
                     CurrentSeq++;
-                    Cycles += SequenceMode0[systemIndex][CurrentSeq];
+                    Cycles += SequenceMode0[SystemIndex][CurrentSeq];
                     if (CurrentSeq == 6)
                         CurrentSeq = 0;
                 }
@@ -272,7 +274,7 @@ namespace MyNes.Core
                         case 3: APUClockEnvelope(); break;
                     }
                     CurrentSeq++;
-                    Cycles = SequenceMode1[systemIndex][CurrentSeq];
+                    Cycles = SequenceMode1[SystemIndex][CurrentSeq];
                     if (CurrentSeq == 4)
                         CurrentSeq = 0;
                 }
@@ -282,7 +284,7 @@ namespace MyNes.Core
             this.pulse2Channel.ClockSingle();
             this.triangleChannel.ClockSingle();
             this.noiseChannel.ClockSingle();
-            DMCClockSingle();
+            this.dmcChannel.ClockSingle();
             if (board.enable_external_sound)
                 board.OnAPUClockSingle(ref IsClockingDuration);
             // Playback

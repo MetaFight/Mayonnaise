@@ -35,8 +35,8 @@ namespace MyNes.Core
 		private static byte[] oam_ram;
 		// The secondary oam...
 		private static byte[] oam_secondary;
-		private static int BUS_ADDRESS;
-		private static bool BUS_RW;
+		public int BUS_ADDRESS;
+		public bool BUS_RW;
 		private static bool BUS_RW_P;
 		// temps
 		private static byte temp_4015;
@@ -67,7 +67,7 @@ namespace MyNes.Core
 				throw new MapperNotSupportedException(rom.MapperNumber);
 			}
 		}
-		private static void MEMHardReset()
+		private void MEMHardReset()
 		{
 			// memory
 			WRAM = new byte[0x800];
@@ -135,7 +135,8 @@ namespace MyNes.Core
 					Trace.WriteLine("SRAM saved successfully.");
 				}
 		}
-		private byte Read(int address)
+		[Obsolete("Warning to remind you to migrate this file into a dedicated class and inject into DMA")]
+		public byte Read(int address)
 		{
 			BUS_RW_P = BUS_RW;
 			BUS_ADDRESS = address;
@@ -160,7 +161,7 @@ namespace MyNes.Core
 				}
 			}
 			APUClock();
-			DMAClock();
+			this.dma.DMAClock();
 
 			board.OnCPUClock();
 			#endregion
@@ -272,12 +273,12 @@ namespace MyNes.Core
 								temp_4015 |= 0x04;
 							if (this.noiseChannel.Duration_counter > 0)
 								temp_4015 |= 0x08;
-							if (dmc_dmaSize > 0)
+							if (this.dmcChannel.dmc_dmaSize > 0)
 								temp_4015 |= 0x10;
 							// IRQ
 							if (FrameIrqFlag)
 								temp_4015 |= 0x40;
-							if (DeltaIrqOccur)
+							if (this.dmcChannel.DeltaIrqOccur)
 								temp_4015 |= 0x80;
 
 							FrameIrqFlag = false;
@@ -330,7 +331,7 @@ namespace MyNes.Core
 			// Should not reach here !
 			return 0;
 		}
-		private void Write(int address, byte value)
+		public void Write(int address, byte value)
 		{
 			BUS_RW_P = BUS_RW;
 			BUS_ADDRESS = address;
@@ -355,7 +356,7 @@ namespace MyNes.Core
 				}
 			}
 			APUClock();
-			DMAClock();
+			this.dma.DMAClock();
 
 			board.OnCPUClock();
 			#endregion
@@ -504,36 +505,36 @@ namespace MyNes.Core
 					/*DMC*/
 					case 0x4010:
 						{
-							DMCIrqEnabled = (value & 0x80) != 0;
-							dmc_dmaLooping = (value & 0x40) != 0;
+							this.dmcChannel.DMCIrqEnabled = (value & 0x80) != 0;
+							this.dmcChannel.dmc_dmaLooping = (value & 0x40) != 0;
 
-							if (!DMCIrqEnabled)
+							if (!this.dmcChannel.DMCIrqEnabled)
 							{
-								DeltaIrqOccur = false;
+								this.dmcChannel.DeltaIrqOccur = false;
 								IRQFlags &= ~IRQ_DMC;
 							}
-							dmc_freqTimer = value & 0x0F;
+							this.dmcChannel.dmc_freqTimer = value & 0x0F;
 							break;
 						}
 					case 0x4011:
 						{
-							dmc_output = (byte)(value & 0x7F);
+							this.dmcChannel.Output = (byte)(value & 0x7F);
 							break;
 						}
 					case 0x4012:
 						{
-							dmc_dmaAddrRefresh = (value << 6) | 0xC000;
+							this.dmcChannel.dmc_dmaAddrRefresh = (value << 6) | 0xC000;
 							break;
 						}
 					case 0x4013:
 						{
-							dmc_dmaSizeRefresh = (value << 4) | 0x0001;
+							this.dmcChannel.dmc_dmaSizeRefresh = (value << 4) | 0x0001;
 							break;
 						}
 					case 0x4014:
 						{
-							dmaOamaddress = value << 8;
-							AssertOAMDMA();
+							this.dma.dmaOamaddress = value << 8;
+							this.dma.AssertOAMDMA();
 							break;
 						}
 					case 0x4015:
@@ -557,23 +558,23 @@ namespace MyNes.Core
 							// DMC
 							if ((value & 0x10) != 0)
 							{
-								if (dmc_dmaSize == 0)
+								if (this.dmcChannel.dmc_dmaSize == 0)
 								{
-									dmc_dmaSize = dmc_dmaSizeRefresh;
-									dmc_dmaAddr = dmc_dmaAddrRefresh;
+									this.dmcChannel.dmc_dmaSize = this.dmcChannel.dmc_dmaSizeRefresh;
+									this.dmcChannel.dmc_dmaAddr = this.dmcChannel.dmc_dmaAddrRefresh;
 								}
 							}
 							else
 							{
-								dmc_dmaSize = 0;
+								this.dmcChannel.dmc_dmaSize = 0;
 							}
 							// Disable DMC IRQ
-							DeltaIrqOccur = false;
+							this.dmcChannel.DeltaIrqOccur = false;
 							IRQFlags &= ~IRQ_DMC;
 							// RDY ?
-							if (!dmc_bufferFull && dmc_dmaSize > 0)
+							if (!this.dmcChannel.dmc_bufferFull && this.dmcChannel.dmc_dmaSize > 0)
 							{
-								AssertDMCDMA();
+								this.dma.AssertDMCDMA();
 							}
 							break;
 						}
@@ -624,9 +625,9 @@ namespace MyNes.Core
 							CurrentSeq = 0;
 
 							if (!SequencingMode)
-								Cycles = SequenceMode0[systemIndex][0];
+								Cycles = SequenceMode0[SystemIndex][0];
 							else
-								Cycles = SequenceMode1[systemIndex][0];
+								Cycles = SequenceMode1[SystemIndex][0];
 
 							if (!oddCycle)
 								Cycles++;

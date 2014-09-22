@@ -122,35 +122,10 @@ namespace MyNes.Core
             bin.Write(dummy);
             #endregion
             #region DMA
-            bin.Write(dmaDMCDMAWaitCycles);
-            bin.Write(dmaOAMDMAWaitCycles);
-            bin.Write(isOamDma);
-            bin.Write(oamdma_i);
-            bin.Write(dmaDMCOn);
-            bin.Write(dmaOAMOn);
-            bin.Write(dmaDMC_occurring);
-            bin.Write(dmaOAM_occurring);
-            bin.Write(dmaOAMFinishCounter);
-            bin.Write(dmaOamaddress);
-            bin.Write(OAMCYCLE);
-            bin.Write(latch);
+			this.dma.SaveState(bin);
             #endregion
             #region DMC
-            bin.Write(DeltaIrqOccur);
-            bin.Write(DMCIrqEnabled);
-            bin.Write(dmc_dmaLooping);
-            bin.Write(dmc_dmaEnabled);
-            bin.Write(dmc_bufferFull);
-            bin.Write(dmc_dmaAddrRefresh);
-            bin.Write(dmc_dmaSizeRefresh);
-            bin.Write(dmc_dmaSize);
-            bin.Write(dmc_dmaBits);
-            bin.Write(dmc_dmaByte);
-            bin.Write(dmc_dmaAddr);
-            bin.Write(dmc_dmaBuffer);
-            bin.Write(dmc_output);
-            bin.Write(dmc_cycles);
-            bin.Write(dmc_freqTimer);
+			this.dmcChannel.SaveState(bin);
             #endregion
             #region Input
             bin.Write(PORT0);
@@ -368,35 +343,10 @@ namespace MyNes.Core
             dummy = bin.ReadByte();
             #endregion
             #region DMA
-            dmaDMCDMAWaitCycles = bin.ReadInt32();
-            dmaOAMDMAWaitCycles = bin.ReadInt32();
-            isOamDma = bin.ReadBoolean();
-            oamdma_i = bin.ReadInt32();
-            dmaDMCOn = bin.ReadBoolean();
-            dmaOAMOn = bin.ReadBoolean();
-            dmaDMC_occurring = bin.ReadBoolean();
-            dmaOAM_occurring = bin.ReadBoolean();
-            dmaOAMFinishCounter = bin.ReadInt32();
-            dmaOamaddress = bin.ReadInt32();
-            OAMCYCLE = bin.ReadInt32();
-            latch = bin.ReadByte();
+			this.dma.LoadState(bin);
             #endregion
             #region DMC
-            DeltaIrqOccur = bin.ReadBoolean();
-            DMCIrqEnabled = bin.ReadBoolean();
-            dmc_dmaLooping = bin.ReadBoolean();
-            dmc_dmaEnabled = bin.ReadBoolean();
-            dmc_bufferFull = bin.ReadBoolean();
-            dmc_dmaAddrRefresh = bin.ReadInt32();
-            dmc_dmaSizeRefresh = bin.ReadInt32();
-            dmc_dmaSize = bin.ReadInt32();
-            dmc_dmaBits = bin.ReadInt32();
-            dmc_dmaByte = bin.ReadByte();
-            dmc_dmaAddr = bin.ReadInt32();
-            dmc_dmaBuffer = bin.ReadByte();
-            dmc_output = bin.ReadByte();
-            dmc_cycles = bin.ReadInt32();
-            dmc_freqTimer = bin.ReadInt32();
+			this.dmcChannel.LoadState(bin);
             #endregion
             #region Input
             PORT0 = bin.ReadInt32();

@@ -19,12 +19,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.IO;
 
 /*DMA section*/
 namespace MyNes.Core
 {
-    public partial class NesEmu
+    public class Dma
     {
+		public event EventHandler DmcDma;
+
+		public Dma(NesEmu core)
+		{
+			this.core = core;
+		}
+
         // I suspect the SN74LS373N chip: "OCTAL TRANSPARENT LATCH WITH 3-STATE OUTPUTS; OCTAL D-TYPE FLIP-FLOP
         // WITH 3-STATE OUTPUT"
         // http://html.alldatasheet.com/html-pdf/28021/TI/SN74LS373N/24/1/SN74LS373N.html
@@ -40,11 +48,12 @@ namespace MyNes.Core
         private static bool dmaDMC_occurring;
         private static bool dmaOAM_occurring;
         private static int dmaOAMFinishCounter;
-        private static int dmaOamaddress;
+        public int dmaOamaddress;
         private static int OAMCYCLE;
         private static byte latch;
+		private NesEmu core;
 
-        private static void DMAHardReset()
+        public void DMAHardReset()
         {
             dmaDMCDMAWaitCycles = 0;
             dmaOAMDMAWaitCycles = 0;
@@ -59,7 +68,7 @@ namespace MyNes.Core
             OAMCYCLE = 0;
             latch = 0;
         }
-        private static void DMASoftReset()
+        public void DMASoftReset()
         {
             dmaDMCDMAWaitCycles = 0;
             dmaOAMDMAWaitCycles = 0;
@@ -74,7 +83,7 @@ namespace MyNes.Core
             OAMCYCLE = 0;
             latch = 0;
         }
-        private static void AssertDMCDMA()
+        public void AssertDMCDMA()
         {
             isOamDma = false;
             if (dmaOAM_occurring)
@@ -83,7 +92,7 @@ namespace MyNes.Core
                 if (OAMCYCLE < 508)
                     // OAM DMA is occurring here, then use the oam logic for waiting cycles
                     // which depends on apu's odd toggle
-                    dmaDMCDMAWaitCycles = oddCycle ? 0 : 1;
+                    dmaDMCDMAWaitCycles = this.core.oddCycle ? 0 : 1;
                 else
                 {
                     // Here the oam dma is about to finish
@@ -101,14 +110,14 @@ namespace MyNes.Core
             {
                 // Nothing occurring, initialize brand new dma
                 // DMC DMA depends on r/w flag for the wait cycles.
-                dmaDMCDMAWaitCycles = BUS_RW ? 3 : 2;
+                dmaDMCDMAWaitCycles = this.core.BUS_RW ? 3 : 2;
                 // After 2 cycles of oam dma, add extra cycle for the waiting.
                 if (dmaOAMFinishCounter == 3)
                     dmaDMCDMAWaitCycles++;
             }
             dmaDMCOn = true;
         }
-        private static void AssertOAMDMA()
+        public void AssertOAMDMA()
         {
             isOamDma = true;
             // Setup
@@ -116,7 +125,7 @@ namespace MyNes.Core
             if (dmaDMC_occurring)
             {
                 // DMC DMA occurring here, use r/w flag
-                dmaOAMDMAWaitCycles = BUS_RW ? 1 : 0;
+                dmaOAMDMAWaitCycles = this.core.BUS_RW ? 1 : 0;
             }
             else if (dmaOAM_occurring)
             {
@@ -127,16 +136,16 @@ namespace MyNes.Core
             else
             {
                 // OAM DMA depends on the apu odd timer to add the waiting cycles
-                dmaOAMDMAWaitCycles = oddCycle ? 1 : 2;
+                dmaOAMDMAWaitCycles = this.core.oddCycle ? 1 : 2;
             }
             dmaOAMOn = true;
             dmaOAMFinishCounter = 0;
         }
-        private void DMAClock()
+        public void DMAClock()
         {
             if (dmaOAMFinishCounter > 0)
                 dmaOAMFinishCounter--;
-            if (!BUS_RW)// Clocks only on reads
+            if (!this.core.BUS_RW)// Clocks only on reads
             {
                 if (dmaDMCDMAWaitCycles > 0)
                     dmaDMCDMAWaitCycles--;
@@ -146,7 +155,7 @@ namespace MyNes.Core
             }
             if (dmaDMCOn)
             {
-                if (BUS_RW)// Clocks only on reads
+                if (this.core.BUS_RW)// Clocks only on reads
                 {
                     dmaDMC_occurring = true;
                     // This is it ! pause the cpu
@@ -154,14 +163,14 @@ namespace MyNes.Core
                     // Do wait cycles (extra reads)
                     if (dmaDMCDMAWaitCycles > 0)
                     {
-                        if (BUS_ADDRESS == 0x4016 || BUS_ADDRESS == 0x4017)
+                        if (this.core.BUS_ADDRESS == 0x4016 || this.core.BUS_ADDRESS == 0x4017)
                         {
-                            Read(BUS_ADDRESS);
+                            this.core.Read(this.core.BUS_ADDRESS);
                             dmaDMCDMAWaitCycles--;
 
                             while (dmaDMCDMAWaitCycles > 0)
                             {
-                                ClockComponents();
+                                this.core.ClockComponents();
                                 dmaDMCDMAWaitCycles--;
                             }
                         }
@@ -169,41 +178,20 @@ namespace MyNes.Core
                         {
                             while (dmaDMCDMAWaitCycles > 0)
                             {
-                                Read(BUS_ADDRESS);
+                                this.core.Read(this.core.BUS_ADDRESS);
                                 dmaDMCDMAWaitCycles--;
                             }
                         }
                     }
                     // Do DMC DMA
-                    dmc_bufferFull = true;
-
-                    dmc_dmaBuffer = Read(dmc_dmaAddr);
-
-                    if (++dmc_dmaAddr == 0x10000)
-                        dmc_dmaAddr = 0x8000;
-                    if (dmc_dmaSize > 0)
-                        dmc_dmaSize--;
-
-                    if (dmc_dmaSize == 0)
-                    {
-                        if (dmc_dmaLooping)
-                        {
-                            dmc_dmaAddr = dmc_dmaAddrRefresh;
-                            dmc_dmaSize = dmc_dmaSizeRefresh;
-                        }
-                        else if (DMCIrqEnabled)
-                        {
-                            IRQFlags |= IRQ_DMC;
-                            DeltaIrqOccur = true;
-                        }
-                    }
+					this.FireDmcDma();
 
                     dmaDMC_occurring = false;
                 }
             }
             if (dmaOAMOn)
             {
-                if (BUS_RW)// Clocks only on reads
+                if (this.core.BUS_RW)// Clocks only on reads
                 {
                     dmaOAM_occurring = true;
                     // This is it ! pause the cpu
@@ -211,14 +199,14 @@ namespace MyNes.Core
                     // Do wait cycles (extra reads)
                     if (dmaOAMDMAWaitCycles > 0)
                     {
-                        if (BUS_ADDRESS == 0x4016 || BUS_ADDRESS == 0x4017)
+                        if (this.core.BUS_ADDRESS == 0x4016 || this.core.BUS_ADDRESS == 0x4017)
                         {
-                            Read(BUS_ADDRESS);
+							this.core.Read(this.core.BUS_ADDRESS);
                             dmaOAMDMAWaitCycles--;
 
                             while (dmaOAMDMAWaitCycles > 0)
                             {
-                                ClockComponents();
+								this.core.ClockComponents();
                                 dmaOAMDMAWaitCycles--;
                             }
                         }
@@ -226,7 +214,7 @@ namespace MyNes.Core
                         {
                             while (dmaOAMDMAWaitCycles > 0)
                             {
-                                Read(BUS_ADDRESS);
+								this.core.Read(this.core.BUS_ADDRESS);
                                 dmaOAMDMAWaitCycles--;
                             }
                         }
@@ -236,9 +224,9 @@ namespace MyNes.Core
                     OAMCYCLE = 0;
                     for (oamdma_i = 0; oamdma_i < 256; oamdma_i++)
                     {
-                        latch = Read(dmaOamaddress);
+						latch = this.core.Read(dmaOamaddress);
                         OAMCYCLE++;
-                        Write(0x2004, latch);
+						this.core.Write(0x2004, latch);
                         OAMCYCLE++;
                         dmaOamaddress = (++dmaOamaddress) & 0xFFFF;
                     }
@@ -248,6 +236,48 @@ namespace MyNes.Core
                 }
             }
         }
-    }
+
+		private void FireDmcDma()
+		{
+			var handler = this.DmcDma;
+
+			if (handler != null)
+			{
+				handler(this, null);
+			}
+		}
+
+		internal void SaveState(BinaryWriter bin)
+		{
+			bin.Write(dmaDMCDMAWaitCycles);
+			bin.Write(dmaOAMDMAWaitCycles);
+			bin.Write(isOamDma);
+			bin.Write(oamdma_i);
+			bin.Write(dmaDMCOn);
+			bin.Write(dmaOAMOn);
+			bin.Write(dmaDMC_occurring);
+			bin.Write(dmaOAM_occurring);
+			bin.Write(dmaOAMFinishCounter);
+			bin.Write(dmaOamaddress);
+			bin.Write(OAMCYCLE);
+			bin.Write(latch);
+		}
+
+		internal void LoadState(BinaryReader bin)
+		{
+			dmaDMCDMAWaitCycles = bin.ReadInt32();
+			dmaOAMDMAWaitCycles = bin.ReadInt32();
+			isOamDma = bin.ReadBoolean();
+			oamdma_i = bin.ReadInt32();
+			dmaDMCOn = bin.ReadBoolean();
+			dmaOAMOn = bin.ReadBoolean();
+			dmaDMC_occurring = bin.ReadBoolean();
+			dmaOAM_occurring = bin.ReadBoolean();
+			dmaOAMFinishCounter = bin.ReadInt32();
+			dmaOamaddress = bin.ReadInt32();
+			OAMCYCLE = bin.ReadInt32();
+			latch = bin.ReadByte();
+		}
+	}
 }
 

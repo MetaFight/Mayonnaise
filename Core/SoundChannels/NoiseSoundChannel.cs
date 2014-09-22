@@ -63,7 +63,7 @@ namespace MyNes.Core.SoundChannels
 		private int freqTimer;
 		private int cycles;
 		public int Output;
-		private NesEmu core;
+		private readonly NesEmu core;
 
 		public void HardReset()
 		{
@@ -132,7 +132,7 @@ namespace MyNes.Core.SoundChannels
 
 			if (--cycles <= 0)
 			{
-				cycles = FrequencyTable[this.core.systemIndex][freqTimer];
+				cycles = FrequencyTable[this.core.SystemIndex][freqTimer];
 				if (modeFlag)
 					feedback = (shiftRegister >> 6 & 0x1) ^ (shiftRegister & 0x1);
 				else

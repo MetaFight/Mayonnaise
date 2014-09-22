@@ -40,15 +40,15 @@ namespace MyNes.Core
 			switch (TVFormat)
 			{
 				case TVSystem.NTSC:
-					systemIndex = 0;
+					SystemIndex = 0;
 					audio_playback_samplePeriod = 1789772.67f;
 					break;
 				case TVSystem.PALB:
-					systemIndex = 1;
+					SystemIndex = 1;
 					audio_playback_samplePeriod = 1662607f;
 					break;
 				case TVSystem.DENDY:
-					systemIndex = 2;
+					SystemIndex = 2;
 					audio_playback_samplePeriod = 1773448f;
 					break;
 			}
@@ -57,10 +57,13 @@ namespace MyNes.Core
 			else//PALB, DENDY
 				FramePeriod = (1.0 / (FPS = 50.0));
 
+			this.dma = new Dma(this);
+
 			this.noiseChannel = new NoiseSoundChannel(this);
 			this.pulse1Channel = new PulseSoundChannel(this, 0x4000);
 			this.pulse2Channel = new PulseSoundChannel(this, 0x4004);
 			this.triangleChannel = new TriangleSoundChannel(this);
+			this.dmcChannel = new DmcSoundChannel(this, dma);
 		}
 
         public static TVSystemSetting TVFormatSetting;
@@ -106,11 +109,13 @@ namespace MyNes.Core
         /// Raised when the emu engine finished shutdown.
         /// </summary>
         public static event EventHandler EMUShutdown;
-		
-		private NoiseSoundChannel noiseChannel;
-		private PulseSoundChannel pulse1Channel;
-		private PulseSoundChannel pulse2Channel;
-		private TriangleSoundChannel triangleChannel;
+
+		private readonly NoiseSoundChannel noiseChannel;
+		private readonly PulseSoundChannel pulse1Channel;
+		private readonly PulseSoundChannel pulse2Channel;
+		private readonly TriangleSoundChannel triangleChannel;
+		private readonly DmcSoundChannel dmcChannel;
+		private Dma dma;
 
         /// <summary>
         /// Call this at application start up to set nes default stuff
@@ -366,7 +371,7 @@ namespace MyNes.Core
         public static NesCartDatabaseCartridgeInfo GameCartInfo
         { get { return board.GameCartInfo; } }
         // Internal methods
-        private void ClockComponents()
+        public void ClockComponents()
         {
             PPUClock();
             /*
@@ -386,7 +391,7 @@ namespace MyNes.Core
                 }
             }
             APUClock();
-            DMAClock();
+            this.dma.DMAClock();
 
             board.OnCPUClock();
         }
@@ -485,7 +490,7 @@ namespace MyNes.Core
             CPUHardReset();
             PPUHardReset();
             APUHardReset();
-            DMAHardReset();
+            this.dma.DMAHardReset();
         }
 
         private void SoftReset()
@@ -494,7 +499,7 @@ namespace MyNes.Core
             CPUSoftReset();
             PPUSoftReset();
             APUSoftReset();
-            DMASoftReset();
+            this.dma.DMASoftReset();
         }
 
         private static double GetTime()

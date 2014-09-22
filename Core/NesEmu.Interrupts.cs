@@ -27,7 +27,7 @@ namespace MyNes.Core
     {
         private const int IRQ_APU = 0x1;
         public const int IRQ_BOARD = 0x2;
-        private const int IRQ_DMC = 0x4;
+        public const int IRQ_DMC = 0x4;
         // Represents the current NMI pin (connected to ppu)
         private static bool NMI_Current;
         // Represents the old status if NMI pin, used to generate NMI in raising edge

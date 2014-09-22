@@ -50,7 +50,7 @@ namespace MyNes.Core.SoundChannels
 		private int frequency;
 		public byte Output;
 		private int cycles;
-		private NesEmu core;
+		private readonly NesEmu core;
 
 		public void HardReset()
 		{

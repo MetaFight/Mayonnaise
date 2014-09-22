@@ -374,7 +374,7 @@
     <Compile Include="Interfaces\IZapperConnecter.cs" />
     <Compile Include="NesEmu.Apu.cs" />
     <Compile Include="NesEmu.Cpu.cs" />
-    <Compile Include="NesEmu.Dmc.cs" />
+    <Compile Include="SoundChannels\DmcSoundChannel.cs" />
     <Compile Include="NesEmu.VSUnisystem.cs" />
     <Compile Include="NesEmu.Input.cs" />
     <Compile Include="SoundChannels\NoiseSoundChannel.cs" />
@@ -398,7 +398,7 @@
     <Compile Include="ZLIP\ZStream.cs" />
     <Compile Include="ZLIP\ZStreamException.cs" />
     <Compile Include="_NesEmu.cs" />
-    <Compile Include="NesEmu.Dma.cs" />
+    <Compile Include="Dma.cs" />
     <Compile Include="NesEmu.Interrupts.cs" />
     <Compile Include="NesEmu.Memory.cs" />
     <Compile Include="NesEmu.Ppu.cs" />
