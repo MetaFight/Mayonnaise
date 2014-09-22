@@ -1,0 +1,654 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="&gt;&gt;StatusLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="StatusLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>30, 22</value>
+  </data>
+  <data name="&gt;&gt;toolStrip_bar.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;alwaysStretchnoAspectRatioToolStripMenuItem1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="nextToolStripMenuItem.Text" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="toolStripButton_openDefaultBrowser.Text" xml:space="preserve">
+    <value>Open image with default windows application</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton_add.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;normalstretchIfLargerWithAspectRatioToolStripMenuItem.Name" xml:space="preserve">
+    <value>normalstretchIfLargerWithAspectRatioToolStripMenuItem</value>
+  </data>
+  <data name="toolStripSeparator6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>239, 6</value>
+  </data>
+  <data name="alwaysStretchwithAspectRatioToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Always stretch (with aspect ratio)</value>
+  </data>
+  <data name="toolStripButton_deleteAll.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="alwaysStretchwithAspectRatioToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>294, 22</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator4.Name" xml:space="preserve">
+    <value>toolStripSeparator4</value>
+  </data>
+  <data name="&gt;&gt;imagePanel1.Name" xml:space="preserve">
+    <value>imagePanel1</value>
+  </data>
+  <data name="&gt;&gt;addMoreImagesToolStripMenuItem.Name" xml:space="preserve">
+    <value>addMoreImagesToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;imagePanel1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;openWithWindowsDefaultAppToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="deleteSelectedToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>242, 22</value>
+  </data>
+  <data name="toolStrip_bar.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;toolStripSplitButton1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSplitButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStrip_bar.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="toolStripButton_delete.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
+  </data>
+  <data name="&gt;&gt;StatusLabel.Name" xml:space="preserve">
+    <value>StatusLabel</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="imagePanel1.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;alwaysStretchwithAspectRatioToolStripMenuItem1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="deleteSelectedToolStripMenuItem.Text" xml:space="preserve">
+    <value>Delete selected</value>
+  </data>
+  <data name="toolStripButton_add.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
+  </data>
+  <data name="nextToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>242, 22</value>
+  </data>
+  <data name="toolStripButton_next.Text" xml:space="preserve">
+    <value>Next image</value>
+  </data>
+  <data name="toolStripButton_previous.Text" xml:space="preserve">
+    <value>Previous image</value>
+  </data>
+  <data name="toolStripButton_previous.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="toolStripButton_openLocation.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>6, 25</value>
+  </data>
+  <data name="deleteAllToolStripMenuItem.Text" xml:space="preserve">
+    <value>Delete all</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="&gt;&gt;openWithWindowsDefaultAppToolStripMenuItem.Name" xml:space="preserve">
+    <value>openWithWindowsDefaultAppToolStripMenuItem</value>
+  </data>
+  <data name="StatusLabel.Text" xml:space="preserve">
+    <value>0 / 0</value>
+  </data>
+  <data name="alwaysStretchnoAspectRatioToolStripMenuItem.Text" xml:space="preserve">
+    <value>Always stretch (no aspect ratio)</value>
+  </data>
+  <data name="&gt;&gt;nextToolStripMenuItem.Name" xml:space="preserve">
+    <value>nextToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;previousToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;alwaysStretchnoAspectRatioToolStripMenuItem1.Name" xml:space="preserve">
+    <value>alwaysStretchnoAspectRatioToolStripMenuItem1</value>
+  </data>
+  <data name="openLocationToolStripMenuItem.Text" xml:space="preserve">
+    <value>Open location</value>
+  </data>
+  <data name="addMoreImagesToolStripMenuItem.Text" xml:space="preserve">
+    <value>Add more images</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="toolStrip_status.Text" xml:space="preserve">
+    <value>toolStrip2</value>
+  </data>
+  <data name="toolStripSplitButton1.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator5.Name" xml:space="preserve">
+    <value>toolStripSeparator5</value>
+  </data>
+  <data name="contextMenuStrip1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="openWithWindowsDefaultAppToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>242, 22</value>
+  </data>
+  <data name="toolStripButton_delete.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="&gt;&gt;showStatusbarToolStripMenuItem.Name" xml:space="preserve">
+    <value>showStatusbarToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;showToolbarToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="alwaysStretchwithAspectRatioToolStripMenuItem1.Text" xml:space="preserve">
+    <value>Always stretch (with aspect ratio)</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator3.Name" xml:space="preserve">
+    <value>toolStripSeparator3</value>
+  </data>
+  <data name="toolStripButton_deleteAll.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="toolStripButton_delete.Text" xml:space="preserve">
+    <value>Remove this image</value>
+  </data>
+  <data name="&gt;&gt;toolStripSplitButton1.Name" xml:space="preserve">
+    <value>toolStripSplitButton1</value>
+  </data>
+  <data name="toolStripButton_add.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="&gt;&gt;imageModeToolStripMenuItem.Name" xml:space="preserve">
+    <value>imageModeToolStripMenuItem</value>
+  </data>
+  <data name="toolStripButton_previous.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
+  </data>
+  <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>6, 25</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>ImagesViewer</value>
+  </data>
+  <data name="&gt;&gt;toolStrip_bar.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator2.Name" xml:space="preserve">
+    <value>toolStripSeparator2</value>
+  </data>
+  <data name="toolStripButton_openDefaultBrowser.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton_openDefaultBrowser.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolTip1.Name" xml:space="preserve">
+    <value>toolTip1</value>
+  </data>
+  <data name="toolStrip_status.Size" type="System.Drawing.Size, System.Drawing">
+    <value>392, 25</value>
+  </data>
+  <data name="&gt;&gt;imageModeToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="toolStripButton_next.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="&gt;&gt;alwaysStretchnoAspectRatioToolStripMenuItem.Name" xml:space="preserve">
+    <value>alwaysStretchnoAspectRatioToolStripMenuItem</value>
+  </data>
+  <data name="normalstretchIfLargerWithAspectRatioToolStripMenuItem1.Text" xml:space="preserve">
+    <value>Normal (stretch if larger with aspect ratio)</value>
+  </data>
+  <data name="showStatusbarToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>242, 22</value>
+  </data>
+  <data name="toolStripButton_delete.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="alwaysStretchwithAspectRatioToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>294, 22</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton_delete.Name" xml:space="preserve">
+    <value>toolStripButton_delete</value>
+  </data>
+  <data name="toolStrip_status.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="toolStrip_bar.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="toolStripSplitButton1.Text" xml:space="preserve">
+    <value>Image view mode</value>
+  </data>
+  <data name="toolStrip_status.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="showStatusbarToolStripMenuItem.Text" xml:space="preserve">
+    <value>Show statusbar</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton_next.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;imagePanel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="openLocationToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>242, 22</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton_next.Name" xml:space="preserve">
+    <value>toolStripButton_next</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton_deleteAll.Name" xml:space="preserve">
+    <value>toolStripButton_deleteAll</value>
+  </data>
+  <data name="toolStripButton_openDefaultBrowser.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
+  </data>
+  <data name="toolStripButton_next.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="alwaysStretchnoAspectRatioToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>294, 22</value>
+  </data>
+  <data name="&gt;&gt;normalstretchIfLargerWithAspectRatioToolStripMenuItem1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;showToolbarToolStripMenuItem.Name" xml:space="preserve">
+    <value>showToolbarToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton_delete.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="toolStrip_bar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="openWithWindowsDefaultAppToolStripMenuItem.Text" xml:space="preserve">
+    <value>Open with windows default app</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator6.Name" xml:space="preserve">
+    <value>toolStripSeparator6</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="imagePanel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="previousToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>242, 22</value>
+  </data>
+  <data name="&gt;&gt;deleteSelectedToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="toolStrip_bar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>392, 25</value>
+  </data>
+  <data name="addMoreImagesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>242, 22</value>
+  </data>
+  <data name="toolStripButton_openLocation.Text" xml:space="preserve">
+    <value>Open image location on disk</value>
+  </data>
+  <data name="&gt;&gt;addMoreImagesToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;openLocationToolStripMenuItem.Name" xml:space="preserve">
+    <value>openLocationToolStripMenuItem</value>
+  </data>
+  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
+    <value>392, 328</value>
+  </data>
+  <data name="&gt;&gt;deleteAllToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="toolStripButton_deleteAll.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
+  </data>
+  <data name="&gt;&gt;nextToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="toolStripButton_openLocation.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
+  </data>
+  <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>239, 6</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="normalstretchIfLargerWithAspectRatioToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>294, 22</value>
+  </data>
+  <data name="&gt;&gt;toolStrip_bar.Name" xml:space="preserve">
+    <value>toolStrip_bar</value>
+  </data>
+  <data name="toolStripButton_add.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="imagePanel1.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;toolStripSeparator4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="showToolbarToolStripMenuItem.Text" xml:space="preserve">
+    <value>Show toolbar</value>
+  </data>
+  <data name="imageModeToolStripMenuItem.Text" xml:space="preserve">
+    <value>Image mode</value>
+  </data>
+  <data name="&gt;&gt;toolStrip_status.Name" xml:space="preserve">
+    <value>toolStrip_status</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton_openLocation.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton_openLocation.Name" xml:space="preserve">
+    <value>toolStripButton_openLocation</value>
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;toolStrip_status.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="normalstretchIfLargerWithAspectRatioToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>294, 22</value>
+  </data>
+  <data name="&gt;&gt;previousToolStripMenuItem.Name" xml:space="preserve">
+    <value>previousToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;openLocationToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="toolStrip_status.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Bottom</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;imagePanel1.Type" xml:space="preserve">
+    <value>MyNes.ImagePanel, MyNes, Version=6.0.5334.16521, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="toolStripSeparator4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>239, 6</value>
+  </data>
+  <data name="&gt;&gt;alwaysStretchwithAspectRatioToolStripMenuItem1.Name" xml:space="preserve">
+    <value>alwaysStretchwithAspectRatioToolStripMenuItem1</value>
+  </data>
+  <data name="alwaysStretchnoAspectRatioToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>294, 22</value>
+  </data>
+  <data name="&gt;&gt;alwaysStretchwithAspectRatioToolStripMenuItem.Name" xml:space="preserve">
+    <value>alwaysStretchwithAspectRatioToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator1.Name" xml:space="preserve">
+    <value>toolStripSeparator1</value>
+  </data>
+  <data name="previousToolStripMenuItem.Text" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="&gt;&gt;normalstretchIfLargerWithAspectRatioToolStripMenuItem1.Name" xml:space="preserve">
+    <value>normalstretchIfLargerWithAspectRatioToolStripMenuItem1</value>
+  </data>
+  <data name="toolStripButton_add.Text" xml:space="preserve">
+    <value>Add more images</value>
+  </data>
+  <data name="&gt;&gt;contextMenuStrip1.Name" xml:space="preserve">
+    <value>contextMenuStrip1</value>
+  </data>
+  <data name="&gt;&gt;normalstretchIfLargerWithAspectRatioToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="toolStripButton_previous.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton_deleteAll.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="imageModeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>242, 22</value>
+  </data>
+  <data name="alwaysStretchnoAspectRatioToolStripMenuItem1.Text" xml:space="preserve">
+    <value>Always stretch (no aspect ratio)</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton_add.Name" xml:space="preserve">
+    <value>toolStripButton_add</value>
+  </data>
+  <data name="&gt;&gt;toolStrip_status.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton_openDefaultBrowser.Name" xml:space="preserve">
+    <value>toolStripButton_openDefaultBrowser</value>
+  </data>
+  <data name="toolStrip_bar.Text" xml:space="preserve">
+    <value>toolStrip1</value>
+  </data>
+  <data name="normalstretchIfLargerWithAspectRatioToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Normal (stretch if larger with aspect ratio)</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton_previous.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="contextMenuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>243, 248</value>
+  </data>
+  <data name="toolStripButton_openDefaultBrowser.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;toolStrip_status.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton_previous.Name" xml:space="preserve">
+    <value>toolStripButton_previous</value>
+  </data>
+  <data name="&gt;&gt;alwaysStretchwithAspectRatioToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;deleteSelectedToolStripMenuItem.Name" xml:space="preserve">
+    <value>deleteSelectedToolStripMenuItem</value>
+  </data>
+  <data name="toolStripButton_openLocation.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="toolStripButton_next.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
+  </data>
+  <data name="deleteAllToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>242, 22</value>
+  </data>
+  <data name="toolStripButton_deleteAll.Text" xml:space="preserve">
+    <value>Delete all</value>
+  </data>
+  <data name="imagePanel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>392, 278</value>
+  </data>
+  <data name="showToolbarToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>242, 22</value>
+  </data>
+  <data name="imagePanel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 25</value>
+  </data>
+  <data name="toolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>239, 6</value>
+  </data>
+  <data name="toolStrip_status.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 303</value>
+  </data>
+  <data name="&gt;&gt;contextMenuStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;deleteAllToolStripMenuItem.Name" xml:space="preserve">
+    <value>deleteAllToolStripMenuItem</value>
+  </data>
+  <data name="toolStripSplitButton1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>32, 22</value>
+  </data>
+  <data name="&gt;&gt;alwaysStretchnoAspectRatioToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;showStatusbarToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <metadata name="toolStrip_bar.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>227, 17</value>
+  </metadata>
+  <metadata name="toolStrip_status.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>122, 17</value>
+  </metadata>
+  <metadata name="contextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>324, 17</value>
+  </metadata>
+</root>

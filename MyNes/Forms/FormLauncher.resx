@@ -1,0 +1,1337 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="&gt;&gt;toolStripSeparator3.Name" xml:space="preserve">
+    <value>toolStripSeparator3</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>Manual</value>
+  </data>
+  <data name="&gt;&gt;tabControl2.Parent" xml:space="preserve">
+    <value>splitContainer2.Panel2</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="Button_mode_files.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 20</value>
+  </data>
+  <data name="&gt;&gt;toolStrip2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="splitContainer2.Orientation" type="System.Windows.Forms.Orientation, System.Windows.Forms">
+    <value>Horizontal</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="toolStripTextBox_find.ToolTipText" xml:space="preserve">
+    <value>Search by name</value>
+  </data>
+  <data name="&gt;&gt;rememberSelectionToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="showLauncherAtAppStartToolStripMenuItem.Text" xml:space="preserve">
+    <value>Show Launcher at app start</value>
+  </data>
+  <data name="&gt;&gt;toolStripLabel1.Name" xml:space="preserve">
+    <value>toolStripLabel1</value>
+  </data>
+  <data name="&gt;&gt;managedListView1.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel1</value>
+  </data>
+  <data name="&gt;&gt;tabPage_game.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainer2.Panel1.Parent" xml:space="preserve">
+    <value>splitContainer2</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="toolStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Panel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator6.Name" xml:space="preserve">
+    <value>toolStripSeparator6</value>
+  </data>
+  <data name="&gt;&gt;splitContainer2.Panel2.Parent" xml:space="preserve">
+    <value>splitContainer2</value>
+  </data>
+  <data name="tabPage_game.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton9.Name" xml:space="preserve">
+    <value>toolStripButton9</value>
+  </data>
+  <data name="tabPage_manuals.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="&gt;&gt;toolStripTextBox_find.Name" xml:space="preserve">
+    <value>toolStripTextBox_find</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="toolStripButton8.ToolTipText" xml:space="preserve">
+    <value>Selected game info</value>
+  </data>
+  <data name="toolStripButton5.ToolTipText" xml:space="preserve">
+    <value>Detect snapshots/covers/info for games.
+Games with files exist can be used only.</value>
+  </data>
+  <data name="tabPage_game.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tabPage_info.Parent" xml:space="preserve">
+    <value>tabControl2</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator7.Name" xml:space="preserve">
+    <value>toolStripSeparator7</value>
+  </data>
+  <data name="&gt;&gt;splitContainer2.Panel2.Name" xml:space="preserve">
+    <value>splitContainer2.Panel2</value>
+  </data>
+  <data name="managedListView1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="&gt;&gt;toolStripStatusLabel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Button_mode_all.Text" xml:space="preserve">
+    <value>ALL</value>
+  </data>
+  <data name="&gt;&gt;rememberSelectionToolStripMenuItem.Name" xml:space="preserve">
+    <value>rememberSelectionToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton3.Name" xml:space="preserve">
+    <value>toolStripButton3</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton8.Name" xml:space="preserve">
+    <value>toolStripButton8</value>
+  </data>
+  <data name="&gt;&gt;autoMinimizeToolStripMenuItem.Name" xml:space="preserve">
+    <value>autoMinimizeToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;Button_mode_files.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;contextMenuStrip_list_main.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Panel2.Parent" xml:space="preserve">
+    <value>splitContainer1</value>
+  </data>
+  <data name="Button_mode_files.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tabPage_snapshots.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="&gt;&gt;statusStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="statusStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>978, 22</value>
+  </data>
+  <data name="toolStripButton8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 20</value>
+  </data>
+  <data name="tabPage_info.Text" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="toolStripButton9.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton9.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Button_mode_files.Text" xml:space="preserve">
+    <value>FILES</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>My Nes Launcher</value>
+  </data>
+  <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>165, 6</value>
+  </data>
+  <data name="&gt;&gt;splitContainer2.Panel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator1.Name" xml:space="preserve">
+    <value>toolStripSeparator1</value>
+  </data>
+  <data name="&gt;&gt;imageList1.Name" xml:space="preserve">
+    <value>imageList1</value>
+  </data>
+  <data name="&gt;&gt;Button_mode_notDB.Name" xml:space="preserve">
+    <value>Button_mode_notDB</value>
+  </data>
+  <data name="splitContainer2.SplitterDistance" type="System.Int32, mscorlib">
+    <value>259</value>
+  </data>
+  <data name="&gt;&gt;statusStrip1.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="toolStripButton1.Text" xml:space="preserve">
+    <value>NEW</value>
+  </data>
+  <data name="&gt;&gt;toolStripStatusLabel2.Name" xml:space="preserve">
+    <value>toolStripStatusLabel2</value>
+  </data>
+  <data name="rememberSelectionToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Indicate if the launcher should remeber last selcted entry
+next time you open the launcher.</value>
+  </data>
+  <data name="deleteToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Del</value>
+  </data>
+  <data name="tabControl1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="&gt;&gt;toolStrip2.Name" xml:space="preserve">
+    <value>toolStrip2</value>
+  </data>
+  <data name="toolStripButton9.Text" xml:space="preserve">
+    <value>DELETE</value>
+  </data>
+  <data name="tabPage_snapshots.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;tabPage_game.Name" xml:space="preserve">
+    <value>tabPage_game</value>
+  </data>
+  <data name="&gt;&gt;toolStripStatusLabel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabControl1.Parent" xml:space="preserve">
+    <value>splitContainer2.Panel1</value>
+  </data>
+  <data name="&gt;&gt;ProgressBar.Name" xml:space="preserve">
+    <value>ProgressBar</value>
+  </data>
+  <data name="toolStrip2.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="toolStripButton4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 22</value>
+  </data>
+  <data name="toolStripButton8.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="toolStripButton6.Text" xml:space="preserve">
+    <value>SHOW DETECT TABLE</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabPage_game.Parent" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
+  <data name="toolStripTextBox_find.Size" type="System.Drawing.Size, System.Drawing">
+    <value>120, 25</value>
+  </data>
+  <data name="&gt;&gt;Button_mode_missing.Name" xml:space="preserve">
+    <value>Button_mode_missing</value>
+  </data>
+  <data name="toolStripSeparator7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 6</value>
+  </data>
+  <data name="splitContainer2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="splitContainer2.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="tabPage_covers.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="cycleImagesOnGameInfoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>218, 22</value>
+  </data>
+  <data name="&gt;&gt;splitContainer2.Panel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainer2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="toolStripButton5.Text" xml:space="preserve">
+    <value>DETECT</value>
+  </data>
+  <data name="toolStripButton7.Text" xml:space="preserve">
+    <value>ADD</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton5.Name" xml:space="preserve">
+    <value>toolStripButton5</value>
+  </data>
+  <data name="&gt;&gt;splitContainer2.Panel2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="splitContainer1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tabControl1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator4.Name" xml:space="preserve">
+    <value>toolStripSeparator4</value>
+  </data>
+  <data name="toolStripButton4.ToolTipText" xml:space="preserve">
+    <value>Find games using advanced search</value>
+  </data>
+  <data name="ProgressBar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 16</value>
+  </data>
+  <data name="Button_mode_missing.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="toolStripButton6.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="infoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 22</value>
+  </data>
+  <data name="&gt;&gt;timer_progress.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="toolStrip2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Left</value>
+  </data>
+  <data name="tabControl1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>229, 259</value>
+  </data>
+  <data name="&gt;&gt;ProgressBar.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripProgressBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="toolStripButton2.Text" xml:space="preserve">
+    <value>ASSIGN</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="Button_mode_notDB.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="toolStripStatusLabel2.Text" xml:space="preserve">
+    <value>|</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Panel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;toolStripSplitButton1.Name" xml:space="preserve">
+    <value>toolStripSplitButton1</value>
+  </data>
+  <data name="tabPage_manuals.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="toolStripButton2.ToolTipText" xml:space="preserve">
+    <value>Assign files to the database entries. This process
+will scan folders for nes files that matches the
+entries. Also there's an option allows to add the
+files that not match as new entries.</value>
+  </data>
+  <data name="&gt;&gt;contextMenuStrip_list_columns.Name" xml:space="preserve">
+    <value>contextMenuStrip_list_columns</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton4.Name" xml:space="preserve">
+    <value>toolStripButton4</value>
+  </data>
+  <data name="tabPage_info.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="toolStripSeparator9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>165, 6</value>
+  </data>
+  <data name="&gt;&gt;statusStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tabPage_info.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 242</value>
+  </data>
+  <data name="toolStripButton1.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="toolStrip2.Text" xml:space="preserve">
+    <value>toolStrip2</value>
+  </data>
+  <data name="toolStripSeparator8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>165, 6</value>
+  </data>
+  <data name="toolStripSplitButton1.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="imageList1.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAAW
+        FQAAAk1TRnQBSQFMAgEBBQEAAawBAQG0AQEBEAEAARABAAT/ASEBEAj/AUIBTQE2BwABNgMAASgDAAFA
+        AwABIAMAAQEBAAEgBgABIP8AHwADKgFBAwYBCBgAAwYBCAMqAUHUAAMqAUEBKgEnAfIB/wJAAakB/QMG
+        AQgQAAMGAQgCKwF9AfwBDAEKAeoB/wMqAUHMAAMqAUEBMwExAfUB/wE+ATwB+gH/ATMBMAH2Af8CKwF/
+        AfwDBgEICAADBgEIAisBfQH8ARwBGgHxAf8BJwElAfYB/wEMAQoB6gH/AyoBQcgAAx4BKwE2ATMB9gH/
+        AUABPQH6Af8BTAFLAv8BNAExAfYB/wIrAX8B/AMGAQgDBgEIAisBfgH8ASIBIAHyAf8BPgE9Av8BJQEj
+        AfQB/wEKAQgB6QH/Ax4BK8wAAx4BKwE2ATQB9gH/AUEBPgH6Af8BTwFMAv8BNQEzAfYB/wIrAX8B/AJA
+        AakB/QErASgB9AH/AUMBQgL/ASsBKQH1Af8BEQEPAesB/wMeASvUAAMeASsBNwE1AfYB/wFCAT8B+gH/
+        AU8BTQL/AU4BSwL/AUsBSQL/AUkBRwL/ATIBMAH3Af8BGgEYAe4B/wMeASvcAAMeASsBOAE2AfcB/wFU
+        AVEC/wE0ATEC/wEyAS8C/wFNAUsC/wEjASEB8AH/Ax4BK+AAAwYBCAJAAawB/QFYAVQC/wE5ATYC/wE2
+        ATMC/wFRAU8C/wJAAaoB/QMGAQjcAAMGAQgBNgEzAYUB/AFLAUgB+wH/AYABWQL/AVkBVgL/AVcBVAL/
+        AVQBUgL/ATkBNwH3Af8CKwF/AfwDBgEI1AADBgEIAT4BOwGIAfwBUgFPAf0B/wGGAYIC/wFRAU4B/AH/
+        AT8BPQH4Af8BOwE4AfcB/wFIAUUB+gH/AVYBVAL/ATsBOAH3Af8CKwF/AfwDBgEIzAADBgEIAkABrwH9
+        AVgBVQH+Af8BigGHAv8BVwFUAf0B/wFHAUQB+wH/Ax4BKwMeASsBPAE5AfgB/wFJAUcB+gH/AVgBVQL/
+        ATwBOgH3Af8CKwGAAfwDBAEFyAADFgEfAVUBUgL/AYEBWQL/AYEBWQH+Af8BTwFMAf0B/wMeASsIAAMe
+        ASsBPQE6AfgB/wFKAUgB+wH/AVkBVwL/AT0BOgH4Af8DQAFvAwEBAsgAAxYBHwFVAVIC/wFUAVEB/gH/
+        Ax4BKxAAAx4BKwE/ATwB+AH/AUUBQwH5Af8BUwFSAVMBqAMdASnQAAMWAR8DHgErGAADHgErA0ABbwMp
+        AT74AAMHAQr/ACUAAwoBDQMiATEDIAEvAwUBByAAA1sBxANlAfQB0QGWATUB/wHOAZIBMAH/AcsBjgEr
+        Af8ByQGKASgB/wHHAYcBIwH/AcMBhAEfAf8BwwGEAR8B/wHDAYQBHwH/AcMBhAEfAf8BwwGEAR8B/wHD
+        AYQBHwH/AlUBUwGwRAADWwHEA2UB9AHRAZYBNQH/Ac4BkgEwAf8BywGOASsB/wHJAYoBKAH/AccBhwEj
+        Af8BwwGEAR8B/wHDAYQBHwH/AcMBhAEfAf8BwwGEAR8B/wHDAYQBHwH/AcMBhAEfAf8CVQFTAbAQAAMY
+        ASEDUAGdA10B8AOhAf8DqwH/A6cB/wOVAf8DZAHnA0oBigMQARYUAAHXAaEBQgH/AfgB8gHtAf8B9wHw
+        AeoB/wH2Ae0B5gH/AfQB6gHiAf8B8wHnAd4B/wHxAeQB2wH/AfAB4gHYAf8B8AHiAdgB/wHwAeIB2AH/
+        AfAB4gHYAf8B8AHiAdgB/wHwAeIB2AH/AagBigFAAf1EAAHXAaEBQgH/AfgB8gHtAf8B9wHwAeoB/wH2
+        Ae0B5gH/AfQB6gHiAf8B8wHnAd4B/wHxAeQB2wH/AfAB4gHYAf8B8AHiAdgB/wHwAeIB2AH/AfAB4gHY
+        Af8B8AHiAdgB/wHwAeIB2AH/AagBigFAAf0MAAMvAUoDZQH0A84B/wPtAf8D9AH/A/UB/wP0Af8D7wH/
+        A+IB/wO6Af8DZAHnAyQBNRAAAdkBpAFHAf8B+QHzAe4B/wHrAdIBvgX/AesB0wG/Df8B6gHHAa0N/wHw
+        AeIB2AH/AcYBjAEsAf8MAAMpAT4DXQHKA10BygNdAcoDXQHKA10BygNdAcoDXQHKA10BygNbAcgDGQEj
+        DAAB2QGkAUcB/wH5AfMB7gH/AesB0gG+Bf8B6wHTAb8N/wHqAccBrQ3/AfAB4gHYAf8BxgGMASwB/wwA
+        A1wB6gPeAf8D8wH/A9sB/wPSAf8D2wH/A9YB/wPAAf8DyQH/A+YB/wPEAf8DXAHqEAAB3QGoAUsB/wH5
+        AfMB7wH/AesB0AG6Af8B6wHQAbsB/wHrAdABuwH/AesB0AG7Af8B6wHQAbsB/wHrAdEBvQH/AeoBzQG1
+        Af8B6gHNAbUB/wHqAc0BtQH/AeoBzQG1Af8B8AHiAdgB/wHGAYoBKQH/CAADHwEsAVwCZAHnAZoC7gH/
+        AZoC7gH/AZoC7gH/AZoC7gH/AZoC7gH/AZoC7gH/AZoC7gH/AZoC7gH/AQABSgFMAf8DQwF4AwkBDAgA
+        Ad0BqAFLAf8B+QHzAe8B/wHrAdABugH/AesB0AG7Af8B6wHQAbsB/wHrAdABuwH/AesB0AG7Af8B6wHR
+        Ab0B/wHqAc0BtQH/AeoBzQG1Af8B6gHNAbUB/wHqAc0BtQH/AfAB4gHYAf8BxgGKASkB/wwAA1wB6gPw
+        Af8D3gH/A9QB/wPSAf8D2wH/A9YB/wO/Af8DsAH/A7MB/wPeAf8DXAHqEAAB3wGqAYIB/wH5AfMB7wH/
+        AeoBzgG3Bf8B6wHQAbsN/wHqAc8BugH/AfsB9gHyCf8B8AHiAdgB/wHIAY0BLAH/BAADEQEXAQACogH/
+        AQYBrQGsAf8BtQL+Af8BtgL+Af8BtgL+Af8BtgL+Af8BtgL+Af8BtgL+Af8BtgL+Af8BtgL+Af8BBgGQ
+        AZEB/wEAAYYBhwH/A04BmAgAAd8BqgGCAf8B+QHzAe8B/wHqAc4BtwX/AesB0AG7Df8B6gHPAboB/wH7
+        AfYB8gn/AfAB4gHYAf8ByAGNASwB/wwAA1wB6gPyAf8D4gH/A9gB/wPVAf8D3AH/A9gB/wPAAf8DswH/
+        A7cB/wPgAf8DXAHqDAADBAEFAdgBrAGKAf8B4wHeAdsB/wHSAbsBqQH/AdsBwgGtAf8B4wHHAbAB/wHq
+        AcwBswH/AeoBzAGzAf8B6gHOAbcB/wHoAccBrAH/AegBxwGsAf8B6AHIAbAB/wHoAcgBrgH/AfAB4gHY
+        Af8BxAGGASEB/wQAAxcBIAFMAs8B/wEAAZABkQH/AQABTAGRAf8BAAFJAT0B/wEAAacBsQH/AQABrwGw
+        Af8BOgE4AbAB/wEBAY8BpgH/AQABVQGfAf8BAAGJAbAB/wEAAYABggH/AQABtwG5Af8DVAGmCAAB4QGu
+        AYcB/wH6AfQB8AH/AeoBywGyAf8B6gHMAbMB/wHqAcwBswH/AeoBzAGzAf8B6gHMAbMB/wHqAc4BtwH/
+        AegBxwGsAf8B6AHHAawB/wHoAcgBsAH/AegByAGuAf8B8AHiAdgB/wHEAYYBIQH/DAADXAHqA/MB/wPn
+        Af8D3QH/A9kB/wPgAf8D2wH/A8QB/wO4Af8DuwH/A+EB/wNcAeoIAAMEAQYDPgFqAa8BpAGcAf8CqwGq
+        Af8BpAGgAZwB/wOnAf8BtgGnAZwB/wPzCf8B6AHHAawN/wHxAeUB2wH/AcYBhgEiAf8EAAMXASABTALP
+        Af8BAAGQAZEB/wGpAUEBLQH/AYYBrwGPAf8BkAGnAf4B/wG3AU8B/gH/Ad4BkQH9Af8BAAGpAf4B/wEA
+        AakB/gH/AQABqQH+Af8BAAGAAYIB/wEAAbcBuQH/A1QBpggAAeMBsQGMAf8B+gH2AfEB/wHqAckBrgX/
+        AeoByQGwDf8B6AHHAawN/wHxAeUB2wH/AcYBhgEiAf8MAANcAeoD9AH/A+oB/wPhAf8D3QH/A+MB/wPe
+        Af8DyQH/A70B/wO/Af8D4gH/A1wB6ggAA1IBqQPLAf8D6gH/A/AB/wPyAf8D7AH/A8oB/wGaAZUBkQH/
+        AekByQGuAf8B6QHJAbAB/wHoAccBrAH/AekByQGwAf8B6AHIAbAB/wHoAcwBtQH/AfIB5wHeAf8ByAGK
+        ASYB/wQAAxcBIAFMAs8B/wEAAZABkQH/AQABTgG+Af8BNgE6AcgB/wHuAUgB/QH/AcgBggH9Af8B4gEr
+        Af0B/wHVARMBmgH/AZEBxwH1Af8BMwGOAdgB/wEAAYABggH/AQABtwG5Af8DVAGmCAAB5QG0AY8B/wH6
+        AfYB8gH/AekBxgGqAf8B6QHGAawB/wHqAccBrAH/AekBxwGtAf8B6QHJAa4B/wHpAckBsAH/AegBxwGs
+        Af8B6QHJAbAB/wHoAcgBsAH/AegBzAG1Af8B8gHnAd4B/wHIAYoBJgH/DAADXAHqA/UB/wPuAf8D5gH/
+        A+IB/wPmAf8D4QH/A80B/wPCAf8DwgH/A+MB/wNcAeoIAANdAfAD+gH/A9cB/wPiAf8DygH/A88F/wOT
+        Cf8B6AHHAawN/wH3AfEB6wH/AcsBjwEsAf8EAAMXASABTALPAf8BAAGQAZEB/wFGAbcBxwH/AUUBwAHO
+        Af8BwgGLAdgB/wFJAcQB2QH/AQYBlQGaAf8BRQHFAdEB/wFGAbcBxwH/AUYBugHJAf8BAAGAAYIB/wEA
+        AbcBuQH/A1QBpggAAecBtwGUAf8B+wH3AfQB/wHpAcMBpgX/AegBxAGpDf8B6AHHAawN/wH3AfEB6wH/
+        AcsBjwEsAf8MAANcAeoD9gH/A+sB/wPeAf8D1gH/A9UB/wPRAf8DwwH/A7wB/wPAAf8D5QH/A1wB6ggA
+        A18B6AP4Af8D0QH/A+wB/wPFAf8DxgX/A5oB/wHpAcMBpgH/AekBwwGmAf8B6QHDAaYB/wHpAcMBpgH/
+        AekBwwGmAf8B6QHDAaYB/wH7AfcB9AH/Ac4BkwExAf8EAAMXASABGALHAf8BAAGxAbIB/wEAAaABoQH/
+        AQABoAGhAf8BDQHLAcwB/wEAAZAB7gH/ATgB7gHvAf8BAAGgAaEB/wEAAaABoQH/AQABoAGhAf8BAAGo
+        AaoB/wEAAbcBuQH/A1QBpggAAekBugGYAf8B+wH3AfQB/wHpAcMBpgH/AekBwwGmAf8B6QHDAaYB/wHp
+        AcMBpgH/AekBwwGmAf8B6QHDAaYB/wHpAcMBpgH/AekBwwGmAf8B6QHDAaYB/wHpAcMBpgH/AfsB9wH0
+        Af8BzgGTATEB/wwAA1wB6gP3Af8D5wH/A+8B/wP2Af8D+wH/A/oB/wPwAf8D3gH/A8MB/wPmAf8DXAHq
+        CAADXwHoA/gB/wPVAf8D7wH/A8sB/wPLBf8Dnhn/AfsB9wH0Af8B0QGXATcB/wQAAxIBGAFMAs8B/wGV
+        AsYB/wEAAd4B3wH/Ab4C/gH/AccC/gH/AcEC/gH/AbAC/gH/Ab4C/gH/AccC/gH/AcEC/gH/AbAC/gH/
+        AQABtwG5Af8DNgFZCAAB6wG9AZsB/wH7AfcB9Cn/AfsB9wH0Af8B0QGXATcB/wwAA1wB6gP4Af8D/hn/
+        A/sB/wPqAf8DXAHqCAADXwHoA/gB/wPbAf8D7wH/A9AB/wPQBf8DogH/AYsBywGTAf8BhwHJAY4B/wGC
+        AcYBiQH/AUsBwwGEAf8BRwHBAYAB/wFDAb4BSQH/AfsB9wH0Af8B1AGbATwB/wcAAQEDKgRAAXEDQAFx
+        A0ABcQNAAXEDQAFxA0ABcQNAAXEDQAFxA0ABcQNAAXEDLQFFAwABAQgAAewBvwGeAf8B+wH3AfQB/wGc
+        AdUBpQH/AZgB0wGhAf8BlAHQAZ0B/wGQAc4BmAH/AYsBywGTAf8BhwHJAY4B/wGCAcYBiQH/AUsBwwGE
+        Af8BRwHBAYAB/wFDAb4BSQH/AfsB9wH0Af8B1AGbATwB/wwAA1kBvwPhAf8D/hn/A/sB/wPPAf8DUgGh
+        CAADYgHpA/IB/wPZAf8D5AH/A+IB/wPIAf8D8QH/A6UB/wH7AfcB9AH/AfsB9wH0Af8B+wH3AfQB/wH7
+        AfcB9AH/AfsB9wH0Af8B+wH3AfQB/wH7AfcB9AH/A1wB+EQAA2AB6wH7AfcB9AH/AfsB9wH0Af8B+wH3
+        AfQB/wH7AfcB9AH/AfsB9wH0Af8B+wH3AfQB/wH7AfcB9AH/AfsB9wH0Af8B+wH3AfQB/wH7AfcB9AH/
+        AfsB9wH0Af8B+wH3AfQB/wNcAfgMAAMdASoDXAHRA9AB/wPoAf8D8wH/A/0B/wP8Af8D7QH/A+AB/wPC
+        Af8DWwHDAxQBGwgAA10B7QP2Af8D9AH/A/kB/wP7Af8D9gH/A/YB/wOoAf8B5wG3AZMB/wHmAbUBkAH/
+        AeQBsgGMAf8B4gGvAYgB/wHgAawBhAH/Ad0BqQGAAf8B3AGlAUoB/wNdAcpEAANGAX4DXwHjAe0BwAGf
+        Af8B6wG+AZ0B/wHrAbwBmgH/AekBugGWAf8B5wG3AZMB/wHmAbUBkAH/AeQBsgGMAf8B4gGvAYgB/wHg
+        AawBhAH/Ad0BqQGAAf8B3AGlAUoB/wNdAcoQAAMFAQcDNQFVA1QBrgNgAdYDXwH7A2oB+QNcAc0DUgGp
+        Ay0BRgMCAQMMAANSAaQD1gH/A+0B/wP5Af8D+wH/A/AB/wPZAf8DXgHY4AADDAEQAz8BbANaAcADYAHr
+        A18B8wNeAdADSgGKAxoBJWAAAUIBTQE+BwABPgMAASgDAAFAAwABIAMAAQEBAAEBBgABARYAA/8BAAL/
+        BgAC5wYAAsMGAAKBBgABgAEBBgABwAEDBgAB4AEHBgAB8AEPBgAB8AEPBgAB4AEHBgABwAEDBgABgAEB
+        BgABgQGABgABwwHBBgAB5wHjBgAB/wH3BgAC/wH8AT8BwAEAAv8BgAEBAeABBwHAAQAC/wGAAQEBwAED
+        AcABAAHgAQMBgAEBAcABAwHAAQABwAEBAYABAQHAAQMBwAEAAYABAQGAAQEBwAEDAYABAAGAAQEBgAEB
+        AcABAwIAAYABAQGAAQEBwAEDAgABgAEBAYABAQHAAQMCAAGAAQEBgAEBAcABAwIAAYABAQGAAQEBwAED
+        AgABgAEBAYABAQHAAQMCAAGAAQEBgAEBAcABAwIAAv8BgAEBAcABAwIAAv8BgAEBAeABBwEAB/8BAAP/
+        FgAL
+</value>
+  </data>
+  <data name="toolStripButton3.Text" xml:space="preserve">
+    <value>PLAY</value>
+  </data>
+  <data name="cycleImagesOnGameInfoToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>If enabled, the Game tab will cycle the images
+if the images count (snaps and covers) are larger
+than 1.</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton7.Name" xml:space="preserve">
+    <value>toolStripButton7</value>
+  </data>
+  <data name="toolStripButton1.ToolTipText" xml:space="preserve">
+    <value>Create new database using the NesCartDB file
+(database.xml file). After that, you can assign
+files to the entries.</value>
+  </data>
+  <data name="contextMenuStrip_list_main.Size" type="System.Drawing.Size, System.Drawing">
+    <value>169, 110</value>
+  </data>
+  <data name="toolStripSeparator4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>6, 25</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Panel1.Parent" xml:space="preserve">
+    <value>splitContainer1</value>
+  </data>
+  <data name="splitContainer2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="tabPage_game.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 233</value>
+  </data>
+  <data name="rememberSelectionToolStripMenuItem.Text" xml:space="preserve">
+    <value>Remember selection</value>
+  </data>
+  <data name="autoMinimizeToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Auto minimize the launcher when starting a game.</value>
+  </data>
+  <data name="Button_mode_all.ToolTipText" xml:space="preserve">
+    <value>Show all games in database.</value>
+  </data>
+  <data name="&gt;&gt;splitContainer2.Parent" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="&gt;&gt;tabPage_manuals.Parent" xml:space="preserve">
+    <value>tabControl2</value>
+  </data>
+  <data name="&gt;&gt;deleteToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator8.Name" xml:space="preserve">
+    <value>toolStripSeparator8</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator9.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Button_mode_notDB.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 20</value>
+  </data>
+  <data name="&gt;&gt;cycleImagesOnGameInfoToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;openFileLocationToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Button_mode_notDB.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabPage_game.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="openFileLocationToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 22</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="toolStripLabel1.Text" xml:space="preserve">
+    <value>SHOW</value>
+  </data>
+  <data name="&gt;&gt;tabPage_info.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="Button_mode_missing.ToolTipText" xml:space="preserve">
+    <value>Show games with no file assigned</value>
+  </data>
+  <data name="&gt;&gt;imageList_items.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ImageList, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="toolStripButton3.ToolTipText" xml:space="preserve">
+    <value>Play selected game.</value>
+  </data>
+  <data name="&gt;&gt;tabPage_manuals.Name" xml:space="preserve">
+    <value>tabPage_manuals</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator9.Name" xml:space="preserve">
+    <value>toolStripSeparator9</value>
+  </data>
+  <data name="toolStripButton2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>67, 22</value>
+  </data>
+  <data name="toolStripButton3.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="autoMinimizeToolStripMenuItem.Text" xml:space="preserve">
+    <value>Auto Minimize</value>
+  </data>
+  <data name="&gt;&gt;toolStripTextBox_find.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripTextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tabPage_game.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tabControl2.Name" xml:space="preserve">
+    <value>tabControl2</value>
+  </data>
+  <data name="toolStripStatusLabel2.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="toolStripButton2.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="&gt;&gt;playToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Panel1.Name" xml:space="preserve">
+    <value>splitContainer1.Panel1</value>
+  </data>
+  <data name="tabPage_covers.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;playToolStripMenuItem.Name" xml:space="preserve">
+    <value>playToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;statusStrip1.Name" xml:space="preserve">
+    <value>statusStrip1</value>
+  </data>
+  <data name="&gt;&gt;tabPage_snapshots.Name" xml:space="preserve">
+    <value>tabPage_snapshots</value>
+  </data>
+  <data name="Button_mode_missing.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;showLauncherAtAppStartToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 6</value>
+  </data>
+  <data name="&gt;&gt;tabControl2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;timer_play.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;timer_play.Name" xml:space="preserve">
+    <value>timer_play</value>
+  </data>
+  <data name="toolStripButton6.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="toolStripButton1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 22</value>
+  </data>
+  <data name="&gt;&gt;StatusLabel.Name" xml:space="preserve">
+    <value>StatusLabel</value>
+  </data>
+  <data name="toolStripSplitButton1.Text" xml:space="preserve">
+    <value>SETTINGS</value>
+  </data>
+  <data name="tabPage_snapshots.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="toolStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>978, 25</value>
+  </data>
+  <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>6, 25</value>
+  </data>
+  <data name="statusStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 556</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton4.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Button_mode_missing.Text" xml:space="preserve">
+    <value>MISSING</value>
+  </data>
+  <data name="tabPage_snapshots.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 233</value>
+  </data>
+  <data name="&gt;&gt;toolStripSplitButton1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSplitButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton1.Name" xml:space="preserve">
+    <value>toolStripButton1</value>
+  </data>
+  <data name="toolStripButton7.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="StatusLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>42, 17</value>
+  </data>
+  <data name="tabControl2.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="Button_mode_notDB.Text" xml:space="preserve">
+    <value>NOT DB</value>
+  </data>
+  <data name="toolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 6</value>
+  </data>
+  <data name="&gt;&gt;Button_mode_database.Name" xml:space="preserve">
+    <value>Button_mode_database</value>
+  </data>
+  <data name="&gt;&gt;managedListView1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tabPage_info.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainer2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="Button_mode_notDB.ToolTipText" xml:space="preserve">
+    <value>Show games that not in NesCart database.</value>
+  </data>
+  <data name="toolStripButton8.Text" xml:space="preserve">
+    <value>INFO</value>
+  </data>
+  <data name="splitContainer1.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;tabPage_covers.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tabControl2.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="splitContainer1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>892, 531</value>
+  </data>
+  <data name="&gt;&gt;timer_selection.Name" xml:space="preserve">
+    <value>timer_selection</value>
+  </data>
+  <data name="playToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 22</value>
+  </data>
+  <data name="tabPage_covers.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Panel2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="StatusLabel.Text" xml:space="preserve">
+    <value>Ready.</value>
+  </data>
+  <data name="tabControl2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="deleteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 22</value>
+  </data>
+  <data name="Button_mode_database.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 20</value>
+  </data>
+  <data name="&gt;&gt;Button_mode_all.Name" xml:space="preserve">
+    <value>Button_mode_all</value>
+  </data>
+  <data name="&gt;&gt;imageList1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ImageList, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="toolStripButton4.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="toolStripButton4.Text" xml:space="preserve">
+    <value>FIND</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="managedListView1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>659, 531</value>
+  </data>
+  <data name="toolStripStatusLabel2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>10, 17</value>
+  </data>
+  <data name="&gt;&gt;tabControl1.Name" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
+  <data name="splitContainer1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>86, 25</value>
+  </data>
+  <data name="toolStripStatusLabel1.Text" xml:space="preserve">
+    <value>0 / 0</value>
+  </data>
+  <data name="ProgressBar.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;splitContainer2.Panel1.Name" xml:space="preserve">
+    <value>splitContainer2.Panel1</value>
+  </data>
+  <data name="&gt;&gt;tabControl2.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;timer_progress.Name" xml:space="preserve">
+    <value>timer_progress</value>
+  </data>
+  <data name="&gt;&gt;toolStripLabel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabPage_manuals.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tabPage_covers.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="toolStripButton6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>144, 22</value>
+  </data>
+  <data name="toolStripButton5.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="tabPage_covers.Text" xml:space="preserve">
+    <value>Covers</value>
+  </data>
+  <data name="toolStripButton3.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;Button_mode_files.Name" xml:space="preserve">
+    <value>Button_mode_files</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>FormLauncher</value>
+  </data>
+  <data name="&gt;&gt;toolStripStatusLabel1.Name" xml:space="preserve">
+    <value>toolStripStatusLabel1</value>
+  </data>
+  <data name="&gt;&gt;managedListView1.Name" xml:space="preserve">
+    <value>managedListView1</value>
+  </data>
+  <data name="toolStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="tabPage_manuals.Text" xml:space="preserve">
+    <value>Manuals</value>
+  </data>
+  <data name="toolStripButton9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 20</value>
+  </data>
+  <data name="managedListView1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="infoToolStripMenuItem.Text" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="Button_mode_files.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="&gt;&gt;tabControl1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStrip2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="toolStripStatusLabel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>30, 17</value>
+  </data>
+  <data name="tabPage_info.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 3, 3, 3</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="cycleImagesOnGameInfoToolStripMenuItem.Text" xml:space="preserve">
+    <value>Cycle images on game info</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="showLauncherAtAppStartToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>Indicates if the Launcher should be opened
+when My Nes starts.</value>
+  </data>
+  <data name="&gt;&gt;infoToolStripMenuItem.Name" xml:space="preserve">
+    <value>infoToolStripMenuItem</value>
+  </data>
+  <data name="toolStripSplitButton1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>91, 22</value>
+  </data>
+  <data name="toolStripButton6.ToolTipText" xml:space="preserve">
+    <value>Show a detect table. For debug purpose only.</value>
+  </data>
+  <data name="&gt;&gt;deleteToolStripMenuItem.Name" xml:space="preserve">
+    <value>deleteToolStripMenuItem</value>
+  </data>
+  <data name="Button_mode_database.Text" xml:space="preserve">
+    <value>DATABASE</value>
+  </data>
+  <data name="splitContainer2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>229, 531</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator3.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Button_mode_files.ToolTipText" xml:space="preserve">
+    <value>Show games that exist on disk</value>
+  </data>
+  <data name="toolStripLabel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 15</value>
+  </data>
+  <data name="Button_mode_database.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;timer_search.Name" xml:space="preserve">
+    <value>timer_search</value>
+  </data>
+  <data name="toolStripButton7.ToolTipText" xml:space="preserve">
+    <value>Add files to the database.
+If entries match file(s), these entries get updated.
+Otherwise files not found in database get added
+as new entries/entry.</value>
+  </data>
+  <data name="&gt;&gt;Button_mode_missing.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="openFileLocationToolStripMenuItem.Text" xml:space="preserve">
+    <value>Open file location</value>
+  </data>
+  <data name="&gt;&gt;showLauncherAtAppStartToolStripMenuItem.Name" xml:space="preserve">
+    <value>showLauncherAtAppStartToolStripMenuItem</value>
+  </data>
+  <data name="managedListView1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="toolStripButton3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 20</value>
+  </data>
+  <data name="&gt;&gt;contextMenuStrip_list_main.Name" xml:space="preserve">
+    <value>contextMenuStrip_list_main</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton2.Name" xml:space="preserve">
+    <value>toolStripButton2</value>
+  </data>
+  <data name="&gt;&gt;openFileLocationToolStripMenuItem.Name" xml:space="preserve">
+    <value>openFileLocationToolStripMenuItem</value>
+  </data>
+  <data name="toolStripButton9.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;tabPage_covers.Name" xml:space="preserve">
+    <value>tabPage_covers</value>
+  </data>
+  <data name="&gt;&gt;tabControl1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;contextMenuStrip_list_columns.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Button_mode_notDB.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tabPage_info.Location" type="System.Drawing.Point, System.Drawing">
+    <value>4, 22</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton5.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="toolStrip2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 25</value>
+  </data>
+  <data name="tabPage_snapshots.Text" xml:space="preserve">
+    <value>Snapshots</value>
+  </data>
+  <data name="toolStripButton5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>69, 22</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton8.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tabPage_manuals.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 242</value>
+  </data>
+  <data name="Button_mode_all.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 20</value>
+  </data>
+  <data name="playToolStripMenuItem.Text" xml:space="preserve">
+    <value>Play</value>
+  </data>
+  <data name="&gt;&gt;tabPage_snapshots.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="statusStrip1.Text" xml:space="preserve">
+    <value>statusStrip1</value>
+  </data>
+  <data name="toolStrip2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>86, 531</value>
+  </data>
+  <data name="&gt;&gt;timer_search.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Button_mode_missing.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 20</value>
+  </data>
+  <data name="&gt;&gt;tabPage_info.Name" xml:space="preserve">
+    <value>tabPage_info</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator7.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="deleteToolStripMenuItem.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="contextMenuStrip_list_columns.Size" type="System.Drawing.Size, System.Drawing">
+    <value>61, 4</value>
+  </data>
+  <data name="toolStripButton9.ToolTipText" xml:space="preserve">
+    <value>Delete selected entries</value>
+  </data>
+  <data name="infoToolStripMenuItem.ShortcutKeys" type="System.Windows.Forms.Keys, System.Windows.Forms">
+    <value>Ctrl+F</value>
+  </data>
+  <data name="&gt;&gt;tabPage_covers.Parent" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Name" xml:space="preserve">
+    <value>toolStrip1</value>
+  </data>
+  <data name="&gt;&gt;toolStrip2.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="splitContainer1.SplitterDistance" type="System.Int32, mscorlib">
+    <value>659</value>
+  </data>
+  <data name="rememberSelectionToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>218, 22</value>
+  </data>
+  <data name="tabControl1.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Name" xml:space="preserve">
+    <value>splitContainer1</value>
+  </data>
+  <data name="&gt;&gt;Button_mode_database.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>978, 578</value>
+  </data>
+  <data name="&gt;&gt;autoMinimizeToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tabPage_game.Text" xml:space="preserve">
+    <value>Game</value>
+  </data>
+  <data name="Button_mode_all.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="showLauncherAtAppStartToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>218, 22</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator5.Name" xml:space="preserve">
+    <value>toolStripSeparator5</value>
+  </data>
+  <data name="Button_mode_all.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="&gt;&gt;StatusLabel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cycleImagesOnGameInfoToolStripMenuItem.Name" xml:space="preserve">
+    <value>cycleImagesOnGameInfoToolStripMenuItem</value>
+  </data>
+  <data name="&gt;&gt;tabPage_snapshots.Parent" xml:space="preserve">
+    <value>tabControl1</value>
+  </data>
+  <data name="Button_mode_database.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainer1.Panel2.Name" xml:space="preserve">
+    <value>splitContainer1.Panel2</value>
+  </data>
+  <data name="Button_mode_database.ToolTipText" xml:space="preserve">
+    <value>Show games of NesCartDB database only</value>
+  </data>
+  <data name="&gt;&gt;managedListView1.Type" xml:space="preserve">
+    <value>MLV.ManagedListView, MLV, Version=1.2.5334.30111, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;toolStripButton6.Name" xml:space="preserve">
+    <value>toolStripButton6</value>
+  </data>
+  <data name="statusStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="tabPage_covers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>221, 233</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator8.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splitContainer2.Panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;toolStripSeparator2.Name" xml:space="preserve">
+    <value>toolStripSeparator2</value>
+  </data>
+  <data name="&gt;&gt;tabPage_snapshots.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TabPage, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="imageList_items.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADc
+        BwAAAk1TRnQBSQFMAgEBAgEAAYwBAQGUAQEBEAEAARABAAT/ASEBEAj/AUIBTQE2BwABNgMAASgDAAFA
+        AwABEAMAAQEBAAEgBgABEP8AHwADKgFBAwYBCBgAAwYBCAMqAUHUAAMqAUEBIAEdAfIB/wJAAagB/QMG
+        AQgQAAMGAQgCKwFzAfwBAgEAAeoB/wMqAUEUAAMpAT4DXQHKA10BygNdAcoDXQHKA10BygNdAcoDXQHK
+        A10BygNbAcgDGQEjjAADKgFBASkBJwH1Af8BNAEyAfoB/wEpASYB9gH/AisBdQH8AwYBCAgAAwYBCAIr
+        AXMB/AESARAB8QH/AR0BGwH2Af8BAgEAAeoB/wMqAUEMAAMfASwBXAJkAecBmgLuAf8BmgLuAf8BmgLu
+        Af8BmgLuAf8BmgLuAf8BmgLuAf8BmgLuAf8BmgLuAf8BAAFEAUYB/wNDAXgDCQEMiAADHgErASwBKQH2
+        Af8BNgEzAfoB/wFCAUEC/wEqAScB9gH/AisBdQH8AwYBCAMGAQgCKwF0AfwBGAEWAfIB/wE0ATMC/wEb
+        ARkB9AH/AgAB6QH/Ax4BKwgAAxEBFwEAAqIB/wEAAa0BrAH/AbUC/gH/AbYC/gH/AbYC/gH/AbYC/gH/
+        AbYC/gH/AbYC/gH/AbYC/gH/AbYC/gH/AQABkAGRAf8BAAGGAYcB/wNOAZiMAAMeASsBLAEqAfYB/wE3
+        ATQB+gH/AUUBQgL/ASsBKQH2Af8CKwF1AfwCQAGoAf0BIQEeAfQB/wE5ATgC/wEhAR8B9QH/AQcBBQHr
+        Af8DHgErDAADFwEgAUYCzwH/AQABkAGRAf8BAAFGAZEB/wEAAUMBNwH/AQABpwGxAf8BAAGvAbAB/wE0
+        ATIBsAH/AQABjwGmAf8BAAFPAZ8B/wEAAYkBsAH/AQABgAGCAf8BAAG3AbkB/wNUAaaQAAMeASsBLQEr
+        AfYB/wE4ATUB+gH/AUUBQwL/AUQBQQL/AUEBPwL/AT8BPQL/ASgBJgH3Af8BEAEOAe4B/wMeASsQAAMX
+        ASABRgLPAf8BAAGQAZEB/wGpATsBJwH/AYYBrwGPAf8BkAGnAf4B/wG3AUkB/gH/Ad4BkQH9Af8BAAGp
+        Af4B/wEAAakB/gH/AQABqQH+Af8BAAGAAYIB/wEAAbcBuQH/A1QBppQAAx4BKwEuASwB9wH/AUoBRwL/
+        ASoBJwL/ASgBJQL/AUMBQQL/ARkBFwHwAf8DHgErFAADFwEgAUYCzwH/AQABkAGRAf8BAAFIAb4B/wEw
+        ATQByAH/Ae4BQgH9Af8ByAGCAf0B/wHiASUB/QH/AdUBDQGaAf8BkQHHAfUB/wEtAY4B2AH/AQABgAGC
+        Af8BAAG3AbkB/wNUAaaUAAMGAQgCQAGoAf0BTgFKAv8BLwEsAv8BLAEpAv8BRwFFAv8CQAGoAf0DBgEI
+        FAADFwEgAUYCzwH/AQABkAGRAf8BQAG3AccB/wE/AcABzgH/AcIBiwHYAf8BQwHEAdkB/wEAAZUBmgH/
+        AT8BxQHRAf8BQAG3AccB/wFAAboByQH/AQABgAGCAf8BAAG3AbkB/wNUAaaQAAMGAQgBLAErAXcB/AFB
+        AT4B+wH/AYABTwL/AU8BTAL/AU0BSgL/AUoBSAL/AS8BLQH3Af8CKwF1AfwDBgEIEAADFwEgARICxwH/
+        AQABsQGyAf8BAAGgAaEB/wEAAaABoQH/AQcBywHMAf8BAAGQAe4B/wEyAe4B7wH/AQABoAGhAf8BAAGg
+        AaEB/wEAAaABoQH/AQABqAGqAf8BAAG3AbkB/wNUAaaMAAMGAQgBNAExAXgB/AFIAUUB/QH/AYYBggL/
+        AUcBRAH8Af8BNQEzAfgB/wExAS4B9wH/AT4BOwH6Af8BTAFKAv8BMQEuAfcB/wIrAXUB/AMGAQgMAAMS
+        ARgBRgLPAf8BlQLGAf8BAAHeAd8B/wG+Av4B/wHHAv4B/wHBAv4B/wGwAv4B/wG+Av4B/wHHAv4B/wHB
+        Av4B/wGwAv4B/wEAAbcBuQH/AzYBWYgAAwYBCAJAAagB/QFOAUsB/gH/AYoBhwL/AU0BSgH9Af8BPQE6
+        AfsB/wMeASsDHgErATIBLwH4Af8BPwE9AfoB/wFOAUsC/wEyATAB9wH/AisBdQH8AwQBBQsAAQEDKgRA
+        AXEDQAFxA0ABcQNAAXEDQAFxA0ABcQNAAXEDQAFxA0ABcQNAAXEDLQFFAwABAYgAAxYBHwFLAUgC/wGB
+        AU8C/wGBAU8B/gH/AUUBQgH9Af8DHgErCAADHgErATMBMAH4Af8BQAE+AfsB/wFPAU0C/wEzATAB+AH/
+        A0ABbwMBAQLIAAMWAR8BSwFIAv8BSgFHAf4B/wMeASsQAAMeASsBNQEyAfgB/wE7ATkB+QH/AVMBUgFT
+        AagDHQEp0AADFgEfAx4BKxgAAx4BKwNAAW8DKQE++AADBwEKzAABQgFNAT4HAAE+AwABKAMAAUADAAEQ
+        AwABAQEAAQEFAAGAFwAD/wEABP8EAALnAv8EAALDAeABAwQAAoEBwAEBBAABgAEBAYABAQQAAcABAwGA
+        AQEEAAHgAQcBgAEBBAAB8AEPAYABAQQAAfABDwGAAQEEAAHgAQcBgAEBBAABwAEDAYABAQQAAYABAQGA
+        AQEEAAGBAYAC/wQAAcMBwQL/BAAB5wHjAv8EAAH/AfcC/xoACw==
+</value>
+  </data>
+  <data name="&gt;&gt;tabPage_manuals.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="toolStripSeparator6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>83, 6</value>
+  </data>
+  <data name="tabPage_manuals.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="autoMinimizeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>218, 22</value>
+  </data>
+  <data name="toolStripButton7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>51, 22</value>
+  </data>
+  <data name="&gt;&gt;infoToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;imageList_items.Name" xml:space="preserve">
+    <value>imageList_items</value>
+  </data>
+  <data name="tabControl2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>229, 268</value>
+  </data>
+  <data name="&gt;&gt;toolStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="toolStrip1.Text" xml:space="preserve">
+    <value>toolStrip1</value>
+  </data>
+  <data name="&gt;&gt;splitContainer2.Name" xml:space="preserve">
+    <value>splitContainer2</value>
+  </data>
+  <data name="&gt;&gt;timer_selection.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Button_mode_all.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="toolStripButton8.ImageAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <metadata name="contextMenuStrip_list_columns.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="timer_play.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>706, 17</value>
+  </metadata>
+  <metadata name="timer_search.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 56</value>
+  </metadata>
+  <metadata name="toolStrip2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>814, 17</value>
+  </metadata>
+  <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>452, 17</value>
+  </metadata>
+  <metadata name="imageList1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>342, 17</value>
+  </metadata>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>93</value>
+  </metadata>
+  <metadata name="imageList_items.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>568, 17</value>
+  </metadata>
+  <metadata name="contextMenuStrip_list_main.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>137, 56</value>
+  </metadata>
+  <metadata name="timer_selection.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>471, 56</value>
+  </metadata>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="timer_progress.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>338, 56</value>
+  </metadata>
+  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>237, 17</value>
+  </metadata>
+</root>

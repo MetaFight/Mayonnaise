@@ -1,0 +1,796 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Button_No" xml:space="preserve">
+    <value>&amp;No</value>
+  </data>
+  <data name="Button_Stop" xml:space="preserve">
+    <value>&amp;Stop</value>
+  </data>
+  <data name="Button_Yes" xml:space="preserve">
+    <value>&amp;Yes</value>
+  </data>
+  <data name="Column_Property" xml:space="preserve">
+    <value>Property</value>
+  </data>
+  <data name="Column_Value" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="ERROR" xml:space="preserve">
+    <value>ERROR</value>
+  </data>
+  <data name="FilterMyNes_PaletteFile" xml:space="preserve">
+    <value>My Nes Palette Present (*.mnpp)|*.mnpp</value>
+  </data>
+  <data name="Filter_Image" xml:space="preserve">
+    <value>Image (*.jpg;*.png;*.bmp;*.gif;*.jpeg;*.tiff;*.tga)|*.jpg;*.png;*.bmp;*.gif;*.jpeg;*.tiff;*.tga</value>
+  </data>
+  <data name="Filter_InfoFile" xml:space="preserve">
+    <value>Info file (*.txt;*.rtf;*doc)|*.txt;*.rtf;*.doc;|Text file (*.txt)|*.txt|RTF (*.rtf)|*.rtf|DOC (*.doc)|*.doc</value>
+  </data>
+  <data name="Filter_MyNesDatabase" xml:space="preserve">
+    <value>My Nes Database (*.mndb)|*.mndb</value>
+  </data>
+  <data name="Filter_PaletteFile" xml:space="preserve">
+    <value>Palette file '64 indexes' (*.pal)|*.pal|Palette file '512 indexes' (*.pal)|*.pal</value>
+  </data>
+  <data name="Filter_PDF" xml:space="preserve">
+    <value>PDF (*.pdf)|*.pdf</value>
+  </data>
+  <data name="Filter_XML" xml:space="preserve">
+    <value>XML (*.xml)|*.xml</value>
+  </data>
+  <data name="MessageCaption_ApplyLanguage" xml:space="preserve">
+    <value>Apply Language Interface</value>
+  </data>
+  <data name="MessageCaption_Detect" xml:space="preserve">
+    <value>Detect</value>
+  </data>
+  <data name="MessageCaption_FindGames" xml:space="preserve">
+    <value>Find Games</value>
+  </data>
+  <data name="MessageCaption_RemoveCode" xml:space="preserve">
+    <value>Remove code</value>
+  </data>
+  <data name="MessageCaption_RemoveImage" xml:space="preserve">
+    <value>Remove Image</value>
+  </data>
+  <data name="MessageCaption_RemoveInfoFile" xml:space="preserve">
+    <value>Remove Info file</value>
+  </data>
+  <data name="MessageCaption_RemoveManual" xml:space="preserve">
+    <value>Remove Manual</value>
+  </data>
+  <data name="MessageCheckBox_RemoveFileFromDiskToo" xml:space="preserve">
+    <value>Remove file from disk too. Be carefull !!</value>
+  </data>
+  <data name="Message_AreYouSure" xml:space="preserve">
+    <value>Are you sure ?</value>
+  </data>
+  <data name="Message_AreYouSureToRemoveAllImages" xml:space="preserve">
+    <value>Are you sure you want to delete all images associated to the entry from the database ? 
+This can't be undone.</value>
+  </data>
+  <data name="Message_AreYouSureToRemoveAllInfoFiles" xml:space="preserve">
+    <value>Are you sure you want to delete all info files associated to the entry from the database ?
+This can't be undone.</value>
+  </data>
+  <data name="Message_AreYousureToRemoveAllManuals" xml:space="preserve">
+    <value>Are you sure you want to delete all manuals associated to the entry from the database ?
+This can't be undone.</value>
+  </data>
+  <data name="Message_AreYouSureToRemoveImage" xml:space="preserve">
+    <value>Are you sure you want to remove this image from database ? 
+This can't be undone.</value>
+  </data>
+  <data name="Message_AreYouSureToRemoveInfoFile" xml:space="preserve">
+    <value>Are you sure you want to remove this info file from database ? 
+This can't be undone.</value>
+  </data>
+  <data name="Message_AreYouSuretoRemoveManual" xml:space="preserve">
+    <value>Are you sure you want to remove this manual from database ? 
+This can't be undone.</value>
+  </data>
+  <data name="Message_AreYouSureYouWantToDeleteSelectedFodlers" xml:space="preserve">
+    <value>Are you sure you want to delete selected fodlers ?</value>
+  </data>
+  <data name="Message_AreYouSureYouWantToStopCurrentProgress" xml:space="preserve">
+    <value>Are you sure you want to stop current progress ?</value>
+  </data>
+  <data name="Message_CodeAlreadyExistInTheList" xml:space="preserve">
+    <value>Code is already exist in the list</value>
+  </data>
+  <data name="Message_Done" xml:space="preserve">
+    <value>Done !</value>
+  </data>
+  <data name="Message_DoYouWantToCreateThisFolder" xml:space="preserve">
+    <value>Do you want to create this folder ?</value>
+  </data>
+  <data name="Message_InfoCopiedIntoTheClipboard" xml:space="preserve">
+    <value>Info copied into the Clipboard !!</value>
+  </data>
+  <data name="Message_NesIsOff" xml:space="preserve">
+    <value>Nes Is Off</value>
+  </data>
+  <data name="Message_NoCodeInTheListToSave" xml:space="preserve">
+    <value>No code in the list to save !</value>
+  </data>
+  <data name="Message_NoExtensionAddedYet" xml:space="preserve">
+    <value>No extension added yet, please fill the extensions field or click the Reset button to reset extensions.</value>
+  </data>
+  <data name="Message_NoFolderToSearch" xml:space="preserve">
+    <value>No folder to search, please add at least one folder.</value>
+  </data>
+  <data name="Message_NoGameSelected" xml:space="preserve">
+    <value>No game selected.</value>
+  </data>
+  <data name="Message_PleaseEnterTheSearchWordFirst" xml:space="preserve">
+    <value>Please enter the search word first.</value>
+  </data>
+  <data name="Message_PleaseSelectTheInputDeviceFirst" xml:space="preserve">
+    <value>Please select the input device first.</value>
+  </data>
+  <data name="Message_PleaseSelectTheSearchByColumnFirst" xml:space="preserve">
+    <value>Please select the search by column first.</value>
+  </data>
+  <data name="Message_ThereIsNoCodeInTheList" xml:space="preserve">
+    <value>There is no code in the list.</value>
+  </data>
+  <data name="Message_TheSnapshotsFolderIsntExistAt" xml:space="preserve">
+    <value>The Snapshots folder isn't exist at</value>
+  </data>
+  <data name="Message_TheSRAMFolderIsntExistAt" xml:space="preserve">
+    <value>The SRAM folder isn't exist at</value>
+  </data>
+  <data name="Message_TheSTATEFolderIsntExistAt" xml:space="preserve">
+    <value>The STATE folder isn't exist at</value>
+  </data>
+  <data name="Message_ThisFileIsNotMyNesGameGenieCodesListFile" xml:space="preserve">
+    <value>This file is not My Nes Game Genie codes list file</value>
+  </data>
+  <data name="Message_UnableToCreateTheFolder" xml:space="preserve">
+    <value>Unable to create the folder</value>
+  </data>
+  <data name="Message_UNABLETOSHOWIMAGE" xml:space="preserve">
+    <value>UNABLE TO SHOW IMAGE !!</value>
+  </data>
+  <data name="Message_YouMustRestartTheProgramToApplyLanguage" xml:space="preserve">
+    <value>You must restart My Nes to apply selected language interface</value>
+  </data>
+  <data name="Message_YouMustSekectOneFolderToSearch" xml:space="preserve">
+    <value>You must add at least one folder to search !\nPlease click on the Add button to add a folder to scan.</value>
+  </data>
+  <data name="Status_CancelIn" xml:space="preserve">
+    <value>Cancel in</value>
+  </data>
+  <data name="Status_Detected" xml:space="preserve">
+    <value>DETECTED</value>
+  </data>
+  <data name="Status_Detecting" xml:space="preserve">
+    <value>Detecting</value>
+  </data>
+  <data name="Status_Seconds" xml:space="preserve">
+    <value>seconds.</value>
+  </data>
+  <data name="Text_AddFolderToTheScanList" xml:space="preserve">
+    <value>Add folder to the scan list</value>
+  </data>
+  <data name="Text_NeverPlayed" xml:space="preserve">
+    <value>Never Played</value>
+  </data>
+  <data name="Text_OneTime" xml:space="preserve">
+    <value>1 Time</value>
+  </data>
+  <data name="Text_PressAKeyFor" xml:space="preserve">
+    <value>Press a key for</value>
+  </data>
+  <data name="Text_Times" xml:space="preserve">
+    <value>Times</value>
+  </data>
+  <data name="Text_UnableToRemoveFile" xml:space="preserve">
+    <value>Unable to remove file</value>
+  </data>
+  <data name="Title_AddMoreImages" xml:space="preserve">
+    <value>Add more images</value>
+  </data>
+  <data name="Title_AddMoreInfoFiles" xml:space="preserve">
+    <value>Add more info files</value>
+  </data>
+  <data name="Title_AddMoreManuals" xml:space="preserve">
+    <value>Add more manuals</value>
+  </data>
+  <data name="Title_Cartridge" xml:space="preserve">
+    <value>Cartridge</value>
+  </data>
+  <data name="Title_ChangeTheSnaphotsFolder" xml:space="preserve">
+    <value>Change the Snaphots folder</value>
+  </data>
+  <data name="Title_ChangeTheSRAMFolder" xml:space="preserve">
+    <value>Change the SRAM folder</value>
+  </data>
+  <data name="Title_ChangeTheStateSavesFolder" xml:space="preserve">
+    <value>Change the state saves folder</value>
+  </data>
+  <data name="Title_CHRCount" xml:space="preserve">
+    <value>CHR Count</value>
+  </data>
+  <data name="Title_CHRSize" xml:space="preserve">
+    <value>CHR Size</value>
+  </data>
+  <data name="Title_DataBase" xml:space="preserve">
+    <value>DataBase</value>
+  </data>
+  <data name="Title_DetectCovers" xml:space="preserve">
+    <value>Detect Covers</value>
+  </data>
+  <data name="Title_DetectInfoFiles" xml:space="preserve">
+    <value>Detect Info Files</value>
+  </data>
+  <data name="Title_DetectManuals" xml:space="preserve">
+    <value>Detect Manuals</value>
+  </data>
+  <data name="Title_DetectSnapshots" xml:space="preserve">
+    <value>Detect Snapshots</value>
+  </data>
+  <data name="Title_EnterComment" xml:space="preserve">
+    <value>Enter comment</value>
+  </data>
+  <data name="Title_FileInfo" xml:space="preserve">
+    <value>File Info</value>
+  </data>
+  <data name="Title_GameGenieCode" xml:space="preserve">
+    <value>Game Genie Code</value>
+  </data>
+  <data name="title_GameInfo" xml:space="preserve">
+    <value>Game info</value>
+  </data>
+  <data name="Title_GameInfoFromNesCartDatabase" xml:space="preserve">
+    <value>Game Info From NesCart Database</value>
+  </data>
+  <data name="Title_HasBattery" xml:space="preserve">
+    <value>Has Battery</value>
+  </data>
+  <data name="Title_HasTrainer" xml:space="preserve">
+    <value>Has Trainer</value>
+  </data>
+  <data name="Title_INESHeader" xml:space="preserve">
+    <value>INES Header</value>
+  </data>
+  <data name="Title_IsPlaychoice10" xml:space="preserve">
+    <value>Is Playchoice 10</value>
+  </data>
+  <data name="Title_IsVSUnisystem" xml:space="preserve">
+    <value>Is VS Unisystem</value>
+  </data>
+  <data name="Title_MapperNumber" xml:space="preserve">
+    <value>Mapper Number</value>
+  </data>
+  <data name="Title_Mirroring" xml:space="preserve">
+    <value>Mirroring</value>
+  </data>
+  <data name="Title_NewInfoFile" xml:space="preserve">
+    <value>New info file</value>
+  </data>
+  <data name="Title_Path" xml:space="preserve">
+    <value>Path</value>
+  </data>
+  <data name="Title_PRGCount" xml:space="preserve">
+    <value>PRG Count</value>
+  </data>
+  <data name="Title_PRGSize" xml:space="preserve">
+    <value>PRG Size</value>
+  </data>
+  <data name="Title_SaveMyNesDatabaseFile" xml:space="preserve">
+    <value>Save My Nes Database file</value>
+  </data>
+  <data name="Title_Size" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="Alternative Name" xml:space="preserve">
+    <value>Alternative Name</value>
+  </data>
+  <data name="Board Mapper" xml:space="preserve">
+    <value>Board Mapper</value>
+  </data>
+  <data name="Board Pcb" xml:space="preserve">
+    <value>Board Pcb</value>
+  </data>
+  <data name="Board Type" xml:space="preserve">
+    <value>Board Type</value>
+  </data>
+  <data name="Button_Delete" xml:space="preserve">
+    <value>&amp;Delete</value>
+  </data>
+  <data name="Button_DontDelete" xml:space="preserve">
+    <value>Do&amp;n't Delete</value>
+  </data>
+  <data name="Button_RecordSound" xml:space="preserve">
+    <value>&amp;Record sound</value>
+  </data>
+  <data name="Button_StopSoundRecording" xml:space="preserve">
+    <value>&amp;Stop sound recording</value>
+  </data>
+  <data name="Catalog" xml:space="preserve">
+    <value>Catalog</value>
+  </data>
+  <data name="Class" xml:space="preserve">
+    <value>Class</value>
+  </data>
+  <data name="CRC" xml:space="preserve">
+    <value>CRC</value>
+  </data>
+  <data name="Date Dumped" xml:space="preserve">
+    <value>Date Dumped</value>
+  </data>
+  <data name="Developer" xml:space="preserve">
+    <value>Developer</value>
+  </data>
+  <data name="Dump" xml:space="preserve">
+    <value>Dump</value>
+  </data>
+  <data name="Dumper" xml:space="preserve">
+    <value>Dumper</value>
+  </data>
+  <data name="Filter_MyNesState" xml:space="preserve">
+    <value>My Nes State (*.mns)|*.mns</value>
+  </data>
+  <data name="Filter_Rom" xml:space="preserve">
+    <value>Supported file types (*.nes;*.7z;*.zip;*.rar*.gzip;*.tar;*.bzip2;*.xz)|*.nes;*.7z;*.zip;*.rar*.gzip;*.tar;*.bzip2;*.xz|INES (*.nes)|*.nes|Archive (*.7z;*.zip;*.rar*.gzip;*.tar;*.bzip2;*.xz)|*.7z;*.zip;*.rar*.gzip;*.tar;*.bzip2;*.xz</value>
+  </data>
+  <data name="Filter_Wav" xml:space="preserve">
+    <value>Wav file (*.wav)|*.wav</value>
+  </data>
+  <data name="Last Played" xml:space="preserve">
+    <value>Last Played</value>
+  </data>
+  <data name="MessageCaption_CreateNewDatabase" xml:space="preserve">
+    <value>Create New Database</value>
+  </data>
+  <data name="MessageCaption_DeleteEntries" xml:space="preserve">
+    <value>Delete entries</value>
+  </data>
+  <data name="MessageCheckBox_DontDeleteNesCartEntries" xml:space="preserve">
+    <value>Don't delete NesCart entries</value>
+  </data>
+  <data name="Message_AnotherOperationInProgress" xml:space="preserve">
+    <value>Another Database operation in progress. Please try again later.</value>
+  </data>
+  <data name="Message_AreYouSureYouWantToCreateNewDB" xml:space="preserve">
+    <value>Are you sure you want to create a new database ?
+This will erase all entries and info such as snapshots.</value>
+  </data>
+  <data name="Message_AreYouSureYouWantToDeleteSelectedEntries" xml:space="preserve">
+    <value>Are you sure you want to delete selected entries from the database ?
+This can't be undone.</value>
+  </data>
+  <data name="Message_GameFileNotExistOrNoFileAssignedToThisGameYet" xml:space="preserve">
+    <value>Game file not exist or no file assigned to this game yet.</value>
+  </data>
+  <data name="Message_GameGenieCantBeUSedWhileEmuOf" xml:space="preserve">
+    <value>Game Genie can be configured only during game run time. Please open the game you want to config the Game Genie for.</value>
+  </data>
+  <data name="Message_NoDbLoadedYet" xml:space="preserve">
+    <value>No database loaded yet ! Please click on NEW button to create a database.</value>
+  </data>
+  <data name="Message_NoEntrySelectedToDelete" xml:space="preserve">
+    <value>No entry selected to delete.</value>
+  </data>
+  <data name="Message_PleaseSelectOneGameToOpenLocation" xml:space="preserve">
+    <value>Please select one game to open location.</value>
+  </data>
+  <data name="Message_PleaseSelectOneGameToPlay" xml:space="preserve">
+    <value>Please select one game to play.</value>
+  </data>
+  <data name="Message_PleaseSelectOneGameToShowInfoOf" xml:space="preserve">
+    <value>Please select one game to show info of.</value>
+  </data>
+  <data name="Message_ThisFileIsNoLongerExistDoYouWantToDeleteItFromTheRecentList" xml:space="preserve">
+    <value>This file is no longer exist. Do you want to delete it from the recent list ?</value>
+  </data>
+  <data name="Message_YouNeedToHardResetCurrentGameToApplyRegionSettings" xml:space="preserve">
+    <value>You need to hard reset current game to apply region settings</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Path" xml:space="preserve">
+    <value>Path</value>
+  </data>
+  <data name="Play Time" xml:space="preserve">
+    <value>Play Time</value>
+  </data>
+  <data name="Played" xml:space="preserve">
+    <value>Played</value>
+  </data>
+  <data name="Players" xml:space="preserve">
+    <value>Players</value>
+  </data>
+  <data name="Publisher" xml:space="preserve">
+    <value>Publisher</value>
+  </data>
+  <data name="Rating" xml:space="preserve">
+    <value>Rating</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="Release Date" xml:space="preserve">
+    <value>Release Date</value>
+  </data>
+  <data name="SHA1" xml:space="preserve">
+    <value>SHA1</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="Status_DeletingEntries" xml:space="preserve">
+    <value>Deleting Entries ...</value>
+  </data>
+  <data name="Status_Done" xml:space="preserve">
+    <value>Done.</value>
+  </data>
+  <data name="Status_Ready" xml:space="preserve">
+    <value>Ready.</value>
+  </data>
+  <data name="Status_UpdatingColumnsInTheDatabase" xml:space="preserve">
+    <value>Updating columns in the database ...</value>
+  </data>
+  <data name="System" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="Title_AddFilesToTheDatabase" xml:space="preserve">
+    <value>Add files to the database.</value>
+  </data>
+  <data name="Title_LoadStateAs" xml:space="preserve">
+    <value>Load state as</value>
+  </data>
+  <data name="Title_OpenRom" xml:space="preserve">
+    <value>Open rom</value>
+  </data>
+  <data name="Title_SaveStateAs" xml:space="preserve">
+    <value>Save state as</value>
+  </data>
+  <data name="Title_SaveWavFile" xml:space="preserve">
+    <value>Save wav file</value>
+  </data>
+  <data name="Build" xml:space="preserve">
+    <value>Build</value>
+  </data>
+  <data name="CoreVersion" xml:space="preserve">
+    <value>Core Version</value>
+  </data>
+  <data name="Revision" xml:space="preserve">
+    <value>Revision</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="About_CopyrightNotice" xml:space="preserve">
+    <value>MY NES
+------------
+A Nintendo Entertainment System / Family Computer (Nes/Famicom) Emulator written in C#.
+
+Copyright © Ala Ibrahim Hadid 2009 - 2014
+Email: ahdsoftwares@hotmail.com
+
+This program is free software: you can redistribute it and/or modify it under the terms
+of the GNU General Public License as published by the Free Software Foundation, either
+version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program. 
+If not, see &lt;http://www.gnu.org/licenses/&gt;.
+
+Important!!
+------------
+NES is either a trademark or registered trademark of Nintendo of America Inc.
+Famicom is either a trademark or registered trademark of Nintendo Co., LTD.
+All other trademarks are property of their respective owners.
+My Nes is not affiliated with or endorsed by any of the companies mentioned.
+
+Icons:
+-------
+Mark James
+http://www.famfamfam.com/lab/icons/silk/
+
+This work is licensed under a
+Creative Commons Attribution 2.5 License.
+[ http://creativecommons.org/licenses/by/2.5/ ]
+
+MLV:
+------
+Managed ListView control.
+Copyright © 2013 Ala Ibrahim Hadid.
+This is an article about this project includes all the information.
+http://www.codeproject.com/Articles/538518/Managed-ListView
+
+MMB:
+-------
+Managed Message Box
+Copyright © 2013 Ala Hadid.
+https://sourceforge.net/projects/managedmessagebox/
+
+7-Zip
+------
+7-Zip Copyright (C) 1999-2010 Igor Pavlov.
+
+Licenses for files are:
+
+1) 7z.dll: GNU LGPL + unRAR restriction
+2) All other files:  GNU LGPL
+
+The GNU LGPL + unRAR restriction means that you must follow both
+GNU LGPL rules and unRAR restriction rules.
+
+Note:
+You can use 7-Zip on any computer, including a computer in a commercial
+organization. You don't need to register or pay for 7-Zip.
+
+ZLIP
+-----
+Copyright (c) 2006-2007, ComponentAce
+http://www.componentace.com
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+Neither the name of ComponentAce nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+SlimDX
+--------
+Copyright (c) 2007-2010 SlimDX Group
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+SlimDX Media
+---------------
+All of the SlimDX media is covered by the Creative Commons Attribution-Share Alike 3.0 License:
+http://creativecommons.org/licenses/by-sa/3.0/us/
+
+You are free:
+* To Share - to copy, distribute, display, and perform the work
+* To Remix - to make derivative works
+
+Under the following conditions:
+* Attribution - You must attribute the work in the manner specified by the author or
+licensor (but not in any way that suggests that they endorse you or your use of the work).
+* Share Alike - If you alter, transform, or build upon this work, you may distribute
+the resulting work only under the same, similar or a compatible license.
+
+For any reuse or distribution, you must make clear to others the license terms of this work.
+The best way to do this is with a link to the above web page.
+
+Any of the above conditions can be waived if you get permission from the copyright holder.
+
+Apart from the remix rights granted under this license, nothing in this license impairs or
+restricts the author's moral rights.
+
+Sqlite.Net
+----------
+ADO.NET 2.0/3.5 SQLite Data Provider
+Version 1.0.66.0 April 18, 2010
+Using SQLite 3.6.23.1
+Written by Robert Simpson (robert@blackcastlesoft.com)
+Released to the public domain, use at your own risk!
+Official provider website:  http://sqlite.phxsoftware.com
+
+NesCartDB
+----------------
+By BootGod, released at : Sat Sep 10 14:40:41 2011
+Downloaded from:http://bootgod.dyndns.org:7777/home.php</value>
+  </data>
+  <data name="About_Credits" xml:space="preserve">
+    <value>Author and developer: Ala Ibrahim Hadid &lt;mailto:ahdsoftwares@hotmail.com&gt;
+
+Special thanks to Adam Becker &lt;mailto:beannaich@gmail.com&gt; for the great help !</value>
+  </data>
+  <data name="About_Links" xml:space="preserve">
+    <value>Website: http://sourceforge.net/projects/mynes/
+
+Article: http://www.codeproject.com/KB/game/MyNes_NitendoEmulator.aspx
+
+Facebook: http://www.facebook.com/pages/My-Nes/427707727244076</value>
+  </data>
+  <data name="Message_PaletteFileCantBeFound" xml:space="preserve">
+    <value>The palette file can't be found. The palette settings switched to generators. Go to Settings&gt;Palette to configure the palettes.</value>
+  </data>
+  <data name="Message_PaletteFileNotValid" xml:space="preserve">
+    <value>The palette file is not valid. Switch back to generators. To config palette settings, go to Settings&gt;Palette.</value>
+  </data>
+  <data name="Message_UnableToLoadPaletteFile" xml:space="preserve">
+    <value>Unable to load palette file!</value>
+  </data>
+  <data name="Message_PaletteFileNotExistOrSelected" xml:space="preserve">
+    <value>Palette file not exist; please add palette file via clicking on the Add link or select Use Generator settings instead.</value>
+  </data>
+  <data name="Message_ReplacePaletteFile" xml:space="preserve">
+    <value>A palette file with the same name already exist, replace it ?</value>
+  </data>
+  <data name="Message_ThisGameHaveKnownIssues" xml:space="preserve">
+    <value>This game belongs to a board/mapper that have known issues with My Nes</value>
+  </data>
+  <data name="Message_ThisGameMapperMarkedAsNotSupported" xml:space="preserve">
+    <value>This game mapper marked as not supported. 
+My Nes still can run this game using default Nes configuration (mapper 0). Do you want My Nes to run this game ?</value>
+  </data>
+  <data name="Text_AlwaysTryToRunGameWithNoSupportedMappers" xml:space="preserve">
+    <value>&amp;Always try to run game with no supported mappers, never show this message again.</value>
+  </data>
+  <data name="Text_AlwaysWarnAboutIssues" xml:space="preserve">
+    <value>&amp;Always warn me about game issues</value>
+  </data>
+  <data name="Status_AddingEntries" xml:space="preserve">
+    <value>Adding entries</value>
+  </data>
+  <data name="Status_CalculatingFiles" xml:space="preserve">
+    <value>Calculating files ...</value>
+  </data>
+  <data name="Status_DefaultEntriesFromNesCartDBGeneratedSuccessfully" xml:space="preserve">
+    <value>Default entries from NesCartDB generated successfully.</value>
+  </data>
+  <data name="Status_EntryADDED" xml:space="preserve">
+    <value>Entry ADDED</value>
+  </data>
+  <data name="Status_EntryUPDATED" xml:space="preserve">
+    <value>Entry UPDATED</value>
+  </data>
+  <data name="Status_FilesFound" xml:space="preserve">
+    <value>file(s) found.</value>
+  </data>
+  <data name="Status_GeneratingDefaultEntriesFromNesCartDB" xml:space="preserve">
+    <value>Generating default entries from NesCartDB ...</value>
+  </data>
+  <data name="Status_LoadingEntriesFromTheDatabase" xml:space="preserve">
+    <value>Loading entries from the database ...</value>
+  </data>
+  <data name="Status_SearchingFiles" xml:space="preserve">
+    <value>Searching files ...</value>
+  </data>
+  <data name="Status_TotalOf" xml:space="preserve">
+    <value>Total of</value>
+  </data>
+  <data name="Status_UpdatingDatabase" xml:space="preserve">
+    <value>Updating database (this may take a few minutes)</value>
+  </data>
+  <data name="Status_EntrySkipped" xml:space="preserve">
+    <value>Entry SKIPPED</value>
+  </data>
+</root>

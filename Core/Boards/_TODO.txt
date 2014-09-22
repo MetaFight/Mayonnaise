@@ -1,0 +1,69 @@
+﻿Mapper 1: Dragon Quest III doesn't work :(
+Mapper 5: split screen and Uchuu Keibitai SDF chr corruption for unknown reason in the intro (not in the split screen).
+Mapper 6: not implemented well.
+Mapper 12: not implemented due to incomplete information.
+Mapper 14: not implemented due to incomplete information.
+Mapper 17: not implemented due to incomplete information.
+Mapper 19: Setup mixer for sound channels.
+Mapper 20: not implemented; FDS system not implemented.
+Mapper 23: Wai Wai World is set as mapper 23 but VRC2 mode !!? game won't start when press start.
+Mapper 24-26: test and check the vrc6 sound channels.
+              mapper 26 game Esper Dream 2 glitchy
+Mapper 27-31: add support for 'em
+Mapper 35-43: add support for 'em
+Mapper 44: Super Big 7 - in - 1 : Double Dragon 3 game not work.
+Mapper 53-56: add support for 'em
+Mapper 58: Study and Game 32-in-1 (Ch) [!].nes needs keyboard ?
+Mapper 59: add support for it
+Mapper 63: support it !
+Mapper 69: Add mixer for sound channels.
+Mapper 83-84: Support 'em !!
+Mapper 85: Add support for VRC7 sound channels !
+Mapper 86: support sound.
+Mapper 90: the Super Mario World rom doesn't work while the Super Mario World [b1] works !!
+           DipSwitch not implemented, the irq modes 2-3 not implemented yet.
+Mapper 96: not implemented well also needs special controller.
+Mapper 98-104: support 'em
+Mapper 105: game hangs on title screen !
+Mapper 106: support it !
+Mapper 108-111: not docs !? support 'em
+Mapper 114: support it !
+Mapper 116-117: support 'em
+Mapper 120-132: support 'em
+Mapper 134-139: support 'em
+Mapper 141-151: support 'em
+Mapper 153: support it !
+Mapper 154: game shows glitches with chr
+Mapper 153-158: support 'em
+Mapper 161-163: support 'em
+Mapper 166-179: support 'em
+Mapper 180: Crazy Climber needs special controller.
+Mapper 181: support it !
+Mapper 183: support it !
+Mapper 186-188: support 'em
+Mapper 190: support it
+Mapper 191: test it well.
+Mapper 192: no game to test
+Mapper 193: game show nothing but fighter sprite !
+Mapper 194: no game to test
+Mapper 195-199: support 'em
+Mapper 202: 150 in 1 some games not work well; is it mapper or rom dump ?
+Mapper 204: 64-in-1 some games not work; is it mapper or rom dump ?
+Mapper 206: Test it.
+Mapper 207: Fudou Myouou Den not assigned as mapper 207 ! look into it.
+Mapper 208: support it
+Mapper 211-224: support 'em
+Mapper 222: need test.
+Mapper 229: need test.
+Mapper 230: only contra work.
+Mapper 233: test it.
+Mapper 234: not supported, docs unclear.
+Mapper 235-239: support 'em
+Mapper 241: support it.
+Mapper 243: shows glitches in "Poker III 5-in-1" main menu although the mapper is implemented well.
+Mapper 244: support it.
+Mapper 245: problems with these games:
+            Yin He Shi Dai
+            Yong Zhe Dou e Long - Dragon Quest VII (As)
+            Dong Fang de Chuan Shuo - The Hyrule Fantasy
+Mappe 247-255:  support 'em

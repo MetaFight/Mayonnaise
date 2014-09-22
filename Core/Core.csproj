@@ -1,0 +1,431 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{25F4068D-5D3E-45DA-85D6-8B113D51BA0E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MyNes.Core</RootNamespace>
+    <AssemblyName>Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>..\_Builds\DEBUG\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>..\_Builds\X86\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'X64|AnyCPU'">
+    <OutputPath>bin\X64\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'X64|x86'">
+    <OutputPath>bin\x86\X64\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'X64|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>..\_Builds\X64\</OutputPath>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'X86|AnyCPU'">
+    <OutputPath>bin\X86\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'X86|x86'">
+    <OutputPath>..\_Builds\X86\</OutputPath>
+    <PlatformTarget>x86</PlatformTarget>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'X86|x64'">
+    <OutputPath>bin\x64\X86\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attributes\BoardInfo.cs" />
+    <Compile Include="Attributes\NotImplementedWell.cs" />
+    <Compile Include="Attributes\NotSupported.cs" />
+    <Compile Include="Attributes\WithExternalSound.cs" />
+    <Compile Include="Boards\Discreet\Bandai.cs" />
+    <Compile Include="Boards\Board.cs" />
+    <Compile Include="Boards\Discreet\Namcot106.cs" />
+    <Compile Include="Boards\Eprom.cs" />
+    <Compile Include="Boards\FFE\FFE.cs" />
+    <Compile Include="Boards\Mapper000.cs" />
+    <Compile Include="Boards\Mapper001.cs" />
+    <Compile Include="Boards\Mapper002.cs" />
+    <Compile Include="Boards\Mapper003.cs" />
+    <Compile Include="Boards\Mapper004.cs" />
+    <Compile Include="Boards\Mapper005.cs" />
+    <Compile Include="Boards\Mapper006.cs" />
+    <Compile Include="Boards\Mapper007.cs" />
+    <Compile Include="Boards\Mapper008.cs" />
+    <Compile Include="Boards\Mapper009.cs" />
+    <Compile Include="Boards\Mapper010.cs" />
+    <Compile Include="Boards\Mapper011.cs" />
+    <Compile Include="Boards\Mapper012.cs" />
+    <Compile Include="Boards\Mapper013.cs" />
+    <Compile Include="Boards\Mapper014.cs" />
+    <Compile Include="Boards\Mapper015.cs" />
+    <Compile Include="Boards\Mapper016.cs" />
+    <Compile Include="Boards\Mapper017.cs" />
+    <Compile Include="Boards\Mapper018.cs" />
+    <Compile Include="Boards\Mapper019.cs" />
+    <Compile Include="Boards\Mapper020.cs" />
+    <Compile Include="Boards\Mapper021.cs" />
+    <Compile Include="Boards\Mapper022.cs" />
+    <Compile Include="Boards\Mapper023.cs" />
+    <Compile Include="Boards\Mapper024.cs" />
+    <Compile Include="Boards\Mapper025.cs" />
+    <Compile Include="Boards\Mapper027.cs" />
+    <Compile Include="Boards\Mapper028.cs" />
+    <Compile Include="Boards\Mapper029.cs" />
+    <Compile Include="Boards\Mapper030.cs" />
+    <Compile Include="Boards\Mapper031.cs" />
+    <Compile Include="Boards\Mapper032.cs" />
+    <Compile Include="Boards\Mapper033.cs" />
+    <Compile Include="Boards\Mapper034.cs" />
+    <Compile Include="Boards\Mapper035.cs" />
+    <Compile Include="Boards\Mapper036.cs" />
+    <Compile Include="Boards\Mapper037.cs" />
+    <Compile Include="Boards\Mapper038.cs" />
+    <Compile Include="Boards\Mapper039.cs" />
+    <Compile Include="Boards\Mapper040.cs" />
+    <Compile Include="Boards\Mapper041.cs" />
+    <Compile Include="Boards\Mapper042.cs" />
+    <Compile Include="Boards\Mapper043.cs" />
+    <Compile Include="Boards\Mapper044.cs" />
+    <Compile Include="Boards\Mapper045.cs" />
+    <Compile Include="Boards\Mapper046.cs" />
+    <Compile Include="Boards\Mapper047.cs" />
+    <Compile Include="Boards\Mapper048.cs" />
+    <Compile Include="Boards\Mapper049.cs" />
+    <Compile Include="Boards\Mapper050.cs" />
+    <Compile Include="Boards\Mapper051.cs" />
+    <Compile Include="Boards\Mapper052.cs" />
+    <Compile Include="Boards\Mapper053.cs" />
+    <Compile Include="Boards\Mapper054.cs" />
+    <Compile Include="Boards\Mapper055.cs" />
+    <Compile Include="Boards\Mapper056.cs" />
+    <Compile Include="Boards\Mapper057.cs" />
+    <Compile Include="Boards\Mapper058.cs" />
+    <Compile Include="Boards\Mapper059.cs" />
+    <Compile Include="Boards\Mapper060.cs" />
+    <Compile Include="Boards\Mapper061.cs" />
+    <Compile Include="Boards\Mapper062.cs" />
+    <Compile Include="Boards\Mapper063.cs" />
+    <Compile Include="Boards\Mapper064.cs" />
+    <Compile Include="Boards\Mapper065.cs" />
+    <Compile Include="Boards\Mapper066.cs" />
+    <Compile Include="Boards\Mapper067.cs" />
+    <Compile Include="Boards\Mapper068.cs" />
+    <Compile Include="Boards\Mapper069.cs" />
+    <Compile Include="Boards\Mapper070.cs" />
+    <Compile Include="Boards\Mapper071.cs" />
+    <Compile Include="Boards\Mapper072.cs" />
+    <Compile Include="Boards\Mapper073.cs" />
+    <Compile Include="Boards\Mapper074.cs" />
+    <Compile Include="Boards\Mapper075.cs" />
+    <Compile Include="Boards\Mapper076.cs" />
+    <Compile Include="Boards\Mapper077.cs" />
+    <Compile Include="Boards\Mapper078.cs" />
+    <Compile Include="Boards\Mapper079.cs" />
+    <Compile Include="Boards\Mapper080.cs" />
+    <Compile Include="Boards\Mapper081.cs" />
+    <Compile Include="Boards\Mapper082.cs" />
+    <Compile Include="Boards\Mapper083.cs" />
+    <Compile Include="Boards\Mapper084.cs" />
+    <Compile Include="Boards\Mapper085.cs" />
+    <Compile Include="Boards\Mapper086.cs" />
+    <Compile Include="Boards\Mapper087.cs" />
+    <Compile Include="Boards\Mapper088.cs" />
+    <Compile Include="Boards\Mapper089.cs" />
+    <Compile Include="Boards\Mapper090.cs" />
+    <Compile Include="Boards\Mapper091.cs" />
+    <Compile Include="Boards\Mapper092.cs" />
+    <Compile Include="Boards\Mapper093.cs" />
+    <Compile Include="Boards\Mapper094.cs" />
+    <Compile Include="Boards\Mapper095.cs" />
+    <Compile Include="Boards\Mapper096.cs" />
+    <Compile Include="Boards\Mapper097.cs" />
+    <Compile Include="Boards\Mapper098.cs" />
+    <Compile Include="Boards\Mapper099.cs" />
+    <Compile Include="Boards\Mapper100.cs" />
+    <Compile Include="Boards\Mapper101.cs" />
+    <Compile Include="Boards\Mapper102.cs" />
+    <Compile Include="Boards\Mapper103.cs" />
+    <Compile Include="Boards\Mapper104.cs" />
+    <Compile Include="Boards\Mapper105.cs" />
+    <Compile Include="Boards\Mapper106.cs" />
+    <Compile Include="Boards\Mapper107.cs" />
+    <Compile Include="Boards\Mapper108.cs" />
+    <Compile Include="Boards\Mapper109.cs" />
+    <Compile Include="Boards\Mapper110.cs" />
+    <Compile Include="Boards\Mapper111.cs" />
+    <Compile Include="Boards\Mapper112.cs" />
+    <Compile Include="Boards\Mapper113.cs" />
+    <Compile Include="Boards\Mapper114.cs" />
+    <Compile Include="Boards\Mapper115.cs" />
+    <Compile Include="Boards\Mapper116.cs" />
+    <Compile Include="Boards\Mapper117.cs" />
+    <Compile Include="Boards\Mapper118.cs" />
+    <Compile Include="Boards\Mapper119.cs" />
+    <Compile Include="Boards\Mapper120.cs" />
+    <Compile Include="Boards\Mapper121.cs" />
+    <Compile Include="Boards\Mapper122.cs" />
+    <Compile Include="Boards\Mapper123.cs" />
+    <Compile Include="Boards\Mapper124.cs" />
+    <Compile Include="Boards\Mapper125.cs" />
+    <Compile Include="Boards\Mapper126.cs" />
+    <Compile Include="Boards\Mapper127.cs" />
+    <Compile Include="Boards\Mapper128.cs" />
+    <Compile Include="Boards\Mapper129.cs" />
+    <Compile Include="Boards\Mapper130.cs" />
+    <Compile Include="Boards\Mapper131.cs" />
+    <Compile Include="Boards\Mapper132.cs" />
+    <Compile Include="Boards\Mapper133.cs" />
+    <Compile Include="Boards\Mapper134.cs" />
+    <Compile Include="Boards\Mapper135.cs" />
+    <Compile Include="Boards\Mapper136.cs" />
+    <Compile Include="Boards\Mapper137.cs" />
+    <Compile Include="Boards\Mapper138.cs" />
+    <Compile Include="Boards\Mapper139.cs" />
+    <Compile Include="Boards\Mapper140.cs" />
+    <Compile Include="Boards\Mapper141.cs" />
+    <Compile Include="Boards\Mapper142.cs" />
+    <Compile Include="Boards\Mapper143.cs" />
+    <Compile Include="Boards\Mapper144.cs" />
+    <Compile Include="Boards\Mapper145.cs" />
+    <Compile Include="Boards\Mapper146.cs" />
+    <Compile Include="Boards\Mapper147.cs" />
+    <Compile Include="Boards\Mapper148.cs" />
+    <Compile Include="Boards\Mapper149.cs" />
+    <Compile Include="Boards\Mapper150.cs" />
+    <Compile Include="Boards\Mapper151.cs" />
+    <Compile Include="Boards\Mapper152.cs" />
+    <Compile Include="Boards\Mapper153.cs" />
+    <Compile Include="Boards\Mapper154.cs" />
+    <Compile Include="Boards\Mapper155.cs" />
+    <Compile Include="Boards\Mapper156.cs" />
+    <Compile Include="Boards\Mapper157.cs" />
+    <Compile Include="Boards\Mapper158.cs" />
+    <Compile Include="Boards\Mapper159.cs" />
+    <Compile Include="Boards\Mapper160.cs" />
+    <Compile Include="Boards\Mapper161.cs" />
+    <Compile Include="Boards\Mapper162.cs" />
+    <Compile Include="Boards\Mapper163.cs" />
+    <Compile Include="Boards\Mapper164.cs" />
+    <Compile Include="Boards\Mapper165.cs" />
+    <Compile Include="Boards\Mapper166.cs" />
+    <Compile Include="Boards\Mapper167.cs" />
+    <Compile Include="Boards\Mapper168.cs" />
+    <Compile Include="Boards\Mapper169.cs" />
+    <Compile Include="Boards\Mapper170.cs" />
+    <Compile Include="Boards\Mapper171.cs" />
+    <Compile Include="Boards\Mapper172.cs" />
+    <Compile Include="Boards\Mapper173.cs" />
+    <Compile Include="Boards\Mapper174.cs" />
+    <Compile Include="Boards\Mapper175.cs" />
+    <Compile Include="Boards\Mapper176.cs" />
+    <Compile Include="Boards\Mapper177.cs" />
+    <Compile Include="Boards\Mapper178.cs" />
+    <Compile Include="Boards\Mapper179.cs" />
+    <Compile Include="Boards\Mapper180.cs" />
+    <Compile Include="Boards\Mapper181.cs" />
+    <Compile Include="Boards\Mapper182.cs" />
+    <Compile Include="Boards\Mapper183.cs" />
+    <Compile Include="Boards\Mapper184.cs" />
+    <Compile Include="Boards\Mapper185.cs" />
+    <Compile Include="Boards\Mapper186.cs" />
+    <Compile Include="Boards\Mapper187.cs" />
+    <Compile Include="Boards\Mapper188.cs" />
+    <Compile Include="Boards\Mapper189.cs" />
+    <Compile Include="Boards\Mapper190.cs" />
+    <Compile Include="Boards\Mapper191.cs" />
+    <Compile Include="Boards\Mapper192.cs" />
+    <Compile Include="Boards\Mapper193.cs" />
+    <Compile Include="Boards\Mapper194.cs" />
+    <Compile Include="Boards\Mapper195.cs" />
+    <Compile Include="Boards\Mapper196.cs" />
+    <Compile Include="Boards\Mapper197.cs" />
+    <Compile Include="Boards\Mapper198.cs" />
+    <Compile Include="Boards\Mapper199.cs" />
+    <Compile Include="Boards\Mapper200.cs" />
+    <Compile Include="Boards\Mapper202.cs" />
+    <Compile Include="Boards\Mapper203.cs" />
+    <Compile Include="Boards\Mapper201.cs" />
+    <Compile Include="Boards\Mapper204.cs" />
+    <Compile Include="Boards\Mapper205.cs" />
+    <Compile Include="Boards\Mapper206.cs" />
+    <Compile Include="Boards\Mapper207.cs" />
+    <Compile Include="Boards\Mapper208.cs" />
+    <Compile Include="Boards\Mapper209.cs" />
+    <Compile Include="Boards\Mapper210.cs" />
+    <Compile Include="Boards\Mapper211.cs" />
+    <Compile Include="Boards\Mapper212.cs" />
+    <Compile Include="Boards\Mapper213.cs" />
+    <Compile Include="Boards\Mapper214.cs" />
+    <Compile Include="Boards\Mapper215.cs" />
+    <Compile Include="Boards\Mapper216.cs" />
+    <Compile Include="Boards\Mapper217.cs" />
+    <Compile Include="Boards\Mapper218.cs" />
+    <Compile Include="Boards\Mapper219.cs" />
+    <Compile Include="Boards\Mapper220.cs" />
+    <Compile Include="Boards\Mapper221.cs" />
+    <Compile Include="Boards\Mapper222.cs" />
+    <Compile Include="Boards\Mapper223.cs" />
+    <Compile Include="Boards\Mapper224.cs" />
+    <Compile Include="Boards\Mapper225.cs" />
+    <Compile Include="Boards\Mapper226.cs" />
+    <Compile Include="Boards\Mapper227.cs" />
+    <Compile Include="Boards\Mapper228.cs" />
+    <Compile Include="Boards\Mapper229.cs" />
+    <Compile Include="Boards\Mapper230.cs" />
+    <Compile Include="Boards\Mapper231.cs" />
+    <Compile Include="Boards\Mapper232.cs" />
+    <Compile Include="Boards\Mapper233.cs" />
+    <Compile Include="Boards\Mapper234.cs" />
+    <Compile Include="Boards\Mapper235.cs" />
+    <Compile Include="Boards\Mapper236.cs" />
+    <Compile Include="Boards\Mapper237.cs" />
+    <Compile Include="Boards\Mapper238.cs" />
+    <Compile Include="Boards\Mapper239.cs" />
+    <Compile Include="Boards\Mapper240.cs" />
+    <Compile Include="Boards\Mapper241.cs" />
+    <Compile Include="Boards\Mapper242.cs" />
+    <Compile Include="Boards\Mapper243.cs" />
+    <Compile Include="Boards\Mapper244.cs" />
+    <Compile Include="Boards\Mapper245.cs" />
+    <Compile Include="Boards\Mapper246.cs" />
+    <Compile Include="Boards\Mapper247.cs" />
+    <Compile Include="Boards\Mapper248.cs" />
+    <Compile Include="Boards\Mapper249.cs" />
+    <Compile Include="Boards\Mapper250.cs" />
+    <Compile Include="Boards\Mapper251.cs" />
+    <Compile Include="Boards\Mapper252.cs" />
+    <Compile Include="Boards\Mapper253.cs" />
+    <Compile Include="Boards\Mapper254.cs" />
+    <Compile Include="Boards\Mapper255.cs" />
+    <Compile Include="Boards\MMC\MMC2.cs" />
+    <Compile Include="Databases\NesCartDatabase.cs" />
+    <Compile Include="Databases\NesCartDatabaseGameInfo.cs" />
+    <Compile Include="Databases\SRAMBankInfo.cs" />
+    <Compile Include="ExternalSoundChannels\Namcot106SoundChannel.cs" />
+    <Compile Include="ExternalSoundChannels\Sunsoft5BSoundChannel.cs" />
+    <Compile Include="ExternalSoundChannels\VRC6PulseSoundChannel.cs" />
+    <Compile Include="ExternalSoundChannels\VRC6SawtoothSoundChannel.cs" />
+    <Compile Include="GameGenie\GameGenie.cs" />
+    <Compile Include="GameGenie\GameGenieCode.cs" />
+    <Compile Include="Interfaces\BlankJoypad.cs" />
+    <Compile Include="Interfaces\BlankVSUnisystemDIP.cs" />
+    <Compile Include="Interfaces\BlankZapper.cs" />
+    <Compile Include="Interfaces\IAudioProvider.cs" />
+    <Compile Include="Exceptions\MapperNotSupportedException.cs" />
+    <Compile Include="Exceptions\RomNotValidException.cs" />
+    <Compile Include="Interfaces\IVSUnisystemDIPConnecter.cs" />
+    <Compile Include="Interfaces\IJoypadConnecter.cs" />
+    <Compile Include="Interfaces\IVideoProvider.cs" />
+    <Compile Include="ExternalSoundChannels\MMC5PcmSoundChannel.cs" />
+    <Compile Include="ExternalSoundChannels\MMC5SqrSoundChannel.cs" />
+    <Compile Include="Boards\Mapper026.cs" />
+    <Compile Include="Interfaces\IZapperConnecter.cs" />
+    <Compile Include="NesEmu.Apu.cs" />
+    <Compile Include="NesEmu.Cpu.cs" />
+    <Compile Include="NesEmu.Dmc.cs" />
+    <Compile Include="NesEmu.VSUnisystem.cs" />
+    <Compile Include="NesEmu.Input.cs" />
+    <Compile Include="NesEmu.Noise.cs" />
+    <Compile Include="NesEmu.Pulse1.cs" />
+    <Compile Include="NesEmu.Pulse2.cs" />
+    <Compile Include="NesEmu.State.cs" />
+    <Compile Include="NesEmu.Triangle.cs" />
+    <Compile Include="Palettes\PaletteFileWrapper.cs" />
+    <Compile Include="Types\ZlipWrapper.cs" />
+    <Compile Include="ZLIP\Adler32.cs" />
+    <Compile Include="ZLIP\Deflate.cs" />
+    <Compile Include="ZLIP\InfBlocks.cs" />
+    <Compile Include="ZLIP\InfCodes.cs" />
+    <Compile Include="ZLIP\Inflate.cs" />
+    <Compile Include="ZLIP\InfTree.cs" />
+    <Compile Include="ZLIP\StaticTree.cs" />
+    <Compile Include="ZLIP\SupportClass.cs" />
+    <Compile Include="ZLIP\Tree.cs" />
+    <Compile Include="ZLIP\ZInputStream.cs" />
+    <Compile Include="ZLIP\Zlib.cs" />
+    <Compile Include="ZLIP\ZOutputStream.cs" />
+    <Compile Include="ZLIP\ZStream.cs" />
+    <Compile Include="ZLIP\ZStreamException.cs" />
+    <Compile Include="_NesEmu.cs" />
+    <Compile Include="NesEmu.Dma.cs" />
+    <Compile Include="NesEmu.Interrupts.cs" />
+    <Compile Include="NesEmu.Memory.cs" />
+    <Compile Include="NesEmu.Ppu.cs" />
+    <Compile Include="Palettes\NTSCPaletteGenerator.cs" />
+    <Compile Include="Palettes\PALBPaletteGenerator.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rom\INes.cs" />
+    <Compile Include="Rom\IRom.cs" />
+    <Compile Include="Types\BankInfo.cs" />
+    <Compile Include="Types\CPURegisters.cs" />
+    <Compile Include="Types\Mirroring.cs" />
+    <Compile Include="Types\TVSystem.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Boards\_TODO.txt" />
+    <Content Include="ZLIP\history.txt" />
+    <Content Include="ZLIP\license.txt" />
+    <Content Include="ZLIP\readme.txt" />
+    <Content Include="ZLIP\zlib.net.csproj" />
+    <Content Include="ZLIP\zlib.net.sln" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

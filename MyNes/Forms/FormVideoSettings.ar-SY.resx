@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="checkBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>186, 17</value>
+  </data>
+  <data name="checkBox1.Text" xml:space="preserve">
+    <value>تعيين حجم النافذة عند تشغيل لعبة</value>
+  </data>
+  <data name="checkBox1.ToolTip" xml:space="preserve">
+    <value>تحديد إذا كان المحاكي سيقوم بتغيير حجم النافذة
+عند تشغيل لعبة، حجم النافذة المحدد في الأعلى</value>
+  </data>
+  <data name="comboBox_windowedModeSize.ToolTip" xml:space="preserve">
+    <value>حجم النافذة الذي سيستخدم عند التشغيل في 
+وضعية النافذة</value>
+  </data>
+  <data name="button1.Text" xml:space="preserve">
+    <value>&amp;موافق</value>
+  </data>
+  <data name="button1.ToolTip" xml:space="preserve">
+    <value>حفظ التغيرات و تفعيلها ثم الإغلاق</value>
+  </data>
+  <data name="button2.Text" xml:space="preserve">
+    <value>إل&amp;غاء الأمر</value>
+  </data>
+  <data name="button2.ToolTip" xml:space="preserve">
+    <value>تجاهل التغيرات و الإغلاق</value>
+  </data>
+  <data name="checkBox_fullscreen.Size" type="System.Drawing.Size, System.Drawing">
+    <value>185, 17</value>
+  </data>
+  <data name="checkBox_fullscreen.Text" xml:space="preserve">
+    <value>بدء اللعبة في وضعية ملئ الشاشة</value>
+  </data>
+  <data name="checkBox_fullscreen.ToolTip" xml:space="preserve">
+    <value>تحديد إذا كان المحاكي سيقوم بتشغيل اللعبة في وضعية
+ملئ الشاشة.
+يمكنك التنقل بين وضعية ملئ الشاشة و النافذة باستخدام
+المفتاح F12</value>
+  </data>
+  <data name="comboBox_fullscreenRes.ToolTip" xml:space="preserve">
+    <value>الدقة التي ستستخدم عند التشغيل في وضعية
+ملئ الشاشة</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 13</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>دقة الشاشة في وضع ملئ الشاشة:</value>
+  </data>
+  <data name="checkBox_showNot.Size" type="System.Drawing.Size, System.Drawing">
+    <value>88, 17</value>
+  </data>
+  <data name="checkBox_showNot.Text" xml:space="preserve">
+    <value>إظهار الرسائل</value>
+  </data>
+  <data name="checkBox_showNot.ToolTip" xml:space="preserve">
+    <value>تحديد إذا كان المحاكي يجب بأن يظهر الرسائل
+التي قد تظهر عند حفظ الحالة، تحميل الحالة ....</value>
+  </data>
+  <data name="checkBox_showFPS.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 17</value>
+  </data>
+  <data name="checkBox_showFPS.Text" xml:space="preserve">
+    <value>إظهار عدد الأطر المنجزة في الثانية</value>
+  </data>
+  <data name="checkBox_showFPS.ToolTip" xml:space="preserve">
+    <value>تحديد إذا كان المحاكي سيظهر رقم عدد الأطر
+المنجزة في الثانية</value>
+  </data>
+  <data name="checkBox_cutLines.Size" type="System.Drawing.Size, System.Drawing">
+    <value>170, 17</value>
+  </data>
+  <data name="checkBox_cutLines.Text" xml:space="preserve">
+    <value>إخفاء الخطوط التي يجب إخفاؤها</value>
+  </data>
+  <data name="checkBox_cutLines.ToolTip" xml:space="preserve">
+    <value>تحديد إذا كان المحاكي يجب أن يخفي الخطوط التي
+يجب بأن تكون مخفية، هذه الخطوط المسخ تكون
+غير ظاهرة في الجهاز الحقيقي
+(8 for NTSC/DENDY, 1 for PALB)</value>
+  </data>
+  <data name="checkBox_hardware_vertex_processing.Size" type="System.Drawing.Size, System.Drawing">
+    <value>141, 17</value>
+  </data>
+  <data name="checkBox_hardware_vertex_processing.Text" xml:space="preserve">
+    <value>معالجة الخطوط في الجهاز</value>
+  </data>
+  <data name="checkBox_hardware_vertex_processing.ToolTip" xml:space="preserve">
+    <value>تحديد إذا كانت معالجة الخطوط ستتم في الجهاز
+و إلا ستتم برمجياً</value>
+  </data>
+  <data name="checkBox_keep_aspect_ratio.Size" type="System.Drawing.Size, System.Drawing">
+    <value>135, 17</value>
+  </data>
+  <data name="checkBox_keep_aspect_ratio.Text" xml:space="preserve">
+    <value>الحفاظ على نسبة الأطار</value>
+  </data>
+  <data name="checkBox_keep_aspect_ratio.ToolTip" xml:space="preserve">
+    <value>إذا كان مفعلاً، سيقوم المحاكي بتشغيل اللعبة
+بحيث يحافظ على نسبة الإطار بالنسبة لحجم 
+النافذة أو الشاشة</value>
+  </data>
+  <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>36, 13</value>
+  </data>
+  <data name="label2.Text" xml:space="preserve">
+    <value>الفلتر:</value>
+  </data>
+  <data name="comboBox_filter.ToolTip" xml:space="preserve">
+    <value>الفلتر المستخدم لتنقية الصورة</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 13</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>حجم النافذة:</value>
+  </data>
+  <data name="button3.Text" xml:space="preserve">
+    <value>الإفتراضية</value>
+  </data>
+  <data name="button3.ToolTip" xml:space="preserve">
+    <value>إرجاع الخيارات إلى الافتراضية</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="$this.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>Yes</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="$this.RightToLeftLayout" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>إعدادات الفيديو</value>
+  </data>
+</root>

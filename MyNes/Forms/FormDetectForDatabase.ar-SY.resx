@@ -1,0 +1,391 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="columnHeader1.Text" xml:space="preserve">
+    <value>المجلد</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="listView1.RightToLeftLayout" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="imageList1.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABc
+        BQAAAk1TRnQBSQFMAwEBAAHAAQABwAEAARABAAEQAQAE/wEhAQAI/wFCAU0BNgcAATYDAAEoAwABQAMA
+        ARADAAEBAQABIAYAARD/AP8AGAADQAFwAVICVAGmAVUCXAHqAVEBbQGDAfcBUQFtAYMB9wFRAW0BgwH3
+        AVEBbQGDAfcBUQFtAYMB9wFRAW0BgwH3AVEBbQGDAfcBUQFtAYMB9wFRAW0BgwH3AVMBZAFpAfEDTAGT
+        yAABWAJhAeYBYwJlAfABpwGxAbkB/QGeAdsB9AH/AZYB2gHzAf8BjgHYAfMB/wGGAdcB8wH/AWcB1AHy
+        Af8BYQHTAfIB/wFaAdIB8QH/AVQB0AHxAf8BUQHPAfEB/wGTAbsByQH+AU4BXQFhAfDIAAFRAW0BhAH3
+        Ae8B+gH+Af8BoQHpAfkB/wGRAeUB+AH/AYEB4QH3Af8BWgHeAfYB/wFLAdoB9QH/ATwB1wH0Af8BLwHT
+        AfMB/wEhAdAB8gH/ARYBzQHxAf8BDgHLAfAB/wHKAfIB+wH/AVEBbQGEAffIAAE+AXEBfwH4AfIB+gH9
+        Af8BswHtAfoB/wGkAekB+QH/AZUB5gH4Af8BhQHiAfcB/wFeAd4B9gH/AU0B2wH1Af8BPwHXAfQB/wEx
+        AdQB8wH/ASMB0QHyAf8BGAHOAfEB/wHMAfIB+wH/AVEBbQGEAffIAAFBAXcBiQH5AfYB/AH+Af8ByAHy
+        AfwB/wG5Ae8B+wH/AawB7AH6Af8BnAHoAfkB/wGLAeMB9wH/AWQB4AH2Af8BVAHcAfYB/wFFAdkB9QH/
+        ATcB1gH0Af8BLAHTAfMB/wHQAfMB/AH/AVEBbQGEAffIAAFNAXYBiQH6Af4D/wH4Af0C/wH2Af0C/wH1
+        AfwC/wHzAfwB/gH/AdgB9gH8Af8BlAHmAfgB/wGFAeMB9wH/AV4B3wH2Af8BUAHbAfUB/wFEAdgB9AH/
+        AdcB9AH8Af8BUQFxAYQB98gAAU0BeAGJAfoB6AH2AfsB/wGUAdQB7wH/AYgBzgHuAf8BWwHBAekB/wHJ
+        AekB9gH/AfIB/AH+Af8B8wH8Af4B/wHyAfwB/gH/AfAB/AH+Af8B7wH7Af4B/wHuAfsB/gH/Af4D/wFR
+        AXcBhAH3yAABWQFnAWgB8gHxAfoB/QH/AZQB3gH1Af8BkwHcAfQB/wGBAdUB8gH/AVIBygHtAf8BVAHL
+        AeoB/wGFAdMB7wH/AYAB0gHvAf8BYgHQAe8B/wFeAc8B7gH/AVoBzwHuAf8B6QH3AfsB/wFMAWYBbQHz
+        yAABTgFdAWMB8AH3AfwB/gH/AY4B5AH4Af8BkQHeAfUB/wGfAeAB9QH/AawB4QH2Af8B7wH7Af4B/wH0
+        Af0B/gH/AfMB/AH+Af8B8QH8Af4B/wHvAfsB/gH/Ae4B+wH+Af8BjQKOAfkBXAJgAdTIAAE+AXgBfwH4
+        Af0C/gH/Af4D/wL+Av8B/QH+Av8B/gP/AeoB9wH7Af8BagGGAYoB+QFcAXwBhAH4AVwBfAGEAfgBXAF8
+        AYQB+AFtAYIBhQH3A2EB4QM1AVbIAAFbAl4B0AFNAX0BjwH6AU0BfQGPAfoBTQF9AY8B+gFNAX0BjwH6
+        AU0BfQGPAfoBWAJeAd0DEAEWAwsBDwMLAQ8DCwEPAwsBDwMLAQ8DAwEE/wD/AP8AxwABQgFNAT4HAAE+
+        AwABKAMAAUADAAEQAwABAQEAAQEFAAGAFwAD/wEAAv8GAAL/BgABgAEBBgABgAEBBgABgAEBBgABgAEB
+        BgABgAEBBgABgAEBBgABgAEBBgABgAEBBgABgAEBBgABgAEBBgABgAEBBgAC/wYAAv8GAAL/BgAL
+</value>
+  </data>
+  <data name="button1.Text" xml:space="preserve">
+    <value>إ&amp;ضافة</value>
+  </data>
+  <data name="button1.ToolTip" xml:space="preserve">
+    <value>إضافة مجلد إلى القائمة</value>
+  </data>
+  <data name="button2.Text" xml:space="preserve">
+    <value>&amp;حذف</value>
+  </data>
+  <data name="button2.ToolTip" xml:space="preserve">
+    <value>حذف المجلدات المختارة من القائمة</value>
+  </data>
+  <data name="button3.Text" xml:space="preserve">
+    <value>ال&amp;بدء</value>
+  </data>
+  <data name="button3.ToolTip" xml:space="preserve">
+    <value>بدء عملية التحديد</value>
+  </data>
+  <data name="button4.Text" xml:space="preserve">
+    <value>إل&amp;غاء الأمر</value>
+  </data>
+  <data name="button4.ToolTip" xml:space="preserve">
+    <value>إلغاء الأمر</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>229, 13</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>الإمتدادات التي ستستخدم (إفصل باستخدام ','):</value>
+  </data>
+  <data name="checkBox_includeSubFolders.Size" type="System.Drawing.Size, System.Drawing">
+    <value>139, 17</value>
+  </data>
+  <data name="checkBox_includeSubFolders.Text" xml:space="preserve">
+    <value>تضمين المجلدات الفرعية</value>
+  </data>
+  <data name="checkBox_includeSubFolders.ToolTip" xml:space="preserve">
+    <value>تضمين المجلدات الفرعية في عملية البحث</value>
+  </data>
+  <data name="checkBox_matchCase.Location" type="System.Drawing.Point, System.Drawing">
+    <value>299, 242</value>
+  </data>
+  <data name="checkBox_matchCase.Size" type="System.Drawing.Size, System.Drawing">
+    <value>86, 17</value>
+  </data>
+  <data name="checkBox_matchCase.Text" xml:space="preserve">
+    <value>مطابقة الحالة</value>
+  </data>
+  <data name="checkBox_matchCase.ToolTip" xml:space="preserve">
+    <value>استخدام مطابقة الحال (حرف كبير في اللغة الأنكليزية) عند البحث</value>
+  </data>
+  <data name="checkBox_matchWord.Location" type="System.Drawing.Point, System.Drawing">
+    <value>299, 265</value>
+  </data>
+  <data name="checkBox_matchWord.Size" type="System.Drawing.Size, System.Drawing">
+    <value>90, 17</value>
+  </data>
+  <data name="checkBox_matchWord.Text" xml:space="preserve">
+    <value>مطابقة الكلمة</value>
+  </data>
+  <data name="checkBox_matchWord.ToolTip" xml:space="preserve">
+    <value>استخدم مطابقة الكلمة في البحث</value>
+  </data>
+  <data name="checkBox_deleteOldDetected.Location" type="System.Drawing.Point, System.Drawing">
+    <value>299, 196</value>
+  </data>
+  <data name="checkBox_deleteOldDetected.Size" type="System.Drawing.Size, System.Drawing">
+    <value>157, 17</value>
+  </data>
+  <data name="checkBox_deleteOldDetected.Text" xml:space="preserve">
+    <value>حذف كافة التحديدات السابقة</value>
+  </data>
+  <data name="checkBox_deleteOldDetected.ToolTip" xml:space="preserve">
+    <value>حذف كافة الملفات المحددة سابقاً لكافة العناصر</value>
+  </data>
+  <data name="label_status.Text" xml:space="preserve">
+    <value>أنقر على البدء لبدء عملية التحديد</value>
+  </data>
+  <data name="checkBox_oneFilePerRom.Location" type="System.Drawing.Point, System.Drawing">
+    <value>299, 219</value>
+  </data>
+  <data name="checkBox_oneFilePerRom.Size" type="System.Drawing.Size, System.Drawing">
+    <value>118, 17</value>
+  </data>
+  <data name="checkBox_oneFilePerRom.Text" xml:space="preserve">
+    <value>ملف واحد لكل عنصر</value>
+  </data>
+  <data name="checkBox_oneFilePerRom.ToolTip" xml:space="preserve">
+    <value>إذا كان مفعلاً، سيقوم المحرك بتحديد ملف واحد فقط
+لكل عنصر أي العنصر يأخد ملف واحد حتى و لو طابق
+أكثر من ذلك</value>
+  </data>
+  <data name="checkBox_dontAllowMoreThanOneFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>206, 17</value>
+  </data>
+  <data name="checkBox_dontAllowMoreThanOneFile.Text" xml:space="preserve">
+    <value>لا تحدد نفس الملف لأكثر من عنصر واحد</value>
+  </data>
+  <data name="checkBox_dontAllowMoreThanOneFile.ToolTip" xml:space="preserve">
+    <value>إذا كان مفعلاً، إي ملف يتم مطابقته مع عنصر من قاعدة
+البيانات سيتم حذفه من الذاكرة، هذا الخيار قد يسرع
+عملية التحديد بشكل ملحوظ</value>
+  </data>
+  <data name="button5.Text" xml:space="preserve">
+    <value>افتراضية</value>
+  </data>
+  <data name="button5.ToolTip" xml:space="preserve">
+    <value>استعادة الإمتدادت الافتراضية</value>
+  </data>
+  <data name="checkBox_useRomNameInstead.Size" type="System.Drawing.Size, System.Drawing">
+    <value>281, 17</value>
+  </data>
+  <data name="checkBox_useRomNameInstead.Text" xml:space="preserve">
+    <value>استخدم إسم العنصر بدلاً من اسم الملف المحدد للعنصر</value>
+  </data>
+  <data name="checkBox_useRomNameInstead.ToolTip" xml:space="preserve">
+    <value>إذا كان مفعلاً، سيقوم محرك البحث باستخدام اسم العنصر
+بدلاً من اسم الملف من المسار المحدد للعتصر</value>
+  </data>
+  <data name="radioButton_searchmode_rominfile.Location" type="System.Drawing.Point, System.Drawing">
+    <value>47, 19</value>
+  </data>
+  <data name="radioButton_searchmode_rominfile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>107, 17</value>
+  </data>
+  <data name="radioButton_searchmode_rominfile.Text" xml:space="preserve">
+    <value>عنصر ضمن الملف</value>
+  </data>
+  <data name="radioButton_searchmode_rominfile.ToolTip" xml:space="preserve">
+    <value>سيكون البحث على الشكل: اسم العنصر ضمن اسم الملف
+
+استخدم هذا النوع في حال كانت أسماء العناصر تحوي على رموز
+من الشكل:
+(U), (E), (W) .....</value>
+  </data>
+  <data name="radioButton_searchmode_fileinrom.Location" type="System.Drawing.Point, System.Drawing">
+    <value>49, 42</value>
+  </data>
+  <data name="radioButton_searchmode_fileinrom.Size" type="System.Drawing.Size, System.Drawing">
+    <value>105, 17</value>
+  </data>
+  <data name="radioButton_searchmode_fileinrom.Text" xml:space="preserve">
+    <value>ملف ضمن العنصر</value>
+  </data>
+  <data name="radioButton_searchmode_fileinrom.ToolTip" xml:space="preserve">
+    <value>سيكون البحث على الشكل: اسم الملف ضمن اسم العنصر
+
+استخدم هذا النوع في حال كانت أسماء الملفات تحوي على رموز من الشكل:
+(U), (E), (W) ...</value>
+  </data>
+  <data name="radioButton_searchmode_both.Location" type="System.Drawing.Point, System.Drawing">
+    <value>77, 65</value>
+  </data>
+  <data name="radioButton_searchmode_both.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 17</value>
+  </data>
+  <data name="radioButton_searchmode_both.Text" xml:space="preserve">
+    <value>النوعين معاً</value>
+  </data>
+  <data name="radioButton_searchmode_both.ToolTip" xml:space="preserve">
+    <value>سيقوم المحرك بتحديد النوع تلقائياً
+
+هذا النوع لا ينصح به لأنه قد يحدث أخطاء</value>
+  </data>
+  <data name="radioButton_startWith.Location" type="System.Drawing.Point, System.Drawing">
+    <value>96, 19</value>
+  </data>
+  <data name="radioButton_startWith.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 17</value>
+  </data>
+  <data name="radioButton_startWith.Text" xml:space="preserve">
+    <value>يبدأ مع</value>
+  </data>
+  <data name="radioButton_startWith.ToolTip" xml:space="preserve">
+    <value>تعني النص الذي يتم البحث فيه يجب بأن يبدأ
+بالنص المطلوب</value>
+  </data>
+  <data name="radioButton_endwith.Location" type="System.Drawing.Point, System.Drawing">
+    <value>87, 65</value>
+  </data>
+  <data name="radioButton_endwith.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 17</value>
+  </data>
+  <data name="radioButton_endwith.Text" xml:space="preserve">
+    <value>ينتهي ب</value>
+  </data>
+  <data name="radioButton_endwith.ToolTip" xml:space="preserve">
+    <value>تعني النص الذي يتم البحث فيه يجب بأن ينتهي
+بالنص المطلوب</value>
+  </data>
+  <data name="radioButton_contains.Location" type="System.Drawing.Point, System.Drawing">
+    <value>102, 42</value>
+  </data>
+  <data name="radioButton_contains.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 17</value>
+  </data>
+  <data name="radioButton_contains.Text" xml:space="preserve">
+    <value>يحوي</value>
+  </data>
+  <data name="radioButton_contains.ToolTip" xml:space="preserve">
+    <value>تعني النص الذي يتم البحث فيه يجب بأن يحتوي
+على النص المطلوب</value>
+  </data>
+  <data name="checkBox_useNameWhenPathNotValid.Size" type="System.Drawing.Size, System.Drawing">
+    <value>268, 17</value>
+  </data>
+  <data name="checkBox_useNameWhenPathNotValid.Text" xml:space="preserve">
+    <value>استخدم اسم العنصر إذا كان المسار المحدد غير صالح</value>
+  </data>
+  <data name="checkBox_useNameWhenPathNotValid.ToolTip" xml:space="preserve">
+    <value>إذا كان مفعلاً، سيقوم محرك البحث باستخدام اسم العنصر
+بدلاً من اسم الملفا المحدد للعنصر، و إلا سيتجاهل المحرك
+العنصر باعتباره غير صالح</value>
+  </data>
+  <data name="groupBox1.Text" xml:space="preserve">
+    <value>نوع البحث</value>
+  </data>
+  <data name="groupBox2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>178, 288</value>
+  </data>
+  <data name="groupBox2.Text" xml:space="preserve">
+    <value>نوع بحث النص</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="$this.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>Yes</value>
+  </data>
+  <data name="$this.RightToLeftLayout" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>تحديد</value>
+  </data>
+</root>

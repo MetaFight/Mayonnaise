@@ -1,0 +1,496 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="splitContainer1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>146, 25</value>
+  </data>
+  <data name="imageList_items.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADU
+        BwAAAk1TRnQBSQFMAgEBAgEAAYgBAQGIAQEBEAEAARABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        AwABEAMAAQEBAAEgBgABEP8AHwADKgFBAwYBCBgAAwYBCAMqAUHUAAMqAUEBHgEbAfIB/wJAAagB/QMG
+        AQgQAAMGAQgCKwFxAfwCAAHqAf8DKgFBFAADKQE+A10BygNdAcoDXQHKA10BygNdAcoDXQHKA10BygNd
+        AcoDWwHIAxkBI4wAAyoBQQEnASUB9QH/ATIBMAH6Af8BJwEkAfYB/wIrAXMB/AMGAQgIAAMGAQgCKwFx
+        AfwBEAEOAfEB/wEbARkB9gH/AgAB6gH/AyoBQQwAAx8BLAFcAmQB5wGaAu4B/wGaAu4B/wGaAu4B/wGa
+        Au4B/wGaAu4B/wGaAu4B/wGaAu4B/wGaAu4B/wEAAUIBRAH/A0MBeAMJAQyIAAMeASsBKgEnAfYB/wE0
+        ATEB+gH/AUABPwL/ASgBJQH2Af8CKwFzAfwDBgEIAwYBCAIrAXIB/AEWARQB8gH/ATIBMQL/ARkBFwH0
+        Af8CAAHpAf8DHgErCAADEQEXAQACogH/AQABrQGsAf8BtQL+Af8BtgL+Af8BtgL+Af8BtgL+Af8BtgL+
+        Af8BtgL+Af8BtgL+Af8BtgL+Af8BAAGQAZEB/wEAAYYBhwH/A04BmIwAAx4BKwEqASgB9gH/ATUBMgH6
+        Af8BQwFAAv8BKQEnAfYB/wIrAXMB/AJAAagB/QEfARwB9AH/ATcBNgL/AR8BHQH1Af8BBQEDAesB/wMe
+        ASsMAAMXASABRALPAf8BAAGQAZEB/wEAAUQBkQH/AQABQQE1Af8BAAGnAbEB/wEAAa8BsAH/ATIBMAGw
+        Af8BAAGPAaYB/wEAAU0BnwH/AQABiQGwAf8BAAGAAYIB/wEAAbcBuQH/A1QBppAAAx4CKwEpAfYB/wE2
+        ATMB+gH/AUMBQQL/AUIBPwL/AT8BPQL/AT0BOwL/ASYBJAH3Af8BDgEMAe4B/wMeASsQAAMXASABRALP
+        Af8BAAGQAZEB/wGpATkBJQH/AYYBrwGPAf8BkAGnAf4B/wG3AUcB/gH/Ad4BkQH9Af8BAAGpAf4B/wEA
+        AakB/gH/AQABqQH+Af8BAAGAAYIB/wEAAbcBuQH/A1QBppQAAx4BKwEsASoB9wH/AUgBRQL/ASgBJQL/
+        ASYBIwL/AUEBPwL/ARcBFQHwAf8DHgErFAADFwEgAUQCzwH/AQABkAGRAf8BAAFGAb4B/wEuATIByAH/
+        Ae4BQAH9Af8ByAGCAf0B/wHiASMB/QH/AdUBCwGaAf8BkQHHAfUB/wErAY4B2AH/AQABgAGCAf8BAAG3
+        AbkB/wNUAaaUAAMGAQgCQAGoAf0BTAFIAv8BLQEqAv8BKgEnAv8BRQFDAv8CQAGoAf0DBgEIFAADFwEg
+        AUQCzwH/AQABkAGRAf8BPgG3AccB/wE9AcABzgH/AcIBiwHYAf8BQQHEAdkB/wEAAZUBmgH/AT0BxQHR
+        Af8BPgG3AccB/wE+AboByQH/AQABgAGCAf8BAAG3AbkB/wNUAaaQAAMGAQgCKwF1AfwBPwE8AfsB/wGA
+        AU0C/wFNAUoC/wFLAUgC/wFIAUYC/wEtASsB9wH/AisBcwH8AwYBCBAAAxcBIAEQAscB/wEAAbEBsgH/
+        AQABoAGhAf8BAAGgAaEB/wEFAcsBzAH/AQABkAHuAf8BMAHuAe8B/wEAAaABoQH/AQABoAGhAf8BAAGg
+        AaEB/wEAAagBqgH/AQABtwG5Af8DVAGmjAADBgEIATIBLwF2AfwBRgFDAf0B/wGGAYIC/wFFAUIB/AH/
+        ATMBMQH4Af8BLwEsAfcB/wE8ATkB+gH/AUoBSAL/AS8BLAH3Af8CKwFzAfwDBgEIDAADEgEYAUQCzwH/
+        AZUCxgH/AQAB3gHfAf8BvgL+Af8BxwL+Af8BwQL+Af8BsAL+Af8BvgL+Af8BxwL+Af8BwQL+Af8BsAL+
+        Af8BAAG3AbkB/wM2AVmIAAMGAQgCQAGoAf0BTAFJAf4B/wGKAYcC/wFLAUgB/QH/ATsBOAH7Af8DHgEr
+        Ax4BKwEwAS0B+AH/AT0BOwH6Af8BTAFJAv8BMAEuAfcB/wIrAXMB/AMEAQULAAEBAyoEQAFxA0ABcQNA
+        AXEDQAFxA0ABcQNAAXEDQAFxA0ABcQNAAXEDQAFxAy0BRQMAAQGIAAMWAR8BSQFGAv8BgQFNAv8BgQFN
+        Af4B/wFDAUAB/QH/Ax4BKwgAAx4BKwExAS4B+AH/AT4BPAH7Af8BTQFLAv8BMQEuAfgB/wNAAW8DAQEC
+        yAADFgEfAUkBRgL/AUgBRQH+Af8DHgErEAADHgErATMBMAH4Af8BOQE3AfkB/wFTAVIBUwGoAx0BKdAA
+        AxYBHwMeASsYAAMeASsDQAFvAykBPvgAAwcBCswAAUIBTQE+BwABPgMAASgDAAFAAwABEAMAAQEBAAEB
+        BQABgBcAA/8BAAT/BAAC5wL/BAACwwHgAQMEAAKBAcABAQQAAYABAQGAAQEEAAHAAQMBgAEBBAAB4AEH
+        AYABAQQAAfABDwGAAQEEAAHwAQ8BgAEBBAAB4AEHAYABAQQAAcABAwGAAQEEAAGAAQEBgAEBBAABgQGA
+        Av8EAAHDAcEC/wQAAecB4wL/BAAB/wH3Av8EAAs=
+</value>
+  </data>
+  <data name="managedListView1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>599, 531</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="splitContainer1.Panel1.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="tabControl1.RightToLeftLayout" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="splitContainer2.Panel1.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
+  </data>
+  <data name="tabControl2.RightToLeftLayout" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="splitContainer2.Panel2.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
+  </data>
+  <data name="splitContainer1.Panel2.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
+  </data>
+  <data name="splitContainer1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>832, 531</value>
+  </data>
+  <data name="splitContainer1.SplitterDistance" type="System.Int32, mscorlib">
+    <value>599</value>
+  </data>
+  <data name="tabPage_game.Text" xml:space="preserve">
+    <value>معلومات اللعبة</value>
+  </data>
+  <data name="tabPage_snapshots.Text" xml:space="preserve">
+    <value>الصور</value>
+  </data>
+  <data name="tabPage_covers.Text" xml:space="preserve">
+    <value>الكوفر</value>
+  </data>
+  <data name="tabPage_info.Text" xml:space="preserve">
+    <value>معلومات</value>
+  </data>
+  <data name="tabPage_manuals.Text" xml:space="preserve">
+    <value>الكتب الإلكترونية</value>
+  </data>
+  <data name="toolStripButton1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>50, 22</value>
+  </data>
+  <data name="toolStripButton1.Text" xml:space="preserve">
+    <value>جديد</value>
+  </data>
+  <data name="toolStripButton1.ToolTipText" xml:space="preserve">
+    <value>إنشاء قاعدة بيانات جديدة</value>
+  </data>
+  <data name="toolStripButton2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>88, 22</value>
+  </data>
+  <data name="toolStripButton2.Text" xml:space="preserve">
+    <value>تعيين ملفات</value>
+  </data>
+  <data name="toolStripButton2.ToolTipText" xml:space="preserve">
+    <value>تعيين ملفات للعناصر الموجودة في قاعدة البيانات</value>
+  </data>
+  <data name="toolStripButton7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 22</value>
+  </data>
+  <data name="toolStripButton7.Text" xml:space="preserve">
+    <value>إضافة</value>
+  </data>
+  <data name="toolStripButton7.ToolTipText" xml:space="preserve">
+    <value>إضافة ملفات، إذا كان هناك ملفات مطابقة
+لعناصر سيتم تعيينها</value>
+  </data>
+  <data name="toolStripButton5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 22</value>
+  </data>
+  <data name="toolStripButton5.Text" xml:space="preserve">
+    <value>تحديد</value>
+  </data>
+  <data name="toolStripButton5.ToolTipText" xml:space="preserve">
+    <value>تحديد ملفات إضافية للعناصر
+الملفات الإضافية هي إما الصور، الكوفر، المعلومات أو الكتب الإلكترونية</value>
+  </data>
+  <data name="toolStripButton4.Size" type="System.Drawing.Size, System.Drawing">
+    <value>49, 22</value>
+  </data>
+  <data name="toolStripButton4.Text" xml:space="preserve">
+    <value>بحث</value>
+  </data>
+  <data name="toolStripButton4.ToolTipText" xml:space="preserve">
+    <value>البحث عن ألعاب ضمن قاعدة البيانات مع خيارات متقدمة</value>
+  </data>
+  <data name="toolStripTextBox_find.ToolTipText" xml:space="preserve">
+    <value>البحث باستخدام إسم اللعبة</value>
+  </data>
+  <data name="toolStripSplitButton1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>85, 22</value>
+  </data>
+  <data name="toolStripSplitButton1.Text" xml:space="preserve">
+    <value>الإعدادات</value>
+  </data>
+  <data name="autoMinimizeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>260, 22</value>
+  </data>
+  <data name="autoMinimizeToolStripMenuItem.Text" xml:space="preserve">
+    <value>التصغير التلقائي</value>
+  </data>
+  <data name="autoMinimizeToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>التصغير التلقائي للمستعرض عند تشغيل لعبة</value>
+  </data>
+  <data name="cycleImagesOnGameInfoToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>260, 22</value>
+  </data>
+  <data name="cycleImagesOnGameInfoToolStripMenuItem.Text" xml:space="preserve">
+    <value>تدوير الصور في نافذة معلومات اللعبة</value>
+  </data>
+  <data name="rememberSelectionToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>260, 22</value>
+  </data>
+  <data name="rememberSelectionToolStripMenuItem.Text" xml:space="preserve">
+    <value>تذكر العنصر المختار</value>
+  </data>
+  <data name="rememberSelectionToolStripMenuItem.ToolTipText" xml:space="preserve">
+    <value>تذكر اللعبة المختارة من القائمة المرة المقبلة</value>
+  </data>
+  <data name="showLauncherAtAppStartToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>260, 22</value>
+  </data>
+  <data name="showLauncherAtAppStartToolStripMenuItem.Text" xml:space="preserve">
+    <value>تشغيل المستعرض عند تشغيل البرنامج</value>
+  </data>
+  <data name="imageList1.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAAU
+        FQAAAk1TRnQBSQFMAgEBBQEAAagBAQGoAQEBEAEAARABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        AwABIAMAAQEBAAEgBgABIP8AHwADKgFBAwYBCBgAAwYBCAMqAUHUAAMqAUEBKAElAfIB/wJAAagB/QMG
+        AQgQAAMGAQgCKwF7AfwBCgEIAeoB/wMqAUHMAAMqAUEBMQEvAfUB/wE8AToB+gH/ATEBLgH2Af8CKwF9
+        AfwDBgEICAADBgEIAisBewH8ARoBGAHxAf8BJQEjAfYB/wEKAQgB6gH/AyoBQcgAAx4BKwE0ATEB9gH/
+        AT4BOwH6Af8BSgFJAv8BMgEvAfYB/wIrAX0B/AMGAQgDBgEIAisBfAH8ASABHgHyAf8BPAE7Av8BIwEh
+        AfQB/wEIAQYB6QH/Ax4BK8wAAx4BKwE0ATIB9gH/AT8BPAH6Af8BTQFKAv8BMwExAfYB/wIrAX0B/AJA
+        AagB/QEpASYB9AH/AUEBQAL/ASkBJwH1Af8BDwENAesB/wMeASvUAAMeASsBNQEzAfYB/wFAAT0B+gH/
+        AU0BSwL/AUwBSQL/AUkBRwL/AUcBRQL/ATABLgH3Af8BGAEWAe4B/wMeASvcAAMeASsBNgE0AfcB/wFS
+        AU8C/wEyAS8C/wEwAS0C/wFLAUkC/wEhAR8B8AH/Ax4BK+AAAwYBCAJAAaoB/QFWAVIC/wE3ATQC/wE0
+        ATEC/wFPAU0C/wJAAagB/QMGAQjcAAMGAQgBNAExAX8B/AFJAUYB+wH/AYABVwL/AVcBVAL/AVUBUgL/
+        AVIBUAL/ATcBNQH3Af8CKwF9AfwDBgEI1AADBgEIATwBOQGCAfwBUAFNAf0B/wGGAYIC/wFPAUwB/AH/
+        AT0BOwH4Af8BOQE2AfcB/wFGAUMB+gH/AVQBUgL/ATkBNgH3Af8CKwF9AfwDBgEIzAADBgEIAkABrQH9
+        AVYBUwH+Af8BigGHAv8BVQFSAf0B/wFFAUIB+wH/Ax4BKwMeASsBOgE3AfgB/wFHAUUB+gH/AVYBUwL/
+        AToBOAH3Af8CKwF9AfwDBAEFyAADFgEfAVMBUAL/AYEBVwL/AYEBVwH+Af8BTQFKAf0B/wMeASsIAAMe
+        ASsBOwE4AfgB/wFIAUYB+wH/AVcBVQL/ATsBOAH4Af8DQAFvAwEBAsgAAxYBHwFTAVAC/wFSAU8B/gH/
+        Ax4BKxAAAx4BKwE9AToB+AH/AUMBQQH5Af8BUwFSAVMBqAMdASnQAAMWAR8DHgErGAADHgErA0ABbwMp
+        AT74AAMHAQr/ACUAAwoBDQMiATEDIAEvAwUBByAAA1sBxANlAfQB0QGWATMB/wHOAZIBLgH/AcsBjgEp
+        Af8ByQGKASYB/wHHAYcBIQH/AcMBhAEdAf8BwwGEAR0B/wHDAYQBHQH/AcMBhAEdAf8BwwGEAR0B/wHD
+        AYQBHQH/AlUBUwGwRAADWwHEA2UB9AHRAZYBMwH/Ac4BkgEuAf8BywGOASkB/wHJAYoBJgH/AccBhwEh
+        Af8BwwGEAR0B/wHDAYQBHQH/AcMBhAEdAf8BwwGEAR0B/wHDAYQBHQH/AcMBhAEdAf8CVQFTAbAQAAMY
+        ASEDUAGdA10B8AOhAf8DqwH/A6cB/wOVAf8DZAHnA0oBigMQARYUAAHXAaEBQAH/AfgB8gHtAf8B9wHw
+        AeoB/wH2Ae0B5gH/AfQB6gHiAf8B8wHnAd4B/wHxAeQB2wH/AfAB4gHYAf8B8AHiAdgB/wHwAeIB2AH/
+        AfAB4gHYAf8B8AHiAdgB/wHwAeIB2AH/AagBigFAAf1EAAHXAaEBQAH/AfgB8gHtAf8B9wHwAeoB/wH2
+        Ae0B5gH/AfQB6gHiAf8B8wHnAd4B/wHxAeQB2wH/AfAB4gHYAf8B8AHiAdgB/wHwAeIB2AH/AfAB4gHY
+        Af8B8AHiAdgB/wHwAeIB2AH/AagBigFAAf0MAAMvAUoDZQH0A84B/wPtAf8D9AH/A/UB/wP0Af8D7wH/
+        A+IB/wO6Af8DZAHnAyQBNRAAAdkBpAFFAf8B+QHzAe4B/wHrAdIBvgX/AesB0wG/Df8B6gHHAa0N/wHw
+        AeIB2AH/AcYBjAEqAf8MAAMpAT4DXQHKA10BygNdAcoDXQHKA10BygNdAcoDXQHKA10BygNbAcgDGQEj
+        DAAB2QGkAUUB/wH5AfMB7gH/AesB0gG+Bf8B6wHTAb8N/wHqAccBrQ3/AfAB4gHYAf8BxgGMASoB/wwA
+        A1wB6gPeAf8D8wH/A9sB/wPSAf8D2wH/A9YB/wPAAf8DyQH/A+YB/wPEAf8DXAHqEAAB3QGoAUkB/wH5
+        AfMB7wH/AesB0AG6Af8B6wHQAbsB/wHrAdABuwH/AesB0AG7Af8B6wHQAbsB/wHrAdEBvQH/AeoBzQG1
+        Af8B6gHNAbUB/wHqAc0BtQH/AeoBzQG1Af8B8AHiAdgB/wHGAYoBJwH/CAADHwEsAVwCZAHnAZoC7gH/
+        AZoC7gH/AZoC7gH/AZoC7gH/AZoC7gH/AZoC7gH/AZoC7gH/AZoC7gH/AQABSAFKAf8DQwF4AwkBDAgA
+        Ad0BqAFJAf8B+QHzAe8B/wHrAdABugH/AesB0AG7Af8B6wHQAbsB/wHrAdABuwH/AesB0AG7Af8B6wHR
+        Ab0B/wHqAc0BtQH/AeoBzQG1Af8B6gHNAbUB/wHqAc0BtQH/AfAB4gHYAf8BxgGKAScB/wwAA1wB6gPw
+        Af8D3gH/A9QB/wPSAf8D2wH/A9YB/wO/Af8DsAH/A7MB/wPeAf8DXAHqEAAB3wGqAYIB/wH5AfMB7wH/
+        AeoBzgG3Bf8B6wHQAbsN/wHqAc8BugH/AfsB9gHyCf8B8AHiAdgB/wHIAY0BKgH/BAADEQEXAQACogH/
+        AQQBrQGsAf8BtQL+Af8BtgL+Af8BtgL+Af8BtgL+Af8BtgL+Af8BtgL+Af8BtgL+Af8BtgL+Af8BBAGQ
+        AZEB/wEAAYYBhwH/A04BmAgAAd8BqgGCAf8B+QHzAe8B/wHqAc4BtwX/AesB0AG7Df8B6gHPAboB/wH7
+        AfYB8gn/AfAB4gHYAf8ByAGNASoB/wwAA1wB6gPyAf8D4gH/A9gB/wPVAf8D3AH/A9gB/wPAAf8DswH/
+        A7cB/wPgAf8DXAHqDAADBAEFAdgBrAGKAf8B4wHeAdsB/wHSAbsBqQH/AdsBwgGtAf8B4wHHAbAB/wHq
+        AcwBswH/AeoBzAGzAf8B6gHOAbcB/wHoAccBrAH/AegBxwGsAf8B6AHIAbAB/wHoAcgBrgH/AfAB4gHY
+        Af8BxAGGAR8B/wQAAxcBIAFKAs8B/wEAAZABkQH/AQABSgGRAf8BAAFHATsB/wEAAacBsQH/AQABrwGw
+        Af8BOAE2AbAB/wEAAY8BpgH/AQABUwGfAf8BAAGJAbAB/wEAAYABggH/AQABtwG5Af8DVAGmCAAB4QGu
+        AYcB/wH6AfQB8AH/AeoBywGyAf8B6gHMAbMB/wHqAcwBswH/AeoBzAGzAf8B6gHMAbMB/wHqAc4BtwH/
+        AegBxwGsAf8B6AHHAawB/wHoAcgBsAH/AegByAGuAf8B8AHiAdgB/wHEAYYBHwH/DAADXAHqA/MB/wPn
+        Af8D3QH/A9kB/wPgAf8D2wH/A8QB/wO4Af8DuwH/A+EB/wNcAeoIAAMEAQYDPgFqAa8BpAGcAf8CqwGq
+        Af8BpAGgAZwB/wOnAf8BtgGnAZwB/wPzCf8B6AHHAawN/wHxAeUB2wH/AcYBhgEgAf8EAAMXASABSgLP
+        Af8BAAGQAZEB/wGpAT8BKwH/AYYBrwGPAf8BkAGnAf4B/wG3AU0B/gH/Ad4BkQH9Af8BAAGpAf4B/wEA
+        AakB/gH/AQABqQH+Af8BAAGAAYIB/wEAAbcBuQH/A1QBpggAAeMBsQGMAf8B+gH2AfEB/wHqAckBrgX/
+        AeoByQGwDf8B6AHHAawN/wHxAeUB2wH/AcYBhgEgAf8MAANcAeoD9AH/A+oB/wPhAf8D3QH/A+MB/wPe
+        Af8DyQH/A70B/wO/Af8D4gH/A1wB6ggAA1IBqQPLAf8D6gH/A/AB/wPyAf8D7AH/A8oB/wGaAZUBkQH/
+        AekByQGuAf8B6QHJAbAB/wHoAccBrAH/AekByQGwAf8B6AHIAbAB/wHoAcwBtQH/AfIB5wHeAf8ByAGK
+        ASQB/wQAAxcBIAFKAs8B/wEAAZABkQH/AQABTAG+Af8BNAE4AcgB/wHuAUYB/QH/AcgBggH9Af8B4gEp
+        Af0B/wHVAREBmgH/AZEBxwH1Af8BMQGOAdgB/wEAAYABggH/AQABtwG5Af8DVAGmCAAB5QG0AY8B/wH6
+        AfYB8gH/AekBxgGqAf8B6QHGAawB/wHqAccBrAH/AekBxwGtAf8B6QHJAa4B/wHpAckBsAH/AegBxwGs
+        Af8B6QHJAbAB/wHoAcgBsAH/AegBzAG1Af8B8gHnAd4B/wHIAYoBJAH/DAADXAHqA/UB/wPuAf8D5gH/
+        A+IB/wPmAf8D4QH/A80B/wPCAf8DwgH/A+MB/wNcAeoIAANdAfAD+gH/A9cB/wPiAf8DygH/A88F/wOT
+        Cf8B6AHHAawN/wH3AfEB6wH/AcsBjwEqAf8EAAMXASABSgLPAf8BAAGQAZEB/wFEAbcBxwH/AUMBwAHO
+        Af8BwgGLAdgB/wFHAcQB2QH/AQQBlQGaAf8BQwHFAdEB/wFEAbcBxwH/AUQBugHJAf8BAAGAAYIB/wEA
+        AbcBuQH/A1QBpggAAecBtwGUAf8B+wH3AfQB/wHpAcMBpgX/AegBxAGpDf8B6AHHAawN/wH3AfEB6wH/
+        AcsBjwEqAf8MAANcAeoD9gH/A+sB/wPeAf8D1gH/A9UB/wPRAf8DwwH/A7wB/wPAAf8D5QH/A1wB6ggA
+        A18B6AP4Af8D0QH/A+wB/wPFAf8DxgX/A5oB/wHpAcMBpgH/AekBwwGmAf8B6QHDAaYB/wHpAcMBpgH/
+        AekBwwGmAf8B6QHDAaYB/wH7AfcB9AH/Ac4BkwEvAf8EAAMXASABFgLHAf8BAAGxAbIB/wEAAaABoQH/
+        AQABoAGhAf8BCwHLAcwB/wEAAZAB7gH/ATYB7gHvAf8BAAGgAaEB/wEAAaABoQH/AQABoAGhAf8BAAGo
+        AaoB/wEAAbcBuQH/A1QBpggAAekBugGYAf8B+wH3AfQB/wHpAcMBpgH/AekBwwGmAf8B6QHDAaYB/wHp
+        AcMBpgH/AekBwwGmAf8B6QHDAaYB/wHpAcMBpgH/AekBwwGmAf8B6QHDAaYB/wHpAcMBpgH/AfsB9wH0
+        Af8BzgGTAS8B/wwAA1wB6gP3Af8D5wH/A+8B/wP2Af8D+wH/A/oB/wPwAf8D3gH/A8MB/wPmAf8DXAHq
+        CAADXwHoA/gB/wPVAf8D7wH/A8sB/wPLBf8Dnhn/AfsB9wH0Af8B0QGXATUB/wQAAxIBGAFKAs8B/wGV
+        AsYB/wEAAd4B3wH/Ab4C/gH/AccC/gH/AcEC/gH/AbAC/gH/Ab4C/gH/AccC/gH/AcEC/gH/AbAC/gH/
+        AQABtwG5Af8DNgFZCAAB6wG9AZsB/wH7AfcB9Cn/AfsB9wH0Af8B0QGXATUB/wwAA1wB6gP4Af8D/hn/
+        A/sB/wPqAf8DXAHqCAADXwHoA/gB/wPbAf8D7wH/A9AB/wPQBf8DogH/AYsBywGTAf8BhwHJAY4B/wGC
+        AcYBiQH/AUkBwwGEAf8BRQHBAYAB/wFBAb4BRwH/AfsB9wH0Af8B1AGbAToB/wcAAQEDKgRAAXEDQAFx
+        A0ABcQNAAXEDQAFxA0ABcQNAAXEDQAFxA0ABcQNAAXEDLQFFAwABAQgAAewBvwGeAf8B+wH3AfQB/wGc
+        AdUBpQH/AZgB0wGhAf8BlAHQAZ0B/wGQAc4BmAH/AYsBywGTAf8BhwHJAY4B/wGCAcYBiQH/AUkBwwGE
+        Af8BRQHBAYAB/wFBAb4BRwH/AfsB9wH0Af8B1AGbAToB/wwAA1kBvwPhAf8D/hn/A/sB/wPPAf8DUgGh
+        CAADYgHpA/IB/wPZAf8D5AH/A+IB/wPIAf8D8QH/A6UB/wH7AfcB9AH/AfsB9wH0Af8B+wH3AfQB/wH7
+        AfcB9AH/AfsB9wH0Af8B+wH3AfQB/wH7AfcB9AH/A1wB+EQAA2AB6wH7AfcB9AH/AfsB9wH0Af8B+wH3
+        AfQB/wH7AfcB9AH/AfsB9wH0Af8B+wH3AfQB/wH7AfcB9AH/AfsB9wH0Af8B+wH3AfQB/wH7AfcB9AH/
+        AfsB9wH0Af8B+wH3AfQB/wNcAfgMAAMdASoDXAHRA9AB/wPoAf8D8wH/A/0B/wP8Af8D7QH/A+AB/wPC
+        Af8DWwHDAxQBGwgAA10B7QP2Af8D9AH/A/kB/wP7Af8D9gH/A/YB/wOoAf8B5wG3AZMB/wHmAbUBkAH/
+        AeQBsgGMAf8B4gGvAYgB/wHgAawBhAH/Ad0BqQGAAf8B3AGlAUgB/wNdAcpEAANGAX4DXwHjAe0BwAGf
+        Af8B6wG+AZ0B/wHrAbwBmgH/AekBugGWAf8B5wG3AZMB/wHmAbUBkAH/AeQBsgGMAf8B4gGvAYgB/wHg
+        AawBhAH/Ad0BqQGAAf8B3AGlAUgB/wNdAcoQAAMFAQcDNQFVA1QBrgNgAdYDXwH7A2oB+QNcAc0DUgGp
+        Ay0BRgMCAQMMAANSAaQD1gH/A+0B/wP5Af8D+wH/A/AB/wPZAf8DXgHY4AADDAEQAz8BbANaAcADYAHr
+        A18B8wNeAdADSgGKAxoBJWAAAUIBTQE+BwABPgMAASgDAAFAAwABIAMAAQEBAAEBBgABARYAA/8BAAL/
+        BgAC5wYAAsMGAAKBBgABgAEBBgABwAEDBgAB4AEHBgAB8AEPBgAB8AEPBgAB4AEHBgABwAEDBgABgAEB
+        BgABgQGABgABwwHBBgAB5wHjBgAB/wH3BgAC/wH8AT8BwAEAAv8BgAEBAeABBwHAAQAC/wGAAQEBwAED
+        AcABAAHgAQMBgAEBAcABAwHAAQABwAEBAYABAQHAAQMBwAEAAYABAQGAAQEBwAEDAYABAAGAAQEBgAEB
+        AcABAwIAAYABAQGAAQEBwAEDAgABgAEBAYABAQHAAQMCAAGAAQEBgAEBAcABAwIAAYABAQGAAQEBwAED
+        AgABgAEBAYABAQHAAQMCAAGAAQEBgAEBAcABAwIAAv8BgAEBAcABAwIAAv8BgAEBAeABBwEAB/8BAAP/
+        Cw==
+</value>
+  </data>
+  <data name="StatusLabel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>33, 17</value>
+  </data>
+  <data name="StatusLabel.Text" xml:space="preserve">
+    <value>جاهز.</value>
+  </data>
+  <data name="toolStrip2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>146, 531</value>
+  </data>
+  <data name="toolStripSeparator6.Size" type="System.Drawing.Size, System.Drawing">
+    <value>143, 6</value>
+  </data>
+  <data name="toolStripLabel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>143, 15</value>
+  </data>
+  <data name="toolStripLabel1.Text" xml:space="preserve">
+    <value>العرض</value>
+  </data>
+  <data name="toolStripSeparator7.Size" type="System.Drawing.Size, System.Drawing">
+    <value>143, 6</value>
+  </data>
+  <data name="Button_mode_all.Size" type="System.Drawing.Size, System.Drawing">
+    <value>143, 20</value>
+  </data>
+  <data name="Button_mode_all.Text" xml:space="preserve">
+    <value>الكل</value>
+  </data>
+  <data name="Button_mode_all.ToolTipText" xml:space="preserve">
+    <value>عرض كافة الألعاب في قاعدة البيانات</value>
+  </data>
+  <data name="Button_mode_database.Size" type="System.Drawing.Size, System.Drawing">
+    <value>143, 20</value>
+  </data>
+  <data name="Button_mode_database.Text" xml:space="preserve">
+    <value>قاعدة البيانات</value>
+  </data>
+  <data name="Button_mode_database.ToolTipText" xml:space="preserve">
+    <value>عرض الألعاب التي تنتمي ل NesCartDB فقط</value>
+  </data>
+  <data name="Button_mode_notDB.Size" type="System.Drawing.Size, System.Drawing">
+    <value>143, 20</value>
+  </data>
+  <data name="Button_mode_notDB.Text" xml:space="preserve">
+    <value>ليست في قاعدة البيانات</value>
+  </data>
+  <data name="Button_mode_notDB.ToolTipText" xml:space="preserve">
+    <value>عرض الألعاب التي لا تنتمي ل NesCartDB</value>
+  </data>
+  <data name="Button_mode_files.Size" type="System.Drawing.Size, System.Drawing">
+    <value>143, 20</value>
+  </data>
+  <data name="Button_mode_files.Text" xml:space="preserve">
+    <value>الملفات</value>
+  </data>
+  <data name="Button_mode_files.ToolTipText" xml:space="preserve">
+    <value>عرض الألعاب التي لها ملفات موجودة على القرص.
+هذه الألعاب التي يمكن تشغيلها فقط</value>
+  </data>
+  <data name="Button_mode_missing.Size" type="System.Drawing.Size, System.Drawing">
+    <value>143, 20</value>
+  </data>
+  <data name="Button_mode_missing.Text" xml:space="preserve">
+    <value>المفقودة</value>
+  </data>
+  <data name="Button_mode_missing.ToolTipText" xml:space="preserve">
+    <value>عرض الألعاب التي ليس لها ملفات</value>
+  </data>
+  <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>143, 6</value>
+  </data>
+  <data name="toolStripButton3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>143, 20</value>
+  </data>
+  <data name="toolStripButton3.Text" xml:space="preserve">
+    <value>تشغيل</value>
+  </data>
+  <data name="toolStripButton3.ToolTipText" xml:space="preserve">
+    <value>تشغيل اللعبة المختارة</value>
+  </data>
+  <data name="toolStripButton8.Size" type="System.Drawing.Size, System.Drawing">
+    <value>143, 20</value>
+  </data>
+  <data name="toolStripButton8.Text" xml:space="preserve">
+    <value>معلومات</value>
+  </data>
+  <data name="toolStripButton8.ToolTipText" xml:space="preserve">
+    <value>عرض معلومات عن اللعبة المختارة</value>
+  </data>
+  <data name="toolStripButton9.Size" type="System.Drawing.Size, System.Drawing">
+    <value>143, 20</value>
+  </data>
+  <data name="toolStripButton9.Text" xml:space="preserve">
+    <value>حذف</value>
+  </data>
+  <data name="toolStripButton9.ToolTipText" xml:space="preserve">
+    <value>حذف العناصر المختارة</value>
+  </data>
+  <data name="toolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
+    <value>143, 6</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>My Nes مستعرض</value>
+  </data>
+</root>

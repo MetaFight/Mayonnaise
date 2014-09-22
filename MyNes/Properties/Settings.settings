@@ -1,0 +1,210 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MyNes.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="WinLocation" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">10, 10</Value>
+    </Setting>
+    <Setting Name="WinSize" Type="System.Drawing.Size" Scope="User">
+      <Value Profile="(Default)">528, 511</Value>
+    </Setting>
+    <Setting Name="Audio_SoundEnabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Audio_Frequency" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">44100</Value>
+    </Setting>
+    <Setting Name="Audio_BitsPerSample" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)">16</Value>
+    </Setting>
+    <Setting Name="Database_FilePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">MyNesDatabase.mndb</Value>
+    </Setting>
+    <Setting Name="Database_FoldersScanned" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LauncherLocation" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">10, 10</Value>
+    </Setting>
+    <Setting Name="LauncherSize" Type="System.Drawing.Size" Scope="User">
+      <Value Profile="(Default)">994, 617</Value>
+    </Setting>
+    <Setting Name="Database_FoldersSnapshots" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Database_FoldersCovers" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Database_FoldersInfos" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Database_FoldersManuals" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SnapsView_ImageMode" Type="MyNes.ImageViewMode" Scope="User">
+      <Value Profile="(Default)">StretchIfLarger</Value>
+    </Setting>
+    <Setting Name="CoversView_ImageMode" Type="MyNes.ImageViewMode" Scope="User">
+      <Value Profile="(Default)">StretchIfLarger</Value>
+    </Setting>
+    <Setting Name="SnapsView_ShowBar" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="SnapsView_ShowStatus" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="CoversView_ShowBar" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="CoversView_ShowStatus" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="LauncherSpliter1" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">659</Value>
+    </Setting>
+    <Setting Name="LauncherSpliter2" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">259</Value>
+    </Setting>
+    <Setting Name="LauncherAutoMinimize" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="LauncherAutoCycleImagesInGameTab" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="LauncherRememberLastSelection" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="LauncherLatestSelection" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="LauncherShowAyAppStart" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="Folder_State" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Folder_Sram" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="FirstRun" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="SaveSramOnShutdown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Video_StretchMulti" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="Video_StretchToMulti" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Video_StartFullscreen" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="Video_FullscreenRes" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="Video_ShowNotifications" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Video_ShowFPS" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="Video_CutLines" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Video_HardwareVertexProcessing" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Video_KeepAspectRatio" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Video_Filter" Type="SlimDX.Direct3D9.TextureFilter" Scope="User">
+      <Value Profile="(Default)">Point</Value>
+    </Setting>
+    <Setting Name="Audio_LatencyInMilliseconds" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="Audio_Volume" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="PauseAtFocusLost" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="SnapshotFormat" Type="System.String" Scope="User">
+      <Value Profile="(Default)">.png</Value>
+    </Setting>
+    <Setting Name="Folder_Snapshots" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ReplaceSnapshot" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ControlSettings" Type="MyNes.ControlMappingSettings" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Palette_NTSC_brightness" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">1.07</Value>
+    </Setting>
+    <Setting Name="Palette_NTSC_contrast" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">1.2</Value>
+    </Setting>
+    <Setting Name="Palette_NTSC_gamma" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">1.8</Value>
+    </Setting>
+    <Setting Name="Palette_NTSC_hue_tweak" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="Palette_NTSC_saturation" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">1.5</Value>
+    </Setting>
+    <Setting Name="Palette_PALB_brightness" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">1.07</Value>
+    </Setting>
+    <Setting Name="Palette_PALB_contrast" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">1.2</Value>
+    </Setting>
+    <Setting Name="Palette_PALB_gamma" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">1.8</Value>
+    </Setting>
+    <Setting Name="Palette_PALB_hue_tweak" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="Palette_PALB_saturation" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">1.5</Value>
+    </Setting>
+    <Setting Name="FrameSkip_Enabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="FrameSkip_Reload" Type="System.Byte" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="TVSystemSetting" Type="MyNes.Core.TVSystemSetting" Scope="User">
+      <Value Profile="(Default)">AUTO</Value>
+    </Setting>
+    <Setting Name="RecentPlayed" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Language" Type="System.String" Scope="User">
+      <Value Profile="(Default)">English (United States)</Value>
+    </Setting>
+    <Setting Name="Audio_BufferSizeInMilliseconds" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">400</Value>
+    </Setting>
+    <Setting Name="Palette_UseGenerators" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Palette_FilePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Palette_GeneratorUsageMode" Type="MyNes.PaletteGeneratorUsage" Scope="User">
+      <Value Profile="(Default)">AUTO</Value>
+    </Setting>
+    <Setting Name="IgnoreNotSupportedMapper" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ShowRomIssuesIfHave" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

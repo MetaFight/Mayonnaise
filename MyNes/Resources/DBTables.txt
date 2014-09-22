@@ -1,0 +1,108 @@
+; MY NES DATABASE GENERATOR SCRIPT
+; *****************************************
+; These are sql codes, get generated when the user create new database.
+; Only SQLite codes are supported.
+; Never edit tables/codes unless you know what are you doing !
+; * Any line started with ';' get ignored
+
+; Database info table. Provide information about database file. 
+; [Name]: the database name
+; [CrateTime]: the time when this database created.
+CREATE TABLE info(Name TEXT, CreateTime DATETIME);
+
+; The games table, the main table which user use for games.
+; [IsDB]: indicates if the entry info is loaded from NesCartDB or not.
+; [Name]: the game name.
+; [Alternative Name]: the game alternative name
+; [Size]: the game file size in bytes.
+; [Path]: the game file full path.
+; [Rating]: user rating ranged 0-5. 0 no rating, 5 is best.
+; [Played]: how many time(s) user played this game.
+; [Play Time]: how many seconds user played this game.
+; [Last Played]: the last time user played this game.
+; [Class]: Game Class as provided from database.
+; [Catalog]: Game Catalog as provided from database.
+; [Publisher]: Game Publisher as provided from database.
+; [Developer]: Game Developer as provided from database. 
+; [Region]: Game Region as provided from database. 
+; [Players]: Game Players as provided from database. 
+; [Release Date]: Game Release Date as provided from database. 
+; These columns should be for each rom (may same game presented
+; by more than one rom)
+; [System] : System as provided from database. 
+; [CRC]: CRC as provided from database.
+; [SHA1]: SHA1 as provided from database.
+; [Dump]: Dump status as provided from database.
+; [Dumper]: Dumper name as provided from database.
+; [Date Dumped] Date Dumped as provided from database.
+; [Board Type] : Board Type as provided from database. 
+; [Board Pcb]:  Board Pcb as provided from database. 
+; [Board Mapper]: Board Mapper as provided from database.
+CREATE TABLE GAMES([Id] INTEGER PRIMARY KEY, [IsDB] BOOLEAN NOT NULL, [Name] TEXT NOT NULL, [Alternative Name] TEXT NOT NULL, [Size] INTEGER NOT NULL, [Path] TEXT NOT NULL, [Rating] INTEGER NOT NULL, [Played] INTEGER NOT NULL, [Play Time] INTEGER NOT NULL, [Last Played] DATETIME NOT NULL, [Class] TEXT NOT NULL, [Catalog] TEXT NOT NULL, [Publisher] TEXT NOT NULL, [Developer] TEXT NOT NULL, [Region] TEXT NOT NULL, [Players] TEXT NOT NULL, [Release Date] TEXT NOT NULL, [System] TEXT NOT NULL, [CRC] TEXT NOT NULL, [SHA1] TEXT NOT NULL, [Dump] TEXT NOT NULL,[Dumper] TEXT NOT NULL, [Date Dumped]  TEXT NOT NULL, [Board Type] TEXT NOT NULL, [Board Pcb] TEXT NOT NULL, [Board Mapper] INTEGER NOT NULL);
+
+; The columns table, store information about visible columns.
+; The entries here should matchs the columns in the GAMES table.
+CREATE TABLE COLUMNS([Id] INTEGER PRIMARY KEY, [Column Name] TEXT NOT NULL, [Visible] TEXT NOT NULL, [Width] INTEGER NOT NULL);
+
+; COLUMNS Entries ... the order here affect the order on GUI as well.
+; Also, you should list all the columns exist on the GAMES table except the ones
+; that should not be visible like the Id.
+; [Column Name]: the column name.
+; [Visible]: indicates if this column is visible or not.
+; [Width]: the column width in pixels. Never assign values <=0.
+INSERT INTO COLUMNS([Column Name], [Visible], [Width]) VALUES ('Name', 'TRUE', '120');
+INSERT INTO COLUMNS([Column Name], [Visible], [Width]) VALUES ('Alternative Name', 'TRUE', '70');
+INSERT INTO COLUMNS([Column Name], [Visible], [Width]) VALUES ('Region', 'TRUE', '70');
+INSERT INTO COLUMNS([Column Name], [Visible], [Width]) VALUES ('Board Mapper', 'TRUE', '70');
+INSERT INTO COLUMNS([Column Name], [Visible], [Width]) VALUES ('Board Type', 'TRUE', '70');
+INSERT INTO COLUMNS([Column Name], [Visible], [Width]) VALUES ('Board Pcb', 'TRUE', '70');
+INSERT INTO COLUMNS([Column Name], [Visible], [Width]) VALUES ('Release Date', 'TRUE', '70');
+INSERT INTO COLUMNS([Column Name], [Visible], [Width]) VALUES ('Rating', 'TRUE', '70');
+INSERT INTO COLUMNS([Column Name], [Visible], [Width]) VALUES ('Played', 'TRUE', '70');
+INSERT INTO COLUMNS([Column Name], [Visible], [Width]) VALUES ('Play Time', 'TRUE', '70');
+INSERT INTO COLUMNS([Column Name], [Visible], [Width]) VALUES ('Last Played', 'TRUE', '70');
+INSERT INTO COLUMNS([Column Name], [Visible], [Width]) VALUES ('Catalog', 'TRUE', '70');
+INSERT INTO COLUMNS([Column Name], [Visible], [Width]) VALUES ('Publisher', 'TRUE', '70');
+INSERT INTO COLUMNS([Column Name], [Visible], [Width]) VALUES ('Developer', 'TRUE', '70');
+INSERT INTO COLUMNS([Column Name], [Visible], [Width]) VALUES ('System', 'TRUE', '70');
+INSERT INTO COLUMNS([Column Name], [Visible], [Width]) VALUES ('Class', 'TRUE', '70');
+INSERT INTO COLUMNS([Column Name], [Visible], [Width]) VALUES ('Players', 'TRUE', '70');
+INSERT INTO COLUMNS([Column Name], [Visible], [Width]) VALUES ('CRC', 'False', '70');
+INSERT INTO COLUMNS([Column Name], [Visible], [Width]) VALUES ('SHA1', 'False', '70');
+INSERT INTO COLUMNS([Column Name], [Visible], [Width]) VALUES ('Dump', 'TRUE', '70');
+INSERT INTO COLUMNS([Column Name], [Visible], [Width]) VALUES ('Dumper', 'TRUE', '70');
+INSERT INTO COLUMNS([Column Name], [Visible], [Width]) VALUES ('Date Dumped', 'TRUE', '70');
+INSERT INTO COLUMNS([Column Name], [Visible], [Width]) VALUES ('Size', 'TRUE', '70');
+INSERT INTO COLUMNS([Column Name], [Visible], [Width]) VALUES ('Path', 'TRUE', '70');
+
+; The SNAPS (snapshots) table. Contain the snapshots for the games, assigned by 
+; user. This table is linked to the GAMES table: GAMES [Id]<=>[Game ID] SNAPS
+; [Game ID]: the game id value on the GAMES table.
+; [Name]: snapshot name.
+; [Path]: snapshot path on disk.
+; [File Info]: snapshot size, resolution .. etc information.
+CREATE TABLE SNAPS([Id] INTEGER PRIMARY KEY, [Game ID] INTEGER NOT NULL, [Name] TEXT NOT NULL, [Path] TEXT NOT NULL, [File Info] TEXT NOT NULL, FOREIGN KEY ([Game ID]) REFERENCES GAMES([Id]) ON DELETE CASCADE ON UPDATE CASCADE);
+
+; The COVERS (covers) table. Contain the covers for the games, assigned by 
+; user. This table is linked to the GAMES table: GAMES [Id]<=>[Game ID] COVERS
+; [Game ID]: the game id value on the GAMES table.
+; [Name]: cover name.
+; [Path]: cover path on disk.
+; [File Info]: cover size, resolution .. etc information.
+CREATE TABLE COVERS([Id] INTEGER PRIMARY KEY, [Game ID] INTEGER NOT NULL, [Name] TEXT NOT NULL, [Path] TEXT NOT NULL, [File Info] TEXT NOT NULL, FOREIGN KEY ([Game ID]) REFERENCES GAMES([Id]) ON DELETE CASCADE ON UPDATE CASCADE);
+
+; The INFOS (info files) table. Contain the info files for the games, assigned by 
+; user. This table is linked to the GAMES table: GAMES [Id]<=>[Game ID] INFOS
+; [Game ID]: the game id value on the GAMES table.
+; [Name]: info file name.
+; [Path]: info file path on disk.
+; [File Info]: info file information.
+CREATE TABLE INFOS([Id] INTEGER PRIMARY KEY, [Game ID] INTEGER NOT NULL, [Name] TEXT NOT NULL, [Path] TEXT NOT NULL, [File Info] TEXT NOT NULL, FOREIGN KEY ([Game ID]) REFERENCES GAMES([Id]) ON DELETE CASCADE ON UPDATE CASCADE);
+
+; The MANUALS (manuals) table. Contain the manuals for the games, assigned by 
+; user. This table is linked to the GAMES table: GAMES [Id]<=>[Game ID] MANUALS
+; [Game ID]: the game id value on the GAMES table.
+; [Name]: manual file name.
+; [Path]: manual file path on disk.
+; [File Info]: manual file information.
+CREATE TABLE MANUALS([Id] INTEGER PRIMARY KEY, [Game ID] INTEGER NOT NULL, [Name] TEXT NOT NULL, [Path] TEXT NOT NULL, [File Info] TEXT NOT NULL, FOREIGN KEY ([Game ID]) REFERENCES GAMES([Id]) ON DELETE CASCADE ON UPDATE CASCADE);

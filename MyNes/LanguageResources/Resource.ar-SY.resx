@@ -1,0 +1,691 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Button_No" xml:space="preserve">
+    <value>&amp;لا</value>
+  </data>
+  <data name="Button_Stop" xml:space="preserve">
+    <value>&amp;توقف</value>
+  </data>
+  <data name="Button_Yes" xml:space="preserve">
+    <value>&amp;نعم</value>
+  </data>
+  <data name="Column_Property" xml:space="preserve">
+    <value>الخاصية</value>
+  </data>
+  <data name="Column_Value" xml:space="preserve">
+    <value>القيمة</value>
+  </data>
+  <data name="ERROR" xml:space="preserve">
+    <value>خطأ</value>
+  </data>
+  <data name="FilterMyNes_PaletteFile" xml:space="preserve">
+    <value>My Nes Palette Present (*.mnpp)|*.mnpp</value>
+  </data>
+  <data name="Filter_Image" xml:space="preserve">
+    <value>صورة (*.jpg;*.png;*.bmp;*.gif;*.jpeg;*.tiff;*.tga)|*.jpg;*.png;*.bmp;*.gif;*.jpeg;*.tiff;*.tga</value>
+  </data>
+  <data name="Filter_InfoFile" xml:space="preserve">
+    <value>ملف معلومات (*.txt;*.rtf;*doc)|*.txt;*.rtf;*.doc;|Text file (*.txt)|*.txt|RTF (*.rtf)|*.rtf|DOC (*.doc)|*.doc</value>
+  </data>
+  <data name="Filter_MyNesDatabase" xml:space="preserve">
+    <value>My Nes قاعدة بيانات (*.mndb)|*.mndb</value>
+  </data>
+  <data name="Filter_PaletteFile" xml:space="preserve">
+    <value>Palette file '64 indexes' (*.pal)|*.pal|Palette file '512 indexes' (*.pal)|*.pal</value>
+  </data>
+  <data name="Filter_PDF" xml:space="preserve">
+    <value>PDF (*.pdf)|*.pdf</value>
+  </data>
+  <data name="Filter_XML" xml:space="preserve">
+    <value>XML (*.xml)|*.xml</value>
+  </data>
+  <data name="MessageCaption_ApplyLanguage" xml:space="preserve">
+    <value>تفعيل نصوص اللغة</value>
+  </data>
+  <data name="MessageCaption_Detect" xml:space="preserve">
+    <value>تحديد</value>
+  </data>
+  <data name="MessageCaption_FindGames" xml:space="preserve">
+    <value>البحث عن الألعاب</value>
+  </data>
+  <data name="MessageCaption_RemoveCode" xml:space="preserve">
+    <value>حذف شيفرة</value>
+  </data>
+  <data name="MessageCaption_RemoveImage" xml:space="preserve">
+    <value>حذف صورة</value>
+  </data>
+  <data name="MessageCaption_RemoveInfoFile" xml:space="preserve">
+    <value>حذف ملف معلومات</value>
+  </data>
+  <data name="MessageCaption_RemoveManual" xml:space="preserve">
+    <value>حذف كتاب إلكتروني</value>
+  </data>
+  <data name="MessageCheckBox_RemoveFileFromDiskToo" xml:space="preserve">
+    <value>إحذف الملف من القرص أيضاً. كن حذراً !!</value>
+  </data>
+  <data name="Message_AreYouSure" xml:space="preserve">
+    <value>هل انت متأكد ؟</value>
+  </data>
+  <data name="Message_AreYouSureToRemoveAllImages" xml:space="preserve">
+    <value>هل انت متأكد من حذف كافة الصور من القائمة ؟ هذه العملية لا يمكن التراجع عنها</value>
+  </data>
+  <data name="Message_AreYouSureToRemoveAllInfoFiles" xml:space="preserve">
+    <value>هل أنت متأكد من حذف كافة ملفات التعليمات من القائمة ؟ هذه العملية لا يمكن التراجع عنها</value>
+  </data>
+  <data name="Message_AreYousureToRemoveAllManuals" xml:space="preserve">
+    <value>هل أنت متأكد من حذف كافة الكتب الإلكترونية من القائمة ؟ هذه العملية لا يمكن التراجع عنها</value>
+  </data>
+  <data name="Message_AreYouSureToRemoveImage" xml:space="preserve">
+    <value>هل أنت متأكد من حذف هذه الصورة من القائمة ؟ هذه العملية لا يمكن التراجع عنها</value>
+  </data>
+  <data name="Message_AreYouSureToRemoveInfoFile" xml:space="preserve">
+    <value>هل أنت متأكد من حذف ملف التعليمات من القائمة ؟ هذه العملية لا يمكن التراجع عنها</value>
+  </data>
+  <data name="Message_AreYouSuretoRemoveManual" xml:space="preserve">
+    <value>هل أنت متأكد من حذف الكتاب الإلكتروني من القائمة ؟ هذه العملية لا يمكن التراجع عنها</value>
+  </data>
+  <data name="Message_AreYouSureYouWantToDeleteSelectedFodlers" xml:space="preserve">
+    <value>هل أنت متأكد من حذف المجلدات المختارة من القائمة ؟</value>
+  </data>
+  <data name="Message_AreYouSureYouWantToStopCurrentProgress" xml:space="preserve">
+    <value>هل أنت متأكد من إيقاف العملية ؟</value>
+  </data>
+  <data name="Message_CodeAlreadyExistInTheList" xml:space="preserve">
+    <value>الشيفرة موجودة في القائمة</value>
+  </data>
+  <data name="Message_Done" xml:space="preserve">
+    <value>تم</value>
+  </data>
+  <data name="Message_DoYouWantToCreateThisFolder" xml:space="preserve">
+    <value>هل تريد إنشاء هذا المجلد ؟</value>
+  </data>
+  <data name="Message_InfoCopiedIntoTheClipboard" xml:space="preserve">
+    <value>تم نسخ المعلومات إلى الذاكرة</value>
+  </data>
+  <data name="Message_NesIsOff" xml:space="preserve">
+    <value>المحاكي لا يعمل</value>
+  </data>
+  <data name="Message_NoCodeInTheListToSave" xml:space="preserve">
+    <value>لا يوجد أية شيفرة للحفظ</value>
+  </data>
+  <data name="Message_NoExtensionAddedYet" xml:space="preserve">
+    <value>لم يتم إضافة أية إمتداد بعد، الرجاء إدخال الإمتدادات في الحقل أولاً</value>
+  </data>
+  <data name="Message_NoFolderToSearch" xml:space="preserve">
+    <value>لا يوجد أية مجلد للبحث الرجاء إضافة مجلد واحد على الأقل</value>
+  </data>
+  <data name="Message_NoGameSelected" xml:space="preserve">
+    <value>لم يتم إختيار أي لعبة</value>
+  </data>
+  <data name="Message_PleaseEnterTheSearchWordFirst" xml:space="preserve">
+    <value>الرجاء إدخال كلمة البحث أولاً</value>
+  </data>
+  <data name="Message_PleaseSelectTheInputDeviceFirst" xml:space="preserve">
+    <value>الرجاء إختيار جهاز الإدخال أولاً</value>
+  </data>
+  <data name="Message_PleaseSelectTheSearchByColumnFirst" xml:space="preserve">
+    <value>الرجاء تحديد عنصر البحث في</value>
+  </data>
+  <data name="Message_ThereIsNoCodeInTheList" xml:space="preserve">
+    <value>لا يوجد اي شيفرة في القائمة</value>
+  </data>
+  <data name="Message_TheSnapshotsFolderIsntExistAt" xml:space="preserve">
+    <value>مجلد الصور غير موجود في</value>
+  </data>
+  <data name="Message_TheSRAMFolderIsntExistAt" xml:space="preserve">
+    <value>مجلد السيف رام غير موجود في</value>
+  </data>
+  <data name="Message_TheSTATEFolderIsntExistAt" xml:space="preserve">
+    <value>مجلد ملفات الحالة غير موجود في</value>
+  </data>
+  <data name="Message_ThisFileIsNotMyNesGameGenieCodesListFile" xml:space="preserve">
+    <value>هذا الملف غير مدعوم</value>
+  </data>
+  <data name="Message_UnableToCreateTheFolder" xml:space="preserve">
+    <value>لم يتمكن من إنشاء المجلد</value>
+  </data>
+  <data name="Message_UNABLETOSHOWIMAGE" xml:space="preserve">
+    <value>لم يتمكن من عرض الصورة</value>
+  </data>
+  <data name="Message_YouMustRestartTheProgramToApplyLanguage" xml:space="preserve">
+    <value>عليك إعادة تشغيل البرنامج لتفعيل نصوص اللغة المختارة</value>
+  </data>
+  <data name="Message_YouMustSekectOneFolderToSearch" xml:space="preserve">
+    <value>الرجاء إدخال مجلد واحد على الأقل للبحث</value>
+  </data>
+  <data name="Status_CancelIn" xml:space="preserve">
+    <value>إلغاء بعد</value>
+  </data>
+  <data name="Status_Detected" xml:space="preserve">
+    <value>عُينت</value>
+  </data>
+  <data name="Status_Detecting" xml:space="preserve">
+    <value>جاري التعيين</value>
+  </data>
+  <data name="Status_Seconds" xml:space="preserve">
+    <value>ثانية</value>
+  </data>
+  <data name="Text_AddFolderToTheScanList" xml:space="preserve">
+    <value>إضافة مجلد إلى قائمة البحث</value>
+  </data>
+  <data name="Text_NeverPlayed" xml:space="preserve">
+    <value>لم تلعب بعد</value>
+  </data>
+  <data name="Text_OneTime" xml:space="preserve">
+    <value>مرة واحدة</value>
+  </data>
+  <data name="Text_PressAKeyFor" xml:space="preserve">
+    <value>إضغط زراً لأجل</value>
+  </data>
+  <data name="Text_Times" xml:space="preserve">
+    <value>مرة</value>
+  </data>
+  <data name="Text_UnableToRemoveFile" xml:space="preserve">
+    <value>لم يتمكن من حذف الملف</value>
+  </data>
+  <data name="Title_AddMoreImages" xml:space="preserve">
+    <value>إضافة المزيد من الصور</value>
+  </data>
+  <data name="Title_AddMoreInfoFiles" xml:space="preserve">
+    <value>إضافة المزيد من ملفات التعليمات</value>
+  </data>
+  <data name="Title_AddMoreManuals" xml:space="preserve">
+    <value>إضافة المزيد من الكتب الإلكترونية</value>
+  </data>
+  <data name="Title_Cartridge" xml:space="preserve">
+    <value>الشريط</value>
+  </data>
+  <data name="Title_ChangeTheSnaphotsFolder" xml:space="preserve">
+    <value>تغيير مجلد الصور</value>
+  </data>
+  <data name="Title_ChangeTheSRAMFolder" xml:space="preserve">
+    <value>تغيير مجلد السيف رام</value>
+  </data>
+  <data name="Title_ChangeTheStateSavesFolder" xml:space="preserve">
+    <value>تغيير مجلد ملفات الحالة</value>
+  </data>
+  <data name="Title_CHRCount" xml:space="preserve">
+    <value>CHR عدد</value>
+  </data>
+  <data name="Title_CHRSize" xml:space="preserve">
+    <value>CHR حجم</value>
+  </data>
+  <data name="Title_DataBase" xml:space="preserve">
+    <value>قاعدة البيانات</value>
+  </data>
+  <data name="Title_DetectCovers" xml:space="preserve">
+    <value>تحديد الكوفر</value>
+  </data>
+  <data name="Title_DetectInfoFiles" xml:space="preserve">
+    <value>تحديد ملفات المعلومات</value>
+  </data>
+  <data name="Title_DetectManuals" xml:space="preserve">
+    <value>تحديد الكتب الإلكترونية</value>
+  </data>
+  <data name="Title_DetectSnapshots" xml:space="preserve">
+    <value>تحديد الصور</value>
+  </data>
+  <data name="Title_EnterComment" xml:space="preserve">
+    <value>أدخل تعليقاً</value>
+  </data>
+  <data name="Title_FileInfo" xml:space="preserve">
+    <value>ملف معلومات</value>
+  </data>
+  <data name="Title_GameGenieCode" xml:space="preserve">
+    <value>شيفرة جيم جيني</value>
+  </data>
+  <data name="title_GameInfo" xml:space="preserve">
+    <value>معلومات اللعبة</value>
+  </data>
+  <data name="Title_GameInfoFromNesCartDatabase" xml:space="preserve">
+    <value>المعلومات من  NesCart</value>
+  </data>
+  <data name="Title_HasBattery" xml:space="preserve">
+    <value>فيه بطارية</value>
+  </data>
+  <data name="Title_HasTrainer" xml:space="preserve">
+    <value>فيه ترينر</value>
+  </data>
+  <data name="Title_INESHeader" xml:space="preserve">
+    <value>INES ملف</value>
+  </data>
+  <data name="Title_IsPlaychoice10" xml:space="preserve">
+    <value>هل هو Playchoice 10</value>
+  </data>
+  <data name="Title_IsVSUnisystem" xml:space="preserve">
+    <value>هل هو VS Unisystem</value>
+  </data>
+  <data name="Title_MapperNumber" xml:space="preserve">
+    <value>رقم المبر</value>
+  </data>
+  <data name="Title_Mirroring" xml:space="preserve">
+    <value>الإنعكاس</value>
+  </data>
+  <data name="Title_NewInfoFile" xml:space="preserve">
+    <value>ملف معلومات جديد</value>
+  </data>
+  <data name="Title_Path" xml:space="preserve">
+    <value>المسار</value>
+  </data>
+  <data name="Title_PRGCount" xml:space="preserve">
+    <value>PRG عدد</value>
+  </data>
+  <data name="Title_PRGSize" xml:space="preserve">
+    <value>PRG حجم</value>
+  </data>
+  <data name="Title_SaveMyNesDatabaseFile" xml:space="preserve">
+    <value>حفظ ملف قاعدة بيانت</value>
+  </data>
+  <data name="Title_Size" xml:space="preserve">
+    <value>الحجم</value>
+  </data>
+  <data name="Alternative Name" xml:space="preserve">
+    <value>الإسم المحلي</value>
+  </data>
+  <data name="Board Mapper" xml:space="preserve">
+    <value>مابر البورد</value>
+  </data>
+  <data name="Board Pcb" xml:space="preserve">
+    <value>البورد Pcb</value>
+  </data>
+  <data name="Board Type" xml:space="preserve">
+    <value>نوع البورد</value>
+  </data>
+  <data name="Button_Delete" xml:space="preserve">
+    <value>&amp;حذف</value>
+  </data>
+  <data name="Button_DontDelete" xml:space="preserve">
+    <value>&amp;لا تحذف</value>
+  </data>
+  <data name="Button_RecordSound" xml:space="preserve">
+    <value>&amp;تسجيل الصوت</value>
+  </data>
+  <data name="Button_StopSoundRecording" xml:space="preserve">
+    <value>&amp;توقيف تسجيل الصوت</value>
+  </data>
+  <data name="Catalog" xml:space="preserve">
+    <value>الكاتالوغ</value>
+  </data>
+  <data name="Class" xml:space="preserve">
+    <value>الصنف</value>
+  </data>
+  <data name="CRC" xml:space="preserve">
+    <value>CRC</value>
+  </data>
+  <data name="Date Dumped" xml:space="preserve">
+    <value>تاريخ السحب</value>
+  </data>
+  <data name="Developer" xml:space="preserve">
+    <value>المطوّر</value>
+  </data>
+  <data name="Dump" xml:space="preserve">
+    <value>السحب</value>
+  </data>
+  <data name="Dumper" xml:space="preserve">
+    <value>الشخص الذي سحب</value>
+  </data>
+  <data name="Filter_MyNesState" xml:space="preserve">
+    <value>My Nes ملف حالة (*.mns)|*.mns</value>
+  </data>
+  <data name="Filter_Rom" xml:space="preserve">
+    <value>الأنواع المدعومة (*.nes;*.7z;*.zip;*.rar*.gzip;*.tar;*.bzip2;*.xz)|*.nes;*.7z;*.zip;*.rar*.gzip;*.tar;*.bzip2;*.xz|INES (*.nes)|*.nes|Archive (*.7z;*.zip;*.rar*.gzip;*.tar;*.bzip2;*.xz)|*.7z;*.zip;*.rar*.gzip;*.tar;*.bzip2;*.xz</value>
+  </data>
+  <data name="Filter_Wav" xml:space="preserve">
+    <value>Wav ملف (*.wav)|*.wav</value>
+  </data>
+  <data name="Last Played" xml:space="preserve">
+    <value>أخر مرة لعبت</value>
+  </data>
+  <data name="MessageCaption_CreateNewDatabase" xml:space="preserve">
+    <value>إنشاء قاعدة بيانات</value>
+  </data>
+  <data name="MessageCaption_DeleteEntries" xml:space="preserve">
+    <value>حذف العناصر</value>
+  </data>
+  <data name="MessageCheckBox_DontDeleteNesCartEntries" xml:space="preserve">
+    <value>لا تحذف عناصر  NesCart</value>
+  </data>
+  <data name="Message_AnotherOperationInProgress" xml:space="preserve">
+    <value>هناك عملية أخرى جارية الرجاء المحاولة لاحقاً</value>
+  </data>
+  <data name="Message_AreYouSureYouWantToCreateNewDB" xml:space="preserve">
+    <value>هل أنت متأكد من إنشاء قاعدة بيانات جديدة؟ هذه العملية ستمحي كافة البيانات كالعناصر و الصور و الكوفر و ملفات التعليمات و الكتب الالكترونية</value>
+  </data>
+  <data name="Message_AreYouSureYouWantToDeleteSelectedEntries" xml:space="preserve">
+    <value>هل أنت متأكد من حذف العناصر المختارة ؟ هذه العملية لا يمكن التراجع عنها</value>
+  </data>
+  <data name="Message_GameFileNotExistOrNoFileAssignedToThisGameYet" xml:space="preserve">
+    <value>الملف غير موجود أو غير محدد بعد</value>
+  </data>
+  <data name="Message_GameGenieCantBeUSedWhileEmuOf" xml:space="preserve">
+    <value>لا يمكن إعداد الجيم جيني حتى تقوم بتشغيل لعبة أولاً</value>
+  </data>
+  <data name="Message_NoDbLoadedYet" xml:space="preserve">
+    <value>لا يوجد أية قاعدة بيانات محملة بعد، أنقر على زر الجديد لإنشاء قاعدة بيانات جديدة</value>
+  </data>
+  <data name="Message_NoEntrySelectedToDelete" xml:space="preserve">
+    <value>لم يتم إختيار أية عنصر للحذف</value>
+  </data>
+  <data name="Message_PleaseSelectOneGameToOpenLocation" xml:space="preserve">
+    <value>الرجاء إختيار لعبة واحدة لفتح المجلد الحاوي</value>
+  </data>
+  <data name="Message_PleaseSelectOneGameToPlay" xml:space="preserve">
+    <value>الرجاء إختيار لعبة واحدة للعب</value>
+  </data>
+  <data name="Message_PleaseSelectOneGameToShowInfoOf" xml:space="preserve">
+    <value>الرجاء إختيار لعبة واحدة لعرض التعليمات لها</value>
+  </data>
+  <data name="Message_ThisFileIsNoLongerExistDoYouWantToDeleteItFromTheRecentList" xml:space="preserve">
+    <value>هذا الملف غير موجود ، هل تريد حذفه من القائمة ؟</value>
+  </data>
+  <data name="Message_YouNeedToHardResetCurrentGameToApplyRegionSettings" xml:space="preserve">
+    <value>عليك إعادة تشغيل اللعبة لتفعيل خيار المنطقة</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>الإسم</value>
+  </data>
+  <data name="Path" xml:space="preserve">
+    <value>المسار</value>
+  </data>
+  <data name="Play Time" xml:space="preserve">
+    <value>مدة اللعب</value>
+  </data>
+  <data name="Played" xml:space="preserve">
+    <value>لُعبت</value>
+  </data>
+  <data name="Players" xml:space="preserve">
+    <value>عدد اللاعبين</value>
+  </data>
+  <data name="Publisher" xml:space="preserve">
+    <value>الموزع</value>
+  </data>
+  <data name="Rating" xml:space="preserve">
+    <value>التقييم</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>المنطقة</value>
+  </data>
+  <data name="Release Date" xml:space="preserve">
+    <value>تاريخ الإصدار</value>
+  </data>
+  <data name="SHA1" xml:space="preserve">
+    <value>SHA1</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>الحجم</value>
+  </data>
+  <data name="Status_DeletingEntries" xml:space="preserve">
+    <value>جاري تعيين العناصر ...</value>
+  </data>
+  <data name="Status_Done" xml:space="preserve">
+    <value>تم</value>
+  </data>
+  <data name="Status_Ready" xml:space="preserve">
+    <value>جاهز</value>
+  </data>
+  <data name="Status_UpdatingColumnsInTheDatabase" xml:space="preserve">
+    <value>جاري تحديث معلومات الأعمدة</value>
+  </data>
+  <data name="System" xml:space="preserve">
+    <value>النظام</value>
+  </data>
+  <data name="Title_AddFilesToTheDatabase" xml:space="preserve">
+    <value>إضافة ملفات إلى قاعدة البيانات</value>
+  </data>
+  <data name="Title_LoadStateAs" xml:space="preserve">
+    <value>تحميل الحالة بإسم</value>
+  </data>
+  <data name="Title_OpenRom" xml:space="preserve">
+    <value>فتح لعبة</value>
+  </data>
+  <data name="Title_SaveStateAs" xml:space="preserve">
+    <value>حفظ الحالة بإسم</value>
+  </data>
+  <data name="Title_SaveWavFile" xml:space="preserve">
+    <value>حفظ ملف صوت</value>
+  </data>
+  <data name="Build" xml:space="preserve">
+    <value>البناء</value>
+  </data>
+  <data name="CoreVersion" xml:space="preserve">
+    <value>نسخة الكور</value>
+  </data>
+  <data name="Revision" xml:space="preserve">
+    <value>الإصدار</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>النسخة</value>
+  </data>
+  <data name="About_CopyrightNotice" xml:space="preserve">
+    <value>MY NES
+------
+محاكي لنظام Nintendo Entertainment System / Family Computer (Nes/Famicom) مكتوب بلغة C#
+جميع الحقوق محفوظة © علاء ابراهيم حديد 2009 - 2014
+إيميل: ahdsoftwares@hotmail.com
+
+هذا البرنامج مجاني، يمكنك إعادة نشره و\أو التعديل عليه تحت شروط و قيود الرخصة GNU General Public License كما صدرت من قبل المؤسسة Free Software، النسخة 3 من الرخصة، أو (حسب اختيارك) أية نسخة لاحقة.
+وزع هذا البرنامج على الأمل بأنه مفيد، لكن بدون أية ضمانة؛ حتى بدون الضمانة الضمنية أو الإمكانية التجارية أو الملاءمة التجارية لأي غرض معين.
+يجب بأن تكون قد استلمت نسخة من الرخصة GNU General Public License مع هذا البرنامج، إذا لم تكن موجودة مع البرنامج، الرجاء زيارة الموقع&lt;http://www.gnu.org/licenses/&gt;
+
+هام
+---
+NES هي ماركة مسجلة من Nintendo
+Famicom هي ماركة مسجلة من Nintendo Co., LTD.
+جميع حقوق النشر الأخرى محفوظة لأصحابها
+هذا البرنامج لا يمد بأية صلة لشركة Nintendo أو ما يتبع لها
+
+الأيقونات:
+-------
+Mark James
+http://www.famfamfam.com/lab/icons/silk/
+
+MLV:
+------
+Managed ListView control.
+جميع الحقوق محفوظة © علاء ابراهيم حديد 2013
+مقالة تتضمن كافة المعلومات عن هذه المكتبة:
+http://www.codeproject.com/Articles/538518/Managed-ListView
+
+MMB:
+-------
+Managed Message Box
+جميع الحقوق محفوظة © علاء ابراهيم حديد 2013
+https://sourceforge.net/projects/managedmessagebox/</value>
+  </data>
+  <data name="About_Credits" xml:space="preserve">
+    <value>المؤلف و المطوّر: علاء ابراهيم حديد &lt;mailto:ahdsoftwares@hotmail.com&gt;
+
+شكر خاص للمساعدة الكبيرة:
+Adam Becker for the great help !!
+&lt;mailto:beannaich@gmail.com&gt;</value>
+  </data>
+  <data name="About_Links" xml:space="preserve">
+    <value>الموقع الرسمي: http://sourceforge.net/projects/mynes/
+
+مقالة عن المشروع: http://www.codeproject.com/KB/game/MyNes_NitendoEmulator.aspx
+
+صفحة الفيس بوك: http://www.facebook.com/pages/My-Nes/427707727244076</value>
+  </data>
+  <data name="Message_PaletteFileCantBeFound" xml:space="preserve">
+    <value>لم يتمكن من إيجاد ملف لائحة الألوان، تم إعادة الإعدادات إلى المولدات. لتغيير إعدادات الألوان، إذهب إلى الإعدادات-الألوان</value>
+  </data>
+  <data name="Message_PaletteFileNotValid" xml:space="preserve">
+    <value>ملف لائحة الألوان غير صالح، تم استدخدام مولدات الألوان، لتغيير إعدادات الألوان إذهب إلى الإعدادات-الألوان</value>
+  </data>
+  <data name="Message_UnableToLoadPaletteFile" xml:space="preserve">
+    <value>لم يتمكن من تحميل ملف الألوان !</value>
+  </data>
+  <data name="Message_PaletteFileNotExistOrSelected" xml:space="preserve">
+    <value>لم يتم إختيار ملف لوحة الألوان بعد ، الرجاء إختيار لملف لوحة ألوان من القائمة أو استخدم المولدات عوضاً عن الملف</value>
+  </data>
+  <data name="Message_ReplacePaletteFile" xml:space="preserve">
+    <value>ملف لوحة ألوان بنفس الإسم موجود مسبقاً، هل تريد استبداله ؟</value>
+  </data>
+  <data name="Message_ThisGameHaveKnownIssues" xml:space="preserve">
+    <value>هذه اللعبة تنتمي لبورد يعاني من هذه المشاكل المعروفة مع البرنامج</value>
+  </data>
+  <data name="Message_ThisGameMapperMarkedAsNotSupported" xml:space="preserve">
+    <value>هذه اللعبة مسجلة على أنها غير مدعومة بالبرنامج.
+على كل حال يمكن للبرنامج محاولة تشغيل هذه اللعبة باستخدام إعدادات المحاكي الإفتراضية.
+هل تريد من البرنامج المحاولة لتشغيل هذه اللعبة ؟</value>
+  </data>
+  <data name="Text_AlwaysTryToRunGameWithNoSupportedMappers" xml:space="preserve">
+    <value>&amp;لا تظهر هذه الرسالة مجددا، المحاكي سيقوم دائماً بمحاولة تشغيل الألعاب الغير مدعومة</value>
+  </data>
+  <data name="Text_AlwaysWarnAboutIssues" xml:space="preserve">
+    <value>&amp;حذرني دائماً من المشاكل المعروفة</value>
+  </data>
+  <data name="Status_AddingEntries" xml:space="preserve">
+    <value>جاري إضافة السجلات</value>
+  </data>
+  <data name="Status_CalculatingFiles" xml:space="preserve">
+    <value>جاري حساب عدد الملفات</value>
+  </data>
+  <data name="Status_DefaultEntriesFromNesCartDBGeneratedSuccessfully" xml:space="preserve">
+    <value>تم إنشاء السجلات بنجاح</value>
+  </data>
+  <data name="Status_EntryADDED" xml:space="preserve">
+    <value>سجل أضيف</value>
+  </data>
+  <data name="Status_EntryUPDATED" xml:space="preserve">
+    <value>سجل حُدث</value>
+  </data>
+  <data name="Status_FilesFound" xml:space="preserve">
+    <value>ملف وجد</value>
+  </data>
+  <data name="Status_GeneratingDefaultEntriesFromNesCartDB" xml:space="preserve">
+    <value>جاري إنشاء سجلات قاعدة البيانات</value>
+  </data>
+  <data name="Status_LoadingEntriesFromTheDatabase" xml:space="preserve">
+    <value>جاري تحميل السجلات من قاعدة البيانات</value>
+  </data>
+  <data name="Status_SearchingFiles" xml:space="preserve">
+    <value>جاري البحث عن الملفات</value>
+  </data>
+  <data name="Status_TotalOf" xml:space="preserve">
+    <value>حوالي</value>
+  </data>
+  <data name="Status_UpdatingDatabase" xml:space="preserve">
+    <value>جاري تحديث قاعدة البيانات (قد يستغرق الأمر بضع دقائق)</value>
+  </data>
+  <data name="Status_EntrySkipped" xml:space="preserve">
+    <value>سجل تم تجاهله</value>
+  </data>
+</root>

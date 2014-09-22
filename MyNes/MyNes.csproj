@@ -1,0 +1,673 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5883614C-A4E9-41E5-B446-1FE179A54811}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MyNes</RootNamespace>
+    <AssemblyName>MyNes</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>..\_Builds\DEBUG\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>..\_Builds\X86\</OutputPath>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\MyNes.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'X64|AnyCPU'">
+    <OutputPath>bin\X64\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'X64|x86'">
+    <OutputPath>bin\x86\X64\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Release\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'X64|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>..\_Builds\X64\</OutputPath>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <DefineConstants>
+    </DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'X86|AnyCPU'">
+    <OutputPath>bin\X86\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'X86|x86'">
+    <OutputPath>..\_Builds\X86\</OutputPath>
+    <PlatformTarget>x86</PlatformTarget>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'X86|x64'">
+    <OutputPath>bin\x64\X86\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="SevenZipSharp">
+      <HintPath>..\7ZLibraries\SevenZipSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="SlimDX">
+      <HintPath>..\SlimDXLibrary\SlimDX.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\SQLiteLibraries\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Args\EnterNameFormOkPressedArgs.cs" />
+    <Compile Include="ControlSettings\ControlMappingSettings.cs" />
+    <Compile Include="ControlSettings\IInputSettings.cs" />
+    <Compile Include="ControlSettings\IInputSettingsJoypad.cs" />
+    <Compile Include="ControlSettings\IInputSettingsVSUnisystemDIP.cs" />
+    <Compile Include="ControlSettings\InputControls\InputControlVSUnisystemDIP.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ControlSettings\InputControls\InputControlVSUnisystemDIP.Designer.cs">
+      <DependentUpon>InputControlVSUnisystemDIP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ControlSettings\InputControls\InputControlJoypad.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ControlSettings\InputControls\InputControlJoypad.Designer.cs">
+      <DependentUpon>InputControlJoypad.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Rating\Rating.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Rating\Rating.designer.cs">
+      <DependentUpon>Rating.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Crc32.cs" />
+    <Compile Include="Database\DateTimeFormater.cs" />
+    <Compile Include="Database\MyNesDetectEntryInfo.cs" />
+    <Compile Include="Forms\FormFirstRun.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormFirstRun.Designer.cs">
+      <DependentUpon>FormFirstRun.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormAbout.designer.cs">
+      <DependentUpon>FormAbout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormEnterName.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormEnterName.designer.cs">
+      <DependentUpon>FormEnterName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormGameGenie.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormGameGenie.designer.cs">
+      <DependentUpon>FormGameGenie.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormInputSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormInputSettings.Designer.cs">
+      <DependentUpon>FormInputSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormKey.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormKey.designer.cs">
+      <DependentUpon>FormKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormPaletteSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormPaletteSettings.designer.cs">
+      <DependentUpon>FormPaletteSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormPreferences.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormPreferences.Designer.cs">
+      <DependentUpon>FormPreferences.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormPathsSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormPathsSettings.Designer.cs">
+      <DependentUpon>FormPathsSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormFilesList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormFilesList.designer.cs">
+      <DependentUpon>FormFilesList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormRomInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormRomInfo.Designer.cs">
+      <DependentUpon>FormRomInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormDetectSelection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormDetectSelection.Designer.cs">
+      <DependentUpon>FormDetectSelection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormAssignFilesToDB.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormAssignFilesToDB.Designer.cs">
+      <DependentUpon>FormAssignFilesToDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormCreateDatabase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormCreateDatabase.Designer.cs">
+      <DependentUpon>FormCreateDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormGeneratingDatabase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormGeneratingDatabase.Designer.cs">
+      <DependentUpon>FormGeneratingDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormLauncher.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormLauncher.Designer.cs">
+      <DependentUpon>FormLauncher.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormAudioSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormAudioSettings.Designer.cs">
+      <DependentUpon>FormAudioSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Database\MyNesDB.cs" />
+    <Compile Include="Database\MyNesDBEntryInfo.cs" />
+    <Compile Include="Database\MyNesDBColumn.cs" />
+    <Compile Include="Forms\FormSearchLauncher.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormSearchLauncher.designer.cs">
+      <DependentUpon>FormSearchLauncher.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormDetectForDatabase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormDetectForDatabase.designer.cs">
+      <DependentUpon>FormDetectForDatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ImagePanel\ImagePanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ImagePanel\ImagePanel.Designer.cs">
+      <DependentUpon>ImagePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ImagePanel\ImagePanelEnums.cs" />
+    <Compile Include="Controls\ImagesViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ImagesViewer.Designer.cs">
+      <DependentUpon>ImagesViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\InfoViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\InfoViewer.Designer.cs">
+      <DependentUpon>InfoViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ManualsViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ManualsViewer.Designer.cs">
+      <DependentUpon>ManualsViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\GameInfoViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\GameInfoViewer.Designer.cs">
+      <DependentUpon>GameInfoViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormVideoSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormVideoSettings.Designer.cs">
+      <DependentUpon>FormVideoSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ControlSettings\IInputSettingsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Renderers\DirectInput\NesJoypadPcJoystickConnection.cs" />
+    <Compile Include="Renderers\DirectInput\NesVSUnisystemDIPJoystickConnection.cs" />
+    <Compile Include="Renderers\DirectInput\NesVSUnisystemDIPKeyboardConnection.cs" />
+    <Compile Include="Renderers\DirectInput\NesJoypadPcKeyboardConnection.cs" />
+    <Compile Include="Renderers\DirectInput\ZapperConnecter.cs" />
+    <Compile Include="Renderers\DirectSoundRenderer.cs" />
+    <Compile Include="Forms\FormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Renderers\DirectXVideo.cs" />
+    <Compile Include="Renderers\WaveRecorder.cs" />
+    <EmbeddedResource Include="ControlSettings\InputControls\InputControlVSUnisystemDIP.ar-SY.resx">
+      <DependentUpon>InputControlVSUnisystemDIP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ControlSettings\InputControls\InputControlVSUnisystemDIP.resx">
+      <DependentUpon>InputControlVSUnisystemDIP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ControlSettings\InputControls\InputControlJoypad.ar-SY.resx">
+      <DependentUpon>InputControlJoypad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\GameInfoViewer.ar-SY.resx">
+      <DependentUpon>GameInfoViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ImagesViewer.ar-SY.resx">
+      <DependentUpon>ImagesViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ImagesViewer.resx">
+      <DependentUpon>ImagesViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\InfoViewer.ar-SY.resx">
+      <DependentUpon>InfoViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\InfoViewer.resx">
+      <DependentUpon>InfoViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ControlSettings\InputControls\InputControlJoypad.resx">
+      <DependentUpon>InputControlJoypad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ManualsViewer.ar-SY.resx">
+      <DependentUpon>ManualsViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Rating\Rating.ar-SY.resx">
+      <DependentUpon>Rating.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Rating\Rating.resx">
+      <DependentUpon>Rating.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormFirstRun.resx">
+      <DependentUpon>FormFirstRun.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormAbout.ar-SY.resx">
+      <DependentUpon>FormAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormAbout.resx">
+      <DependentUpon>FormAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormAssignFilesToDB.ar-SY.resx">
+      <DependentUpon>FormAssignFilesToDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormAudioSettings.ar-SY.resx">
+      <DependentUpon>FormAudioSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormCreateDatabase.ar-SY.resx">
+      <DependentUpon>FormCreateDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormDetectForDatabase.ar-SY.resx">
+      <DependentUpon>FormDetectForDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormDetectSelection.ar-SY.resx">
+      <DependentUpon>FormDetectSelection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormEnterName.ar-SY.resx">
+      <DependentUpon>FormEnterName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormEnterName.resx">
+      <DependentUpon>FormEnterName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormFilesList.ar-SY.resx">
+      <DependentUpon>FormFilesList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormGameGenie.ar-SY.resx">
+      <DependentUpon>FormGameGenie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormGameGenie.resx">
+      <DependentUpon>FormGameGenie.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormGeneratingDatabase.ar-SY.resx">
+      <DependentUpon>FormGeneratingDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormInputSettings.ar-SY.resx">
+      <DependentUpon>FormInputSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormInputSettings.resx">
+      <DependentUpon>FormInputSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormKey.ar-SY.resx">
+      <DependentUpon>FormKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormKey.resx">
+      <DependentUpon>FormKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormLauncher.ar-SY.resx">
+      <DependentUpon>FormLauncher.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormMain.ar-SY.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormPaletteSettings.ar-SY.resx">
+      <DependentUpon>FormPaletteSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormPaletteSettings.resx">
+      <DependentUpon>FormPaletteSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormPathsSettings.ar-SY.resx">
+      <DependentUpon>FormPathsSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormPreferences.ar-SY.resx">
+      <DependentUpon>FormPreferences.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormPreferences.resx">
+      <DependentUpon>FormPreferences.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormDetectSelection.resx">
+      <DependentUpon>FormDetectSelection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormAssignFilesToDB.resx">
+      <DependentUpon>FormAssignFilesToDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormCreateDatabase.resx">
+      <DependentUpon>FormCreateDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormFilesList.resx">
+      <DependentUpon>FormFilesList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormGeneratingDatabase.resx">
+      <DependentUpon>FormGeneratingDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormAudioSettings.resx">
+      <DependentUpon>FormAudioSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormLauncher.resx">
+      <DependentUpon>FormLauncher.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormMain.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormPathsSettings.resx">
+      <DependentUpon>FormPathsSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormRomInfo.ar-SY.resx">
+      <DependentUpon>FormRomInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormRomInfo.resx">
+      <DependentUpon>FormRomInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormSearchLauncher.ar-SY.resx">
+      <DependentUpon>FormSearchLauncher.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormSearchLauncher.resx">
+      <DependentUpon>FormSearchLauncher.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormDetectForDatabase.resx">
+      <DependentUpon>FormDetectForDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ManualsViewer.resx">
+      <DependentUpon>ManualsViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\GameInfoViewer.resx">
+      <DependentUpon>GameInfoViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormVideoSettings.ar-SY.resx">
+      <DependentUpon>FormVideoSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormVideoSettings.resx">
+      <DependentUpon>FormVideoSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LanguageResources\Resource.ar-SY.resx" />
+    <EmbeddedResource Include="LanguageResources\Resource.en-US.resx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\door_in.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\DBTables.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{25f4068d-5d3e-45da-85d6-8b113d51ba0e}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MLV\MLV.csproj">
+      <Project>{cb876583-d5f9-4398-b399-fbe6d4aa8a51}</Project>
+      <Name>MLV</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MMB\MMB.csproj">
+      <Project>{a43061a2-f337-413a-a008-9df2973351c4}</Project>
+      <Name>MMB</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database_table.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\control_play.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\find.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\server_database.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\INES.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cross.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database_go.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\application_view_list.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\arrow_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\images.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MyNesImage.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cross_black.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\disk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\note_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\File_PDF.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\acrobat_casimir_software.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="AcroPDFLib">
+      <Guid>{05BFD3F1-6319-4F30-B752-C7A22889BCC4}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="AxAcroPDFLib">
+      <Guid>{05BFD3F1-6319-4F30-B752-C7A22889BCC4}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wrench.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\information.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\control_pause.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\control_repeat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\control_repeat_blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\control_eject.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sound.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MyNes.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder_wrench.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\drive_disk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\drive_go.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\monitor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\camera.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\controller.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\color_wheel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sound_none.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\world.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\FileGame-genie-nes-front.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\application_get.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
