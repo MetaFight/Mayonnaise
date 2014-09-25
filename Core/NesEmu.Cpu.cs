@@ -34,7 +34,7 @@ namespace MyNes.Core
 		private static int int_temp1;
 		private static byte dummy;
 
-		private static void CPUHardReset()
+		private void CPUHardReset()
 		{
 			// registers
 			registers.a = 0x00;
@@ -45,9 +45,9 @@ namespace MyNes.Core
 			registers.sph = 0x01;
 
 			int rst = 0xFFFC;
-			registers.pcl = board.ReadPRG(ref rst);
+			registers.pcl = this.memory.board.ReadPRG(ref rst);
 			rst++;
-			registers.pch = board.ReadPRG(ref rst);
+			registers.pch = this.memory.board.ReadPRG(ref rst);
 			registers.p = 0;
 			registers.i = true;
 			registers.ea = 0;
@@ -75,13 +75,13 @@ namespace MyNes.Core
 			registers.i = true;
 			registers.sp -= 3;
 
-			registers.pcl = Read(0xFFFC);
-			registers.pch = Read(0xFFFD);
+			registers.pcl = this.memory.Read(0xFFFC);
+			registers.pch = this.memory.Read(0xFFFD);
 		}
 		private void CPUClock()
 		{
 			// First clock is to fetch opcode
-			opcode = Read(registers.pc);
+			opcode = this.memory.Read(registers.pc);
 			registers.pc++;
 
 			#region Decode Opcode
@@ -1595,283 +1595,283 @@ namespace MyNes.Core
          */
 		private void IndirectX_R()
 		{
-			byte_temp = Read(registers.pc);
+			byte_temp = this.memory.Read(registers.pc);
 			registers.pc++;// CLock 1
-			Read(byte_temp);// Clock 2
+			this.memory.Read(byte_temp);// Clock 2
 			byte_temp += registers.x;
 
-			registers.eal = Read(byte_temp);// Clock 3
+			registers.eal = this.memory.Read(byte_temp);// Clock 3
 			byte_temp++;
 
-			registers.eah = Read(byte_temp);// Clock 4
+			registers.eah = this.memory.Read(byte_temp);// Clock 4
 
-			M = Read(registers.ea);
+			M = this.memory.Read(registers.ea);
 		}
 
 		private void IndirectX_W()
 		{
-			byte_temp = Read(registers.pc);
+			byte_temp = this.memory.Read(registers.pc);
 			registers.pc++;// CLock 1
-			Read(byte_temp);// Clock 2
+			this.memory.Read(byte_temp);// Clock 2
 			byte_temp += registers.x;
 
-			registers.eal = Read(byte_temp);// Clock 3
+			registers.eal = this.memory.Read(byte_temp);// Clock 3
 			byte_temp++;
 
-			registers.eah = Read(byte_temp);// Clock 4
+			registers.eah = this.memory.Read(byte_temp);// Clock 4
 		}
 
 		private void IndirectX_RW()
 		{
-			byte_temp = Read(registers.pc);
+			byte_temp = this.memory.Read(registers.pc);
 			registers.pc++;// CLock 1
-			Read(byte_temp);// Clock 2
+			this.memory.Read(byte_temp);// Clock 2
 			byte_temp += registers.x;
 
-			registers.eal = Read(byte_temp);// Clock 3
+			registers.eal = this.memory.Read(byte_temp);// Clock 3
 			byte_temp++;
 
-			registers.eah = Read(byte_temp);// Clock 4
+			registers.eah = this.memory.Read(byte_temp);// Clock 4
 
-			M = Read(registers.ea);
+			M = this.memory.Read(registers.ea);
 		}
 		private void IndirectY_R()
 		{
-			byte_temp = Read(registers.pc);
+			byte_temp = this.memory.Read(registers.pc);
 			registers.pc++;// CLock 1
-			registers.eal = Read(byte_temp);
+			registers.eal = this.memory.Read(byte_temp);
 			byte_temp++;// Clock 2
-			registers.eah = Read(byte_temp);// Clock 2
+			registers.eah = this.memory.Read(byte_temp);// Clock 2
 
 			registers.eal += registers.y;
 
-			M = Read(registers.ea);// Clock 3
+			M = this.memory.Read(registers.ea);// Clock 3
 			if (registers.eal < registers.y)
 			{
 				registers.eah++;
-				M = Read(registers.ea);// Clock 4
+				M = this.memory.Read(registers.ea);// Clock 4
 			}
 		}
 		private void IndirectY_W()
 		{
-			byte_temp = Read(registers.pc);
+			byte_temp = this.memory.Read(registers.pc);
 			registers.pc++;// CLock 1
-			registers.eal = Read(byte_temp);
+			registers.eal = this.memory.Read(byte_temp);
 			byte_temp++;// Clock 2
-			registers.eah = Read(byte_temp);// Clock 2
+			registers.eah = this.memory.Read(byte_temp);// Clock 2
 
 			registers.eal += registers.y;
 
-			M = Read(registers.ea);// Clock 3
+			M = this.memory.Read(registers.ea);// Clock 3
 			if (registers.eal < registers.y)
 				registers.eah++;
 		}
 		private void IndirectY_RW()
 		{
-			byte_temp = Read(registers.pc);
+			byte_temp = this.memory.Read(registers.pc);
 			registers.pc++;// CLock 1
-			registers.eal = Read(byte_temp);
+			registers.eal = this.memory.Read(byte_temp);
 			byte_temp++;// Clock 2
-			registers.eah = Read(byte_temp);// Clock 2
+			registers.eah = this.memory.Read(byte_temp);// Clock 2
 
 			registers.eal += registers.y;
 
-			Read(registers.ea);// Clock 3
+			this.memory.Read(registers.ea);// Clock 3
 			if (registers.eal < registers.y)
 				registers.eah++;
 
-			M = Read(registers.ea);// Clock 4
+			M = this.memory.Read(registers.ea);// Clock 4
 		}
 		private void ZeroPage_R()
 		{
-			registers.ea = Read(registers.pc);
+			registers.ea = this.memory.Read(registers.pc);
 			registers.pc++;// Clock 1
-			M = Read(registers.ea);// Clock 2
+			M = this.memory.Read(registers.ea);// Clock 2
 		}
 		private void ZeroPage_W()
 		{
-			registers.ea = Read(registers.pc);
+			registers.ea = this.memory.Read(registers.pc);
 			registers.pc++;// Clock 1
 		}
 		private void ZeroPage_RW()
 		{
-			registers.ea = Read(registers.pc);
+			registers.ea = this.memory.Read(registers.pc);
 			registers.pc++;// Clock 1
-			M = Read(registers.ea);// Clock 2
+			M = this.memory.Read(registers.ea);// Clock 2
 		}
 		private void ZeroPageX_R()
 		{
-			registers.ea = Read(registers.pc);
+			registers.ea = this.memory.Read(registers.pc);
 			registers.pc++;// Clock 1
-			Read(registers.ea);// Clock 2
+			this.memory.Read(registers.ea);// Clock 2
 			registers.eal += registers.x;
-			M = Read(registers.ea);// Clock 3
+			M = this.memory.Read(registers.ea);// Clock 3
 		}
 		private void ZeroPageX_W()
 		{
-			registers.ea = Read(registers.pc);
+			registers.ea = this.memory.Read(registers.pc);
 			registers.pc++;// Clock 1
-			Read(registers.ea);// Clock 2
+			this.memory.Read(registers.ea);// Clock 2
 			registers.eal += registers.x;
 		}
 		private void ZeroPageX_RW()
 		{
-			registers.ea = Read(registers.pc);
+			registers.ea = this.memory.Read(registers.pc);
 			registers.pc++;// Clock 1
-			Read(registers.ea);// Clock 2
+			this.memory.Read(registers.ea);// Clock 2
 			registers.eal += registers.x;
-			M = Read(registers.ea);// Clock 3
+			M = this.memory.Read(registers.ea);// Clock 3
 		}
 		private void ZeroPageY_R()
 		{
-			registers.ea = Read(registers.pc);
+			registers.ea = this.memory.Read(registers.pc);
 			registers.pc++;// Clock 1
-			Read(registers.ea);// Clock 2
+			this.memory.Read(registers.ea);// Clock 2
 			registers.eal += registers.y;
-			M = Read(registers.ea);// Clock 3
+			M = this.memory.Read(registers.ea);// Clock 3
 		}
 		private void ZeroPageY_W()
 		{
-			registers.ea = Read(registers.pc);
+			registers.ea = this.memory.Read(registers.pc);
 			registers.pc++;// Clock 1
-			Read(registers.ea);// Clock 2
+			this.memory.Read(registers.ea);// Clock 2
 			registers.eal += registers.y;
 		}
 		private void ZeroPageY_RW()
 		{
-			registers.ea = Read(registers.pc);
+			registers.ea = this.memory.Read(registers.pc);
 			registers.pc++;// Clock 1
-			Read(registers.ea);// Clock 2
+			this.memory.Read(registers.ea);// Clock 2
 			registers.eal += registers.y;
-			M = Read(registers.ea);// Clock 3
+			M = this.memory.Read(registers.ea);// Clock 3
 		}
 		private void Immediate()
 		{
-			M = Read(registers.pc);
+			M = this.memory.Read(registers.pc);
 			registers.pc++;// Clock 1
 		}
 		private void ImpliedAccumulator()
 		{
-			dummy = Read(registers.pc);
+			dummy = this.memory.Read(registers.pc);
 		}
 		private void Absolute_R()
 		{
-			registers.eal = Read(registers.pc);
+			registers.eal = this.memory.Read(registers.pc);
 			registers.pc++;// Clock 1
-			registers.eah = Read(registers.pc);
+			registers.eah = this.memory.Read(registers.pc);
 			registers.pc++;// Clock 2
-			M = Read(registers.ea);// Clock 3
+			M = this.memory.Read(registers.ea);// Clock 3
 		}
 		private void Absolute_W()
 		{
-			registers.eal = Read(registers.pc);
+			registers.eal = this.memory.Read(registers.pc);
 			registers.pc++;// Clock 1
-			registers.eah = Read(registers.pc);
+			registers.eah = this.memory.Read(registers.pc);
 			registers.pc++;// Clock 2
 		}
 		private void Absolute_RW()
 		{
-			registers.eal = Read(registers.pc);
+			registers.eal = this.memory.Read(registers.pc);
 			registers.pc++;// Clock 1
-			registers.eah = Read(registers.pc);
+			registers.eah = this.memory.Read(registers.pc);
 			registers.pc++;// Clock 2
-			M = Read(registers.ea);// Clock 3
+			M = this.memory.Read(registers.ea);// Clock 3
 		}
 		private void AbsoluteX_R()
 		{
-			registers.eal = Read(registers.pc);
+			registers.eal = this.memory.Read(registers.pc);
 			registers.pc++;// Clock 1
-			registers.eah = Read(registers.pc);
+			registers.eah = this.memory.Read(registers.pc);
 			registers.pc++;// Clock 2
 
 			registers.eal += registers.x;
 
-			M = Read(registers.ea);// Clock 3
+			M = this.memory.Read(registers.ea);// Clock 3
 			if (registers.eal < registers.x)
 			{
 				registers.eah++;
-				M = Read(registers.ea);// Clock 4
+				M = this.memory.Read(registers.ea);// Clock 4
 			}
 		}
 		private void AbsoluteX_W()
 		{
-			registers.eal = Read(registers.pc);
+			registers.eal = this.memory.Read(registers.pc);
 			registers.pc++;// Clock 1
-			registers.eah = Read(registers.pc);
+			registers.eah = this.memory.Read(registers.pc);
 			registers.pc++;// Clock 2
 
 			registers.eal += registers.x;
 
-			M = Read(registers.ea);// Clock 3
+			M = this.memory.Read(registers.ea);// Clock 3
 			if (registers.eal < registers.x)
 				registers.eah++;
 		}
 		private void AbsoluteX_RW()
 		{
-			registers.eal = Read(registers.pc);
+			registers.eal = this.memory.Read(registers.pc);
 			registers.pc++;// Clock 1
-			registers.eah = Read(registers.pc);
+			registers.eah = this.memory.Read(registers.pc);
 			registers.pc++;// Clock 2
 
 			registers.eal += registers.x;
 
-			Read(registers.ea);// Clock 3
+			this.memory.Read(registers.ea);// Clock 3
 			if (registers.eal < registers.x)
 				registers.eah++;
 
-			M = Read(registers.ea);// Clock 4
+			M = this.memory.Read(registers.ea);// Clock 4
 		}
 		private void AbsoluteY_R()
 		{
-			registers.eal = Read(registers.pc);
+			registers.eal = this.memory.Read(registers.pc);
 			registers.pc++;// Clock 1
-			registers.eah = Read(registers.pc);
+			registers.eah = this.memory.Read(registers.pc);
 			registers.pc++;// Clock 2
 
 			registers.eal += registers.y;
 
-			M = Read(registers.ea);// Clock 3
+			M = this.memory.Read(registers.ea);// Clock 3
 			if (registers.eal < registers.y)
 			{
 				registers.eah++;
-				M = Read(registers.ea);// Clock 4
+				M = this.memory.Read(registers.ea);// Clock 4
 			}
 		}
 		private void AbsoluteY_W()
 		{
-			registers.eal = Read(registers.pc);
+			registers.eal = this.memory.Read(registers.pc);
 			registers.pc++;// Clock 1
-			registers.eah = Read(registers.pc);
+			registers.eah = this.memory.Read(registers.pc);
 			registers.pc++;// Clock 2
 
 			registers.eal += registers.y;
 
-			M = Read(registers.ea);// Clock 3
+			M = this.memory.Read(registers.ea);// Clock 3
 			if (registers.eal < registers.y)
 				registers.eah++;
 		}
 		private void AbsoluteY_RW()
 		{
-			registers.eal = Read(registers.pc);
+			registers.eal = this.memory.Read(registers.pc);
 			registers.pc++;// Clock 1
-			registers.eah = Read(registers.pc);
+			registers.eah = this.memory.Read(registers.pc);
 			registers.pc++;// Clock 2
 
 			registers.eal += registers.y;
 
-			M = Read(registers.ea);// Clock 3
+			M = this.memory.Read(registers.ea);// Clock 3
 			if (registers.eal < registers.y)
 				registers.eah++;
 
-			M = Read(registers.ea);// Clock 4
+			M = this.memory.Read(registers.ea);// Clock 4
 		}
 		#endregion
 
 		#region Instructions
 		private void Interrupt()
 		{
-			Read(registers.pc);
-			Read(registers.pc);
+			this.memory.Read(registers.pc);
+			this.memory.Read(registers.pc);
 
 			Push(registers.pch);
 			Push(registers.pcl);
@@ -1881,28 +1881,28 @@ namespace MyNes.Core
 			int_temp = interrupt_vector;
 
 			interrupt_suspend = true;
-			registers.pcl = Read(int_temp);
+			registers.pcl = this.memory.Read(int_temp);
 			int_temp++;
 			registers.i = true;
-			registers.pch = Read(int_temp);
+			registers.pch = this.memory.Read(int_temp);
 			interrupt_suspend = false;
 		}
 		private void Branch(bool condition)
 		{
-			byte_temp = Read(registers.pc);
+			byte_temp = this.memory.Read(registers.pc);
 			registers.pc++;
 
 			if (condition)
 			{
 				interrupt_suspend = true;
-				Read(registers.pc);
+				this.memory.Read(registers.pc);
 				registers.pcl += byte_temp;
 				interrupt_suspend = false;
 				if (byte_temp >= 0x80)
 				{
 					if (registers.pcl >= byte_temp)
 					{
-						Read(registers.pc);
+						this.memory.Read(registers.pc);
 						registers.pch--;
 					}
 				}
@@ -1910,7 +1910,7 @@ namespace MyNes.Core
 				{
 					if (registers.pcl < byte_temp)
 					{
-						Read(registers.pc);
+						this.memory.Read(registers.pc);
 						registers.pch++;
 					}
 				}
@@ -1919,13 +1919,13 @@ namespace MyNes.Core
 		}
 		private void Push(byte val)
 		{
-			Write(registers.sp, val);
+			this.memory.Write(registers.sp, val);
 			registers.spl--;
 		}
 		private byte Pull()
 		{
 			registers.spl++;
-			return Read(registers.sp);
+			return this.memory.Read(registers.sp);
 		}
 		private static void ADC()
 		{
@@ -1941,7 +1941,7 @@ namespace MyNes.Core
 		private void AHX()
 		{
 			byte_temp = (byte)((registers.a & registers.x) & 7);
-			Write(registers.ea, byte_temp);
+			this.memory.Write(registers.ea, byte_temp);
 		}
 		private static void ALR()
 		{
@@ -1989,11 +1989,11 @@ namespace MyNes.Core
 		private void ASL_M()
 		{
 			registers.c = (M & 0x80) == 0x80;
-			Write(registers.ea, M);
+			this.memory.Write(registers.ea, M);
 
 			M = (byte)((M << 1) & 0xFE);
 
-			Write(registers.ea, M);
+			this.memory.Write(registers.ea, M);
 
 			registers.n = (M & 0x80) == 0x80;
 			registers.z = (M == 0);
@@ -2015,7 +2015,7 @@ namespace MyNes.Core
 		}
 		private void BRK()
 		{
-			Read(registers.pc);
+			this.memory.Read(registers.pc);
 			registers.pc++;
 
 			Push(registers.pch);
@@ -2026,10 +2026,10 @@ namespace MyNes.Core
 			int_temp = interrupt_vector;
 
 			interrupt_suspend = true;
-			registers.pcl = Read(int_temp);
+			registers.pcl = this.memory.Read(int_temp);
 			int_temp++;
 			registers.i = true;
-			registers.pch = Read(int_temp);
+			registers.pch = this.memory.Read(int_temp);
 			interrupt_suspend = false;
 		}
 		private static void CMP()
@@ -2055,10 +2055,10 @@ namespace MyNes.Core
 		}
 		private void DCP()
 		{
-			Write(registers.ea, M);
+			this.memory.Write(registers.ea, M);
 
 			M--;
-			Write(registers.ea, M);
+			this.memory.Write(registers.ea, M);
 
 			int_temp = registers.a - M;
 
@@ -2068,9 +2068,9 @@ namespace MyNes.Core
 		}
 		private void DEC()
 		{
-			Write(registers.ea, M);
+			this.memory.Write(registers.ea, M);
 			M--;
-			Write(registers.ea, M);
+			this.memory.Write(registers.ea, M);
 			registers.n = (M & 0x80) == 0x80;
 			registers.z = (M == 0);
 		}
@@ -2094,9 +2094,9 @@ namespace MyNes.Core
 		}
 		private void INC()
 		{
-			Write(registers.ea, M);
+			this.memory.Write(registers.ea, M);
 			M++;
-			Write(registers.ea, M);
+			this.memory.Write(registers.ea, M);
 			registers.n = (M & 0x80) == 0x80;
 			registers.z = (M == 0);
 		}
@@ -2114,13 +2114,13 @@ namespace MyNes.Core
 		}
 		private void ISC()
 		{
-			byte_temp = Read(registers.ea);
+			byte_temp = this.memory.Read(registers.ea);
 
-			Write(registers.ea, byte_temp);
+			this.memory.Write(registers.ea, byte_temp);
 
 			byte_temp++;
 
-			Write(registers.ea, byte_temp);
+			this.memory.Write(registers.ea, byte_temp);
 
 			int_temp = byte_temp ^ 0xFF;
 			int_temp1 = (registers.a + int_temp + (registers.c ? 1 : 0));
@@ -2133,25 +2133,25 @@ namespace MyNes.Core
 		}
 		private void JMP_I()
 		{
-			registers.eal = Read(registers.pc++);
-			registers.eah = Read(registers.pc++);
+			registers.eal = this.memory.Read(registers.pc++);
+			registers.eah = this.memory.Read(registers.pc++);
 
-			byte_temp = Read(registers.ea);
+			byte_temp = this.memory.Read(registers.ea);
 			registers.eal++; // only increment the low byte, causing the "JMP ($nnnn)" bug
-			registers.pch = Read(registers.ea);
+			registers.pch = this.memory.Read(registers.ea);
 
 			registers.pcl = byte_temp;
 		}
 		private void JSR()
 		{
-			registers.eal = Read(registers.pc);
+			registers.eal = this.memory.Read(registers.pc);
 			registers.pc++;
-			registers.eah = Read(registers.pc);
+			registers.eah = this.memory.Read(registers.pc);
 
 			Push(registers.pch);
 			Push(registers.pcl);
 
-			registers.eah = Read(registers.pc);
+			registers.eah = this.memory.Read(registers.pc);
 			registers.pc = registers.ea;
 		}
 		private static void LAR()
@@ -2198,10 +2198,10 @@ namespace MyNes.Core
 		private void LSR_M()
 		{
 			registers.c = (M & 1) == 1;
-			Write(registers.ea, M);
+			this.memory.Write(registers.ea, M);
 			M >>= 1;
 
-			Write(registers.ea, M);
+			this.memory.Write(registers.ea, M);
 			registers.z = (M == 0);
 			registers.n = (M & 0x80) != 0;
 		}
@@ -2221,25 +2221,25 @@ namespace MyNes.Core
 		}
 		private void PLA()
 		{
-			Read(registers.sp);
+			this.memory.Read(registers.sp);
 			registers.a = Pull();
 			registers.n = (registers.a & 0x80) == 0x80;
 			registers.z = (registers.a == 0);
 		}
 		private void PLP()
 		{
-			Read(registers.sp);
+			this.memory.Read(registers.sp);
 			registers.p = Pull();
 		}
 		private void RLA()
 		{
-			byte_temp = Read(registers.ea);
+			byte_temp = this.memory.Read(registers.ea);
 
-			Write(registers.ea, byte_temp);
+			this.memory.Write(registers.ea, byte_temp);
 
 			dummy = (byte)((byte_temp << 1) | (registers.c ? 0x01 : 0x00));
 
-			Write(registers.ea, dummy);
+			this.memory.Write(registers.ea, dummy);
 
 			registers.n = (dummy & 0x80) != 0;
 			registers.z = (dummy & 0xFF) == 0;
@@ -2261,10 +2261,10 @@ namespace MyNes.Core
 		}
 		private void ROL_M()
 		{
-			Write(registers.ea, M);
+			this.memory.Write(registers.ea, M);
 			byte_temp = (byte)((M << 1) | (registers.c ? 0x01 : 0x00));
 
-			Write(registers.ea, byte_temp);
+			this.memory.Write(registers.ea, byte_temp);
 			registers.n = (byte_temp & 0x80) != 0;
 			registers.z = (byte_temp & 0xFF) == 0;
 			registers.c = (M & 0x80) != 0;
@@ -2281,10 +2281,10 @@ namespace MyNes.Core
 		}
 		private void ROR_M()
 		{
-			Write(registers.ea, M);
+			this.memory.Write(registers.ea, M);
 
 			byte_temp = (byte)((M >> 1) | (registers.c ? 0x80 : 0x00));
-			Write(registers.ea, byte_temp);
+			this.memory.Write(registers.ea, byte_temp);
 
 			registers.n = (byte_temp & 0x80) != 0;
 			registers.z = (byte_temp & 0xFF) == 0;
@@ -2292,13 +2292,13 @@ namespace MyNes.Core
 		}
 		private void RRA()
 		{
-			byte_temp = Read(registers.ea);
+			byte_temp = this.memory.Read(registers.ea);
 
-			Write(registers.ea, byte_temp);
+			this.memory.Write(registers.ea, byte_temp);
 
 			dummy = (byte)((byte_temp >> 1) | (registers.c ? 0x80 : 0x00));
 
-			Write(registers.ea, dummy);
+			this.memory.Write(registers.ea, dummy);
 
 			registers.n = (dummy & 0x80) != 0;
 			registers.z = (dummy & 0xFF) == 0;
@@ -2315,7 +2315,7 @@ namespace MyNes.Core
 		}
 		private void RTI()
 		{
-			Read(registers.sp);
+			this.memory.Read(registers.sp);
 			registers.p = Pull();
 
 			registers.pcl = Pull();
@@ -2323,17 +2323,17 @@ namespace MyNes.Core
 		}
 		private void RTS()
 		{
-			Read(registers.sp);
+			this.memory.Read(registers.sp);
 			registers.pcl = Pull();
 			registers.pch = Pull();
 
 			registers.pc++;
 
-			Read(registers.pc);
+			this.memory.Read(registers.pc);
 		}
 		private void SAX()
 		{
-			Write(registers.ea, (byte)(registers.x & registers.a));
+			this.memory.Write(registers.ea, (byte)(registers.x & registers.a));
 		}
 		private static void SBC()
 		{
@@ -2350,36 +2350,36 @@ namespace MyNes.Core
 		{
 			byte_temp = (byte)(registers.x & (registers.eah + 1));
 
-			Read(registers.ea);
+			this.memory.Read(registers.ea);
 			registers.eal += registers.y;
 
 			if (registers.eal < registers.y)
 				registers.eah = byte_temp;
 
-			Write(registers.ea, byte_temp);
+			this.memory.Write(registers.ea, byte_temp);
 		}
 		private void SHY()
 		{
 			byte_temp = (byte)(registers.y & (registers.eah + 1));
 
-			Read(registers.ea);
+			this.memory.Read(registers.ea);
 			registers.eal += registers.x;
 
 			if (registers.eal < registers.x)
 				registers.eah = byte_temp;
-			Write(registers.ea, byte_temp);
+			this.memory.Write(registers.ea, byte_temp);
 		}
 		private void SLO()
 		{
-			byte_temp = Read(registers.ea);
+			byte_temp = this.memory.Read(registers.ea);
 
 			registers.c = (byte_temp & 0x80) != 0;
 
-			Write(registers.ea, byte_temp);
+			this.memory.Write(registers.ea, byte_temp);
 
 			byte_temp <<= 1;
 
-			Write(registers.ea, byte_temp);
+			this.memory.Write(registers.ea, byte_temp);
 
 			registers.n = (byte_temp & 0x80) != 0;
 			registers.z = (byte_temp & 0xFF) == 0;
@@ -2390,15 +2390,15 @@ namespace MyNes.Core
 		}
 		private void SRE()
 		{
-			byte_temp = Read(registers.ea);
+			byte_temp = this.memory.Read(registers.ea);
 
 			registers.c = (byte_temp & 0x01) != 0;
 
-			Write(registers.ea, byte_temp);
+			this.memory.Write(registers.ea, byte_temp);
 
 			byte_temp >>= 1;
 
-			Write(registers.ea, byte_temp);
+			this.memory.Write(registers.ea, byte_temp);
 
 			registers.n = (byte_temp & 0x80) != 0;
 			registers.z = (byte_temp & 0xFF) == 0;
@@ -2409,15 +2409,15 @@ namespace MyNes.Core
 		}
 		private void STA()
 		{
-			Write(registers.ea, registers.a);
+			this.memory.Write(registers.ea, registers.a);
 		}
 		private void STX()
 		{
-			Write(registers.ea, registers.x);
+			this.memory.Write(registers.ea, registers.x);
 		}
 		private void STY()
 		{
-			Write(registers.ea, registers.y);
+			this.memory.Write(registers.ea, registers.y);
 		}
 		private static void TAX()
 		{
@@ -2462,7 +2462,7 @@ namespace MyNes.Core
 		private void XAS()
 		{
 			registers.spl = (byte)(registers.a & registers.x /*& ((dummyVal >> 8) + 1)*/);
-			Write(registers.ea, registers.spl);
+			this.memory.Write(registers.ea, registers.spl);
 		}
 		#endregion
 	}

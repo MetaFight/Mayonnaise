@@ -33,6 +33,8 @@ namespace MyNes
 {
     static class Program
     {
+		private static NesEmu Emulator;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -72,11 +74,13 @@ namespace MyNes
             ResourceManager = new ResourceManager("MyNes.LanguageResources.Resource",
               Assembly.GetExecutingAssembly());
 
+			Program.Emulator = new NesEmu(TVSystem.NTSC);
+
             // Start-up nes emulation engine
-            MyNes.Core.NesEmu.WarmUp();
+			Program.Emulator.WarmUp();
 
             // Create the main form
-            FormMain = new FormMain();
+			FormMain = new FormMain(Program.Emulator);
 
             // Do command lines
             DoCommandLines(Args);
@@ -136,17 +140,17 @@ namespace MyNes
                     case "/vid_wind": Program.Settings.Video_StartFullscreen = false; break;
                     case "/vid_stretch_wind_on": Program.Settings.Video_StretchToMulti = true; break;
                     case "/vid_stretch_wind_off": Program.Settings.Video_StretchToMulti = false; break;
-                    case "/state_slot_0": NesEmu.STATESlot = 0; break;
-                    case "/state_slot_1": NesEmu.STATESlot = 1; break;
-                    case "/state_slot_2": NesEmu.STATESlot = 2; break;
-                    case "/state_slot_3": NesEmu.STATESlot = 3; break;
-                    case "/state_slot_4": NesEmu.STATESlot = 4; break;
-                    case "/state_slot_5": NesEmu.STATESlot = 5; break;
-                    case "/state_slot_6": NesEmu.STATESlot = 6; break;
-                    case "/state_slot_7": NesEmu.STATESlot = 7; break;
-                    case "/state_slot_8": NesEmu.STATESlot = 8; break;
-                    case "/state_slot_9": NesEmu.STATESlot = 9; break;
-                    case "/state_load": NesEmu.LoadState(); break;// Request a state load on the first rendered frame !
+                    case "/state_slot_0": Program.Emulator.STATESlot = 0; break;
+                    case "/state_slot_1": Program.Emulator.STATESlot = 1; break;
+                    case "/state_slot_2": Program.Emulator.STATESlot = 2; break;
+                    case "/state_slot_3": Program.Emulator.STATESlot = 3; break;
+                    case "/state_slot_4": Program.Emulator.STATESlot = 4; break;
+                    case "/state_slot_5": Program.Emulator.STATESlot = 5; break;
+                    case "/state_slot_6": Program.Emulator.STATESlot = 6; break;
+                    case "/state_slot_7": Program.Emulator.STATESlot = 7; break;
+                    case "/state_slot_8": Program.Emulator.STATESlot = 8; break;
+                    case "/state_slot_9": Program.Emulator.STATESlot = 9; break;
+                    case "/state_load": Program.Emulator.LoadState(); break;// Request a state load on the first rendered frame !
                 }
             }
 

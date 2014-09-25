@@ -23,7 +23,7 @@ using System.Collections.Generic;
 using System.IO;
 namespace MyNes.Core
 {
-    abstract class Board
+    public abstract class Board
     {
         public Board()
         {
@@ -172,14 +172,14 @@ namespace MyNes.Core
                 else if (attr.GetType() == typeof(NotSupported))
                 {
                     this.Supported = false;
-                    Console.WriteLine("BOARD FLAGED 'Not Supported'");
+                    Console.WriteLine("BOARD FLAGGED 'Not Supported'");
                 }
                 else if (attr.GetType() == typeof(NotImplementedWell))
                 {
                     NotImplementedWell inf = (NotImplementedWell)attr;
                     this.Issues = inf.Issues;
                     this.NotImplementedWell = true;
-                    Console.WriteLine("BOARD FLAGED 'Not Implemented Well'");
+                    Console.WriteLine("BOARD FLAGGED 'Not Implemented Well'");
                 }
             }
         }
@@ -1003,6 +1003,13 @@ namespace MyNes.Core
             else
                 Switch08KCHR(0, chr_01K_rom_count > 0);
         }
-    }
+
+		[Obsolete("Poor man's DI.  Update Mapper base class to take a NesEmu as a dependency.  I would have done this right away but 255 classes will need to be updated!")]
+		public NesEmu Nes
+		{
+			get;
+			set;
+		}
+	}
 }
 

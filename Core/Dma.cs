@@ -28,9 +28,10 @@ namespace MyNes.Core
     {
 		public event EventHandler DmcDma;
 
-		public Dma(NesEmu core)
+		public Dma(NesEmu core, Memory memory)
 		{
 			this.core = core;
+			this.memory = memory;
 		}
 
         // I suspect the SN74LS373N chip: "OCTAL TRANSPARENT LATCH WITH 3-STATE OUTPUTS; OCTAL D-TYPE FLIP-FLOP
@@ -52,6 +53,7 @@ namespace MyNes.Core
         private static int OAMCYCLE;
         private static byte latch;
 		private NesEmu core;
+		private Memory memory;
 
         public void DMAHardReset()
         {
@@ -110,7 +112,7 @@ namespace MyNes.Core
             {
                 // Nothing occurring, initialize brand new dma
                 // DMC DMA depends on r/w flag for the wait cycles.
-                dmaDMCDMAWaitCycles = this.core.BUS_RW ? 3 : 2;
+                dmaDMCDMAWaitCycles = this.memory.BUS_RW ? 3 : 2;
                 // After 2 cycles of oam dma, add extra cycle for the waiting.
                 if (dmaOAMFinishCounter == 3)
                     dmaDMCDMAWaitCycles++;
@@ -125,7 +127,7 @@ namespace MyNes.Core
             if (dmaDMC_occurring)
             {
                 // DMC DMA occurring here, use r/w flag
-                dmaOAMDMAWaitCycles = this.core.BUS_RW ? 1 : 0;
+				dmaOAMDMAWaitCycles = this.memory.BUS_RW ? 1 : 0;
             }
             else if (dmaOAM_occurring)
             {
@@ -145,7 +147,7 @@ namespace MyNes.Core
         {
             if (dmaOAMFinishCounter > 0)
                 dmaOAMFinishCounter--;
-            if (!this.core.BUS_RW)// Clocks only on reads
+			if (!this.memory.BUS_RW)// Clocks only on reads
             {
                 if (dmaDMCDMAWaitCycles > 0)
                     dmaDMCDMAWaitCycles--;
@@ -155,7 +157,7 @@ namespace MyNes.Core
             }
             if (dmaDMCOn)
             {
-                if (this.core.BUS_RW)// Clocks only on reads
+                if (this.memory.BUS_RW)// Clocks only on reads
                 {
                     dmaDMC_occurring = true;
                     // This is it ! pause the cpu
@@ -163,9 +165,9 @@ namespace MyNes.Core
                     // Do wait cycles (extra reads)
                     if (dmaDMCDMAWaitCycles > 0)
                     {
-                        if (this.core.BUS_ADDRESS == 0x4016 || this.core.BUS_ADDRESS == 0x4017)
+						if (this.memory.BUS_ADDRESS == 0x4016 || this.memory.BUS_ADDRESS == 0x4017)
                         {
-                            this.core.Read(this.core.BUS_ADDRESS);
+							this.memory.Read(this.memory.BUS_ADDRESS);
                             dmaDMCDMAWaitCycles--;
 
                             while (dmaDMCDMAWaitCycles > 0)
@@ -178,7 +180,7 @@ namespace MyNes.Core
                         {
                             while (dmaDMCDMAWaitCycles > 0)
                             {
-                                this.core.Read(this.core.BUS_ADDRESS);
+                                this.memory.Read(this.memory.BUS_ADDRESS);
                                 dmaDMCDMAWaitCycles--;
                             }
                         }
@@ -191,7 +193,7 @@ namespace MyNes.Core
             }
             if (dmaOAMOn)
             {
-                if (this.core.BUS_RW)// Clocks only on reads
+                if (this.memory.BUS_RW)// Clocks only on reads
                 {
                     dmaOAM_occurring = true;
                     // This is it ! pause the cpu
@@ -199,9 +201,9 @@ namespace MyNes.Core
                     // Do wait cycles (extra reads)
                     if (dmaOAMDMAWaitCycles > 0)
                     {
-                        if (this.core.BUS_ADDRESS == 0x4016 || this.core.BUS_ADDRESS == 0x4017)
+						if (this.memory.BUS_ADDRESS == 0x4016 || this.memory.BUS_ADDRESS == 0x4017)
                         {
-							this.core.Read(this.core.BUS_ADDRESS);
+							this.memory.Read(this.memory.BUS_ADDRESS);
                             dmaOAMDMAWaitCycles--;
 
                             while (dmaOAMDMAWaitCycles > 0)
@@ -214,7 +216,7 @@ namespace MyNes.Core
                         {
                             while (dmaOAMDMAWaitCycles > 0)
                             {
-								this.core.Read(this.core.BUS_ADDRESS);
+								this.memory.Read(this.memory.BUS_ADDRESS);
                                 dmaOAMDMAWaitCycles--;
                             }
                         }
@@ -224,9 +226,9 @@ namespace MyNes.Core
                     OAMCYCLE = 0;
                     for (oamdma_i = 0; oamdma_i < 256; oamdma_i++)
                     {
-						latch = this.core.Read(dmaOamaddress);
+						latch = this.memory.Read(dmaOamaddress);
                         OAMCYCLE++;
-						this.core.Write(0x2004, latch);
+						this.memory.Write(0x2004, latch);
                         OAMCYCLE++;
                         dmaOamaddress = (++dmaOamaddress) & 0xFFFF;
                     }

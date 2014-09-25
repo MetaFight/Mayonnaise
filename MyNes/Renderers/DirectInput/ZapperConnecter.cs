@@ -27,13 +27,16 @@ namespace MyNes
     public class ZapperConnecter : IZapperConnecter
     {
         // TODO: Zapper with "Wild Gun Man" - The Gang Mode is not working !
-        public ZapperConnecter(IntPtr handle, int winPosX, int winPosY, int videoW, int videoH)
+        public ZapperConnecter(IntPtr handle, int winPosX, int winPosY, int videoW, int videoH, NesEmu emulator)
         {
             this.scanlinesCount = 240;
             this.videoW = videoW;
             this.videoH = videoH;
             this.winPosX = winPosX;
             this.winPosY = winPosY;
+
+			this.emulator = emulator;
+
             DirectInput di = new DirectInput();
             mouse = new Mouse(di);
             mouse.SetCooperativeLevel(handle, CooperativeLevel.Nonexclusive | CooperativeLevel.Foreground);
@@ -53,6 +56,8 @@ namespace MyNes
         private byte r;
         private byte g;
         private byte b;
+		private readonly NesEmu emulator;
+
         public override void Update()
         {
             if (mouse.Acquire().IsSuccess)
@@ -84,11 +89,11 @@ namespace MyNes
                         {
                             if (pixelX + x < 256 && pixelX + x >= 0 && pixelY + y < scanlinesCount && pixelY + y >= 0)
                             {
-                                c = NesEmu.GetPixel(pixelX + x, pixelY + y);
+                                c = this.emulator.GetPixel(pixelX + x, pixelY + y);
                                 r = (byte)(c >> 0x10); // R
                                 g = (byte)(c >> 0x08); // G
-                                b = (byte)(c >> 0x00);  // B
-                                State = (r > 85 && g > 85 && b > 85);//bright color ?
+                                b = (byte)(c >> 0x00); // B
+                                State = (r > 85 && g > 85 && b > 85); //bright color ?
                             }
                             if (State)
                                 break;

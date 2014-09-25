@@ -34,9 +34,17 @@ namespace MyNes.Core
     /// </summary>
     public partial class NesEmu
     {
-		public NesEmu()
+		public NesEmu(TVSystem tvFormat)
 		{
-			InputInitialize();
+			this.TVFormat = tvFormat;
+			this.memory = new Memory(this);
+			this.dma = new Dma(this, this.memory);
+
+			this.memory.dma = this.dma;
+			
+
+			InitializeInput();
+
 			switch (TVFormat)
 			{
 				case TVSystem.NTSC:
@@ -57,70 +65,75 @@ namespace MyNes.Core
 			else//PALB, DENDY
 				FramePeriod = (1.0 / (FPS = 50.0));
 
-			this.dma = new Dma(this);
-
 			this.noiseChannel = new NoiseSoundChannel(this);
 			this.pulse1Channel = new PulseSoundChannel(this, 0x4000);
 			this.pulse2Channel = new PulseSoundChannel(this, 0x4004);
 			this.triangleChannel = new TriangleSoundChannel(this);
-			this.dmcChannel = new DmcSoundChannel(this, dma);
+			this.dmcChannel = new DmcSoundChannel(this, this.dma, this.memory);
 		}
 
-        public static TVSystemSetting TVFormatSetting;
-        public static TVSystem TVFormat;
-        public static Thread EmulationThread;
-        public static bool EmulationON;
-        public static bool EmulationPaused;
-        public static string GAMEFILE;
-        private static bool DoPalAdditionalClock;
-        private static byte palCyc;
-        private static bool initialized;
+        public TVSystemSetting TVFormatSetting;
+        public TVSystem TVFormat;
+        public Thread EmulationThread;
+		public bool EmulationON;
+        public bool EmulationPaused;
+        public string GAMEFILE;
+        public bool DoPalAdditionalClock;
+        public byte palCyc;
+        private bool initialized;
         /*SRAM*/
-        private static bool SaveSRAMAtShutdown;
-        private static string SRAMFileName;
-        private static string SRAMFolder;
+        public bool SaveSRAMAtShutdown;
+        public string SRAMFileName;
+        private string SRAMFolder;
         /*STATE*/
-        private static string STATEFileName;
-        private static string STATEFolder;
-        public static int STATESlot;
+        private string STATEFileName;
+        private string STATEFolder;
+        public int STATESlot;
         /*Snapshot*/
-        private static string SNAPSFolder;
-        private static string SNAPSFileName;
-        private static string SNAPSFormat;
-        private static bool SNAPSReplace;
+        private string SNAPSFolder;
+        private string SNAPSFileName;
+        private string SNAPSFormat;
+        private bool SNAPSReplace;
         /*SPEED LIMITER*/
-        public static bool SpeedLimitterON = true;
-        public static double CurrentFrameTime;
-        public static double ImmediateFrameTime;
-        private static double DeadTime;
-        private static double LastFrameTime;
-        private static double FramePeriod = (1.0 / 60.0988);
-        private static double FPS = 0;
+        public bool SpeedLimitterON = true;
+        public double CurrentFrameTime;
+        public double ImmediateFrameTime;
+        private double DeadTime;
+        private double LastFrameTime;
+        private double FramePeriod = (1.0 / 60.0988);
+        private double FPS = 0;
         // Requests !
-        private static bool request_pauseAtFrameFinish;
-        private static bool request_hardReset;
-        private static bool request_softReset;
-        private static bool request_state_save;
-        private static bool request_state_load;
-        private static bool request_snapshot;
-        private static bool request_save_sram;
+        private bool request_pauseAtFrameFinish;
+        private bool request_hardReset;
+        private bool request_softReset;
+        private bool request_state_save;
+        private bool request_state_load;
+        private bool request_snapshot;
+        private bool request_save_sram;
         // Events !
         /// <summary>
         /// Raised when the emu engine finished shutdown.
         /// </summary>
-        public static event EventHandler EMUShutdown;
+		[Obsolete("Nothing ever seems to unsubscribe from this.  Check for leaks.")]
+        public event EventHandler EMUShutdown;
 
-		private readonly NoiseSoundChannel noiseChannel;
-		private readonly PulseSoundChannel pulse1Channel;
-		private readonly PulseSoundChannel pulse2Channel;
-		private readonly TriangleSoundChannel triangleChannel;
-		private readonly DmcSoundChannel dmcChannel;
-		private Dma dma;
+		[Obsolete("Mega-hack until I can figure out how Memory and sound channel classes should interact.")]
+		public NoiseSoundChannel noiseChannel;
+		[Obsolete("Mega-hack until I can figure out how Memory and sound channel classes should interact.")]
+		public PulseSoundChannel pulse1Channel;
+		[Obsolete("Mega-hack until I can figure out how Memory and sound channel classes should interact.")]
+		public PulseSoundChannel pulse2Channel;
+		[Obsolete("Mega-hack until I can figure out how Memory and sound channel classes should interact.")]
+		public TriangleSoundChannel triangleChannel;
+		[Obsolete("Mega-hack until I can figure out how Memory and sound channel classes should interact.")]
+		public DmcSoundChannel dmcChannel;
+		private readonly Dma dma;
+		private readonly Memory memory;
 
         /// <summary>
         /// Call this at application start up to set nes default stuff
         /// </summary>
-        public static void WarmUp()
+        public void WarmUp()
         {
             InitializeSoundMixTable();
             NesCartDatabase.LoadDatabase("database.xml");
@@ -134,7 +147,7 @@ namespace MyNes.Core
         /// <param name="has_issues">Indicates if this rom mapper have issues or not</param>
         /// <param name="known_issues">Issues with this mapper.</param>
         /// <returns>True if My Nes car run this game otherwise false.</returns>
-        public static bool CheckRom(string fileName, out bool is_supported_mapper, 
+        public bool CheckRom(string fileName, out bool is_supported_mapper, 
             out bool has_issues, out string known_issues)
         {
             switch (Path.GetExtension(fileName).ToLower())
@@ -153,10 +166,11 @@ namespace MyNes.Core
                             {
                                 if (tp.FullName == mapperName)
                                 {
-                                    board = Activator.CreateInstance(tp) as Board;
-                                    is_supported_mapper = board.Supported;
-                                    has_issues = board.NotImplementedWell;
-                                    known_issues = board.Issues;
+                                    this.memory.board = Activator.CreateInstance(tp) as Board;
+									this.memory.board.Nes = this;
+									is_supported_mapper = this.memory.board.Supported;
+                                    has_issues = this.memory.board.NotImplementedWell;
+                                    known_issues = this.memory.board.Issues;
                                     found = true;
                                     return true;
                                 }
@@ -207,7 +221,7 @@ namespace MyNes.Core
                             // Make snapshots file name
                             SNAPSFileName = Path.GetFileNameWithoutExtension(fileName);
                             // Initialzie
-                            MEMInitialize(header);
+							this.memory.MEMInitialize(header);
 
                             TVFormatSetting = tvsetting;
 
@@ -234,7 +248,7 @@ namespace MyNes.Core
             }
         }
 
-        public static void ApplySettings(bool saveSramOnSutdown, string sramFolder, string stateFolder,
+        public void ApplySettings(bool saveSramOnSutdown, string sramFolder, string stateFolder,
             string snapshotsFolder, string snapFormat, bool replaceSnap)
         {
             SaveSRAMAtShutdown = saveSramOnSutdown;
@@ -265,7 +279,7 @@ namespace MyNes.Core
                     if (request_save_sram)
                     {
                         request_save_sram = false;
-                        SaveSRAM();
+						this.memory.SaveSRAM();
                         EmulationPaused = false;
                     }
                     if (request_hardReset)
@@ -307,7 +321,7 @@ namespace MyNes.Core
         /// <summary>
         /// Request a hard reset in the next frame.
         /// </summary>
-        public static void EMUHardReset()
+        public void EMUHardReset()
         {
             request_pauseAtFrameFinish = true;
             request_hardReset = true;
@@ -316,7 +330,7 @@ namespace MyNes.Core
         /// <summary>
         /// Request a soft reset in the next frame
         /// </summary>
-        public static void EMUSoftReset()
+        public void EMUSoftReset()
         {
             request_pauseAtFrameFinish = true;
             request_softReset = true;
@@ -324,12 +338,12 @@ namespace MyNes.Core
         /// <summary>
         /// Shutdown the emulation. This will set the EmulationON to false as well.
         /// </summary>
-        public static void ShutDown()
+        public void ShutDown()
         {
             if (!initialized)
                 return;
             EmulationON = false;
-            MEMShutdown();
+			this.memory.MEMShutdown();
             if (videoOut != null)
                 videoOut.ShutDown();
             // videoOut = null;
@@ -350,26 +364,52 @@ namespace MyNes.Core
         /// <summary>
         /// Take game snapshot
         /// </summary>
-        public static void TakeSnapshot()
+        public void TakeSnapshot()
         {
             request_pauseAtFrameFinish = true;
             request_snapshot = true;
         }
-        public static void SetupGameGenie(bool IsGameGenieActive, GameGenieCode[] GameGenieCodes)
+        public void SetupGameGenie(bool IsGameGenieActive, GameGenieCode[] GameGenieCodes)
         {
-            if (board != null)
-                board.SetupGameGenie(IsGameGenieActive, GameGenieCodes);
+			if (this.memory.board != null)
+				this.memory.board.SetupGameGenie(IsGameGenieActive, GameGenieCodes);
         }
-        public static GameGenieCode[] GameGenieCodes
-        { get { return board.GameGenieCodes; } }
-        public static bool IsGameGenieActive
-        { get { return board.IsGameGenieActive; } }
-        public static bool IsGameFoundOnDB
-        { get { return board.IsGameFoundOnDB; } }
-        public static NesCartDatabaseGameInfo GameInfo
-        { get { return board.GameInfo; } }
-        public static NesCartDatabaseCartridgeInfo GameCartInfo
-        { get { return board.GameCartInfo; } }
+		[Obsolete("Unstaticify")]
+        public GameGenieCode[] GameGenieCodes
+		{
+			get
+			{
+				return this.memory.board.GameGenieCodes;
+			}
+		}
+        public bool IsGameGenieActive
+		{
+			get
+			{
+				return this.memory.board.IsGameGenieActive;
+			}
+		}
+        public bool IsGameFoundOnDB
+		{
+			get
+			{
+				return this.memory.board.IsGameFoundOnDB;
+			}
+		}
+        public NesCartDatabaseGameInfo GameInfo
+		{
+			get
+			{
+				return this.memory.board.GameInfo;
+			}
+		}
+        public NesCartDatabaseCartridgeInfo GameCartInfo
+		{
+			get
+			{
+				return this.memory.board.GameCartInfo;
+			}
+		}
         // Internal methods
         public void ClockComponents()
         {
@@ -393,9 +433,9 @@ namespace MyNes.Core
             APUClock();
             this.dma.DMAClock();
 
-            board.OnCPUClock();
+			this.memory.board.OnCPUClock();
         }
-        private static void OnFinishFrame()
+        private void OnFinishFrame()
         {
             InputFinishFrame();
             // Sound
@@ -436,11 +476,11 @@ namespace MyNes.Core
             {
                 case TVSystemSetting.AUTO:
                     {
-                        if (board.GameInfo.Cartridges != null)
+						if (this.memory.board.GameInfo.Cartridges != null)
                         {
-                            if (board.GameCartInfo.System.ToUpper().Contains("PAL"))
+							if (this.memory.board.GameCartInfo.System.ToUpper().Contains("PAL"))
                                 TVFormat = TVSystem.PALB;
-                            else if (board.GameCartInfo.System.ToUpper().Contains("DENDY"))
+							else if (this.memory.board.GameCartInfo.System.ToUpper().Contains("DENDY"))
                                 TVFormat = TVSystem.DENDY;
                             else
                                 TVFormat = TVSystem.NTSC;
@@ -486,7 +526,7 @@ namespace MyNes.Core
             // I'm sure all sound channels implemented exactly as it should by Wiki
             // and APU passes all tests.
             // Anyway, it sounds good using these values :)
-            MEMHardReset();
+			this.memory.MEMHardReset();
             CPUHardReset();
             PPUHardReset();
             APUHardReset();
@@ -495,14 +535,14 @@ namespace MyNes.Core
 
         private void SoftReset()
         {
-            MEMSoftReset();
+            this.memory.MEMSoftReset();
             CPUSoftReset();
             PPUSoftReset();
             APUSoftReset();
             this.dma.DMASoftReset();
         }
 
-        private static double GetTime()
+        private double GetTime()
         {
             return (double)Stopwatch.GetTimestamp() / (double)Stopwatch.Frequency;
         }

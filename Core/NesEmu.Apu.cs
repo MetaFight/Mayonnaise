@@ -25,13 +25,13 @@ namespace MyNes.Core
 {
     public partial class NesEmu
     {
-        private static int[][] SequenceMode0 =
+        public static readonly int[][] SequenceMode0 =
         { 
             new int[] { 7459, 7456, 7458, 7457, 1, 1, 7457 }, // NTSC
             new int[] { 8315, 8314, 8312, 8313, 1, 1, 8313 }, // PALB
             new int[] { 7459, 7456, 7458, 7457, 1, 1, 7457 }, // DENDY (acts like NTSC)
         };
-        private static int[][] SequenceMode1 = 
+        public static readonly int[][] SequenceMode1 = 
         { 
             new int[] { 1, 7458, 7456, 7458, 14910 } , // NTSC
             new int[] { 1, 8314, 8314, 8312, 16626 } , // PALB
@@ -42,14 +42,12 @@ namespace MyNes.Core
             0x0A, 0xFE, 0x14, 0x02, 0x28, 0x04, 0x50, 0x06, 0xA0, 0x08, 0x3C, 0x0A, 0x0E, 0x0C, 0x1A, 0x0E,
             0x0C, 0x10, 0x18, 0x12, 0x30, 0x14, 0x60, 0x16, 0xC0, 0x18, 0x48, 0x1A, 0x10, 0x1C, 0x20, 0x1E,
         };
-        private static int Cycles = 0;
-        private static bool SequencingMode;
-        private static byte CurrentSeq = 0;
-		[Obsolete("Convert this to property")]
+        public int Cycles = 0;
+        public bool SequencingMode;
+        public byte CurrentSeq = 0;
         public bool IsClockingDuration = false;
-        private static bool FrameIrqEnabled;
-        private static bool FrameIrqFlag;
-		[Obsolete("Convert this to property")]
+        public bool FrameIrqEnabled;
+        public bool FrameIrqFlag;
         public bool oddCycle;
         /*Playback*/
         private static IAudioProvider AudioOut;
@@ -63,10 +61,9 @@ namespace MyNes.Core
         private static byte[] audio_playback_buffer = new byte[44100];
         private static int audio_playback_bufferSize;
         private static bool audio_playback_first_render;
-        public static int audio_playback_w_pos = 0;//Write position
-        public static int audio_playback_latency = 0;//Write position
+        public int audio_playback_w_pos = 0;//Write position
+        public int audio_playback_latency = 0;//Write position
         private static int audio_playback_out;
-		[Obsolete("This should be a property.")]
         public int SystemIndex;
         private static double x, x_1, y, y_1;
         private const double R = 1;// 0.995 for 44100 Hz
@@ -151,7 +148,7 @@ namespace MyNes.Core
                 }
             }
         }
-        public static void SetupSoundPlayback(IAudioProvider AudioOutput, bool soundEnabled, int frequency, int bufferSize,
+        public void SetupSoundPlayback(IAudioProvider AudioOutput, bool soundEnabled, int frequency, int bufferSize,
             int latencyInBytes)
         {
             audio_playback_latency = latencyInBytes;
@@ -176,7 +173,7 @@ namespace MyNes.Core
 							 [this.pulse2Channel.Output]
                              [this.triangleChannel.Output]
                              [this.noiseChannel.Output]
-                             [this.dmcChannel.Output] + (board.enable_external_sound ? board.APUGetSamples() : 0);
+							 [this.dmcChannel.Output] + (this.memory.board.enable_external_sound ? this.memory.board.APUGetSamples() : 0);
                 y = x - x_1 + (0.995 * y_1);// y[n] = x[n] - x[n - 1] + R * y[n - 1]; R = 0.995 for 44100 Hz
 
                 x_1 = x;
@@ -220,8 +217,8 @@ namespace MyNes.Core
             this.pulse2Channel.ClockLengthCounter();
             this.triangleChannel.ClockLengthCounter();
             this.noiseChannel.ClockLengthCounter();
-            if (board.enable_external_sound)
-                board.OnAPUClockDuration();
+			if (this.memory.board.enable_external_sound)
+				this.memory.board.OnAPUClockDuration();
         }
         private void APUClockEnvelope()
         {
@@ -229,18 +226,18 @@ namespace MyNes.Core
             this.pulse2Channel.ClockEnvelope();
             this.triangleChannel.ClockEnvelope();
             this.noiseChannel.ClockEnvelope();
-            if (board.enable_external_sound)
-                board.OnAPUClockEnvelope();
+			if (this.memory.board.enable_external_sound)
+                this.memory.board.OnAPUClockEnvelope();
         }
 
-        private static void APUCheckIrq()
+        private void APUCheckIrq()
         {
             if (FrameIrqEnabled)
                 FrameIrqFlag = true;
             if (FrameIrqFlag)
                 IRQFlags |= IRQ_APU;
         }
-        private void APUClock()
+        public void APUClock()
         {
             this.IsClockingDuration = false;
             Cycles--;
@@ -285,8 +282,8 @@ namespace MyNes.Core
             this.triangleChannel.ClockSingle();
             this.noiseChannel.ClockSingle();
             this.dmcChannel.ClockSingle();
-            if (board.enable_external_sound)
-                board.OnAPUClockSingle(ref IsClockingDuration);
+			if (this.memory.board.enable_external_sound)
+				this.memory.board.OnAPUClockSingle(ref IsClockingDuration);
             // Playback
             APUUpdatePlayback();
         }

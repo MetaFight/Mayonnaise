@@ -32,10 +32,15 @@ namespace MyNes
 {
     public partial class FormGameGenie : Form
     {
-        public FormGameGenie()
+		private GameGenie gameGenie;
+		private NesEmu emulator;
+
+        public FormGameGenie(NesEmu emulator)
         {
+			this.emulator = emulator;
+
             InitializeComponent();
-            if (!NesEmu.EmulationON)
+			if (!emulator.EmulationON)
             {
                 MessageBox.Show(Program.ResourceManager.GetString("Message_NesIsOff"));
                 Close();
@@ -44,18 +49,18 @@ namespace MyNes
             gameGenie = new GameGenie();
             textBox2.SelectAll();
             //load list if found
-            if (NesEmu.GameGenieCodes != null)
+			if (this.emulator.GameGenieCodes != null)
             {
-                foreach (GameGenieCode code in NesEmu.GameGenieCodes)
+				foreach (GameGenieCode code in this.emulator.GameGenieCodes)
                 {
                     listView1.Items.Add(code.Name);
                     listView1.Items[listView1.Items.Count - 1].Checked = code.Enabled;
                     listView1.Items[listView1.Items.Count - 1].SubItems.Add(code.Descreption);
                 }
             }
-            checkBox1.Checked = NesEmu.IsGameGenieActive;
+			checkBox1.Checked = this.emulator.IsGameGenieActive;
         }
-        private GameGenie gameGenie;
+        
         private void ShowValues()
         {
             if (textBox2.Text.Length == 6)
@@ -252,7 +257,7 @@ namespace MyNes
             }
             SaveFileDialog save = new SaveFileDialog();
             save.Filter = Program.ResourceManager.GetString("Filter_XML");
-            save.FileName = System.IO.Path.GetFileNameWithoutExtension(NesEmu.GAMEFILE) + ".xml";
+			save.FileName = System.IO.Path.GetFileNameWithoutExtension(this.emulator.GAMEFILE) + ".xml";
             if (save.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {
                 XmlWriterSettings sett = new XmlWriterSettings();
@@ -338,7 +343,7 @@ namespace MyNes
                 //add to active list
                 codes.Add(code);
             }
-            NesEmu.SetupGameGenie(checkBox1.Checked, codes.ToArray());
+			this.emulator.SetupGameGenie(checkBox1.Checked, codes.ToArray());
             this.Close();
         }
     }

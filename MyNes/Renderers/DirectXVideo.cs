@@ -78,10 +78,13 @@ namespace MyNes
         public bool threadPAUSED;
         private Random r = new Random();
         private byte c;
+		private NesEmu emulator;
 
-        public DirectXVideo(Control surface_control)
+        public DirectXVideo(Control surface_control, NesEmu emulator)
         {
             this.surface_control = surface_control;
+			this.emulator = emulator;
+
             // Make it not fullscreen
             fullScreen = false;
             threadPAUSED = false;
@@ -96,7 +99,7 @@ namespace MyNes
             LoadSettings();
             if (cut_lines)
             {
-                if (NesEmu.TVFormat == TVSystem.NTSC)
+                if (this.emulator.TVFormat == TVSystem.NTSC)
                 {
                     linesToSkip = 8;
                     scanlines = 224;
@@ -116,7 +119,7 @@ namespace MyNes
             originalRect = new Rectangle(0, 0, 256, scanlines);
             currentMode = direct3D.Adapters[0].CurrentDisplayMode;
             Console.WriteLine("Direct3D: Initializing Direct 3d video device ...");
-            if (!NesEmu.EmulationON)
+            if (!this.emulator.EmulationON)
                 fullScreen = false;
             try
             {
@@ -390,7 +393,7 @@ namespace MyNes
             { isRendering = false; return; }
             if (!initialized)
             { isRendering = false; return; }
-            if (!NesEmu.EmulationON)
+            if (!this.emulator.EmulationON)
             {
                 if (fullScreen)
                 {
@@ -446,41 +449,41 @@ namespace MyNes
 
                 displaySprite.Begin(SpriteFlags.AlphaBlend);
                 // fps
-                if (NesEmu.EmulationON)
+                if (this.emulator.EmulationON)
                 {
-                    if (NesEmu.EmulationPaused)
+                    if (this.emulator.EmulationPaused)
                         font_BIG.DrawString(displaySprite, "PAUSED", 20, 20, Color.Lime);
                     else if (Program.FormMain.audio != null)
                     {
                         if (Program.FormMain.audio.IsRecording)
                             font.DrawString(displaySprite, "RECORDING SOUND [" + TimeSpan.FromSeconds(Program.FormMain.audio.Recorder.Time) + "]", 20, 20, Color.OrangeRed);
                         // Debug sound sync by calculating the difference between pointers and show it
-                        //font.DrawString(displaySprite, (Program.FormMain.audio.CurrentWritePosition - NesEmu.audio_playback_w_pos).ToString(), 20, 20, Color.OrangeRed);
+                        //font.DrawString(displaySprite, (Program.FormMain.audio.CurrentWritePosition - this.emulator.audio_playback_w_pos).ToString(), 20, 20, Color.OrangeRed);
                     }
                     if (show_emulation_status_timer > 0)
                     {
                         show_emulation_status_timer--;
                         font.DrawString(displaySprite, "GAME: " + emulation_status_game_name, 20, 20, Color.Lime);
                         font.DrawString(displaySprite,
-                            "TV SYS: " + NesEmu.TVFormat.ToString() +
-                            (NesEmu.IsGameGenieActive ? " | GAME GENIE ON" : "")
+                            "TV SYS: " + this.emulator.TVFormat.ToString() +
+                            (this.emulator.IsGameGenieActive ? " | GAME GENIE ON" : "")
                             , 20, 50, Color.Lime);
-                        double fps = (1.0 / NesEmu.ImmediateFrameTime);
-                        double pfps = (1.0 / NesEmu.CurrentFrameTime);
+                        double fps = (1.0 / this.emulator.ImmediateFrameTime);
+                        double pfps = (1.0 / this.emulator.CurrentFrameTime);
                         font.DrawString(displaySprite, "FPS: " + fps.ToString("F2") + "/" + pfps.ToString("F2"),
                             20, 80, Color.Lime);
                     }
                     else if (show_fps)
                     {
-                        if (!NesEmu.EmulationPaused)
+                        if (!this.emulator.EmulationPaused)
                         {
-                            double fps = (1.0 / NesEmu.ImmediateFrameTime);
-                            double pfps = (1.0 / NesEmu.CurrentFrameTime);
+                            double fps = (1.0 / this.emulator.ImmediateFrameTime);
+                            double pfps = (1.0 / this.emulator.CurrentFrameTime);
                             font.DrawString(displaySprite, fps.ToString("F2") + "/" + pfps.ToString("F2"), 20, 20, Color.Lime);
                         }
                     }
 
-                    if (!NesEmu.SpeedLimitterON)
+                    if (!this.emulator.SpeedLimitterON)
                     {
                         if (frame_timer > 30)
                             font_BIG.DrawString(displaySprite, "TURBO !", 20, ScreenHeight - 100, Color.Lime);
@@ -543,7 +546,7 @@ namespace MyNes
             canRender = false;
             //while (isRendering) { }
             threadPAUSED = true;
-            //NesEmu.EmulationPaused = true; 
+            //this.emulator.EmulationPaused = true; 
             // make sure the file is not replaced
             string path = "";
 
@@ -600,7 +603,7 @@ namespace MyNes
             canRender = true;
             WriteNotification("Snapshot taken. [" + System.IO.Path.GetFileName(path) + "]", 120, Color.Green);
             Console.WriteLine("Direct3D: Snapshot taken");
-            NesEmu.EmulationPaused = false;
+            this.emulator.EmulationPaused = false;
         }
         public void SwitchFullscreen()
         {
@@ -631,19 +634,19 @@ namespace MyNes
         }
         public void ShowEmulationStatus()
         {
-            if (NesEmu.EmulationON)
+            if (this.emulator.EmulationON)
             {
                 show_emulation_status_timer = 240;
-                if (NesEmu.IsGameFoundOnDB)
+                if (this.emulator.IsGameFoundOnDB)
                 {
-                    if (NesEmu.GameInfo.Game_AltName != null && NesEmu.GameInfo.Game_AltName != "")
-                        emulation_status_game_name = NesEmu.GameInfo.Game_Name + " (" + NesEmu.GameInfo.Game_AltName + ")";
+                    if (this.emulator.GameInfo.Game_AltName != null && this.emulator.GameInfo.Game_AltName != "")
+                        emulation_status_game_name = this.emulator.GameInfo.Game_Name + " (" + this.emulator.GameInfo.Game_AltName + ")";
                     else
-                        emulation_status_game_name = NesEmu.GameInfo.Game_Name;
+                        emulation_status_game_name = this.emulator.GameInfo.Game_Name;
                 }
                 else
                 {
-                    emulation_status_game_name = System.IO.Path.GetFileName(NesEmu.GAMEFILE);
+                    emulation_status_game_name = System.IO.Path.GetFileName(this.emulator.GAMEFILE);
                 }
             }
         }

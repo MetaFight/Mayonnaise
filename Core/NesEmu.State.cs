@@ -31,7 +31,7 @@ namespace MyNes.Core
         private static bool state_is_saving_state;
         private static bool state_is_loading_state;
 
-        public static void UpdateStateSlot(int slot)
+        public void UpdateStateSlot(int slot)
         {
             // Reset state
             STATESlot = slot;
@@ -41,7 +41,7 @@ namespace MyNes.Core
         /// <summary>
         /// Request a state save at specified slot.
         /// </summary>
-        public static void SaveState()
+        public void SaveState()
         {
             request_pauseAtFrameFinish = true;
             request_state_save = true;
@@ -49,7 +49,7 @@ namespace MyNes.Core
         /// <summary>
         /// Request a state load at specified slot.
         /// </summary>
-        public static void LoadState()
+        public void LoadState()
         {
             request_pauseAtFrameFinish = true;
             request_state_load = true;
@@ -80,9 +80,9 @@ namespace MyNes.Core
             bin.Write(Encoding.ASCII.GetBytes("MNS"));// Write MNS (My Nes State)
             bin.Write(state_version);// Write version (1 byte)
             // Write SHA1 for compare later
-            for (int i = 0; i < board.RomSHA1.Length; i += 2)
+			for (int i = 0; i < this.memory.board.RomSHA1.Length; i += 2)
             {
-                string v = board.RomSHA1.Substring(i, 2).ToUpper();
+				string v = this.memory.board.RomSHA1.Substring(i, 2).ToUpper();
                 bin.Write(System.Convert.ToByte(v, 16));
             }
             // Write data
@@ -146,17 +146,7 @@ namespace MyNes.Core
             bin.Write(vbl_flag_temp);
             #endregion
             #region Memory
-            board.SaveState(bin);
-            bin.Write(WRAM);
-            bin.Write(palettes_bank);
-            bin.Write(oam_ram);
-            bin.Write(oam_secondary);
-            bin.Write(BUS_ADDRESS);
-            bin.Write(BUS_RW);
-            bin.Write(BUS_RW_P);
-            bin.Write(temp_4015);
-            bin.Write(temp_4016);
-            bin.Write(temp_4017);
+			this.memory.SaveState(bin);
             #endregion
             #region Noise
 			this.noiseChannel.SaveState(bin);
@@ -295,11 +285,11 @@ namespace MyNes.Core
                 return;
             }
             string sha1 = "";
-            for (int i = 0; i < board.RomSHA1.Length; i += 2)
+			for (int i = 0; i < this.memory.board.RomSHA1.Length; i += 2)
             {
                 sha1 += (bin.ReadByte()).ToString("X2");
             }
-            if (sha1.ToLower() != board.RomSHA1.ToLower())
+			if (sha1.ToLower() != this.memory.board.RomSHA1.ToLower())
             {
                 EmulationPaused = false;
                 videoOut.WriteNotification("Unable load state at slot " + STATESlot + "; This state file is not for this game; not same SHA1 !", 120, Color.Red);
@@ -367,17 +357,7 @@ namespace MyNes.Core
             vbl_flag_temp = bin.ReadBoolean();
             #endregion
             #region Memory
-            board.LoadState(bin);
-            bin.Read(WRAM, 0, WRAM.Length);
-            bin.Read(palettes_bank, 0, palettes_bank.Length);
-            bin.Read(oam_ram, 0, oam_ram.Length);
-            bin.Read(oam_secondary, 0, oam_secondary.Length);
-            BUS_ADDRESS = bin.ReadInt32();
-            BUS_RW = bin.ReadBoolean();
-            BUS_RW_P = bin.ReadBoolean();
-            temp_4015 = bin.ReadByte();
-            temp_4016 = bin.ReadByte();
-            temp_4017 = bin.ReadByte();
+			this.memory.LoadState(bin);
             #endregion
             #region Noise
 			this.noiseChannel.LoadState(bin);

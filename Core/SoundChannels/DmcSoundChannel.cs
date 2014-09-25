@@ -55,11 +55,13 @@ namespace MyNes.Core.SoundChannels
         public int dmc_freqTimer;
 		private readonly NesEmu core;
 		private readonly Dma dma;
+		private readonly Memory memory;
 
-		public DmcSoundChannel(NesEmu core, Dma dma)
+		public DmcSoundChannel(NesEmu core, Dma dma, Memory memory)
 		{
 			this.core = core;
 			this.dma = dma;
+			this.memory = memory;
 			this.dma.DmcDma += this.OnDmcDma;
 		}
 
@@ -67,7 +69,7 @@ namespace MyNes.Core.SoundChannels
 		{
 			dmc_bufferFull = true;
 
-			dmc_dmaBuffer = this.core.Read(dmc_dmaAddr);
+			dmc_dmaBuffer = this.memory.Read(dmc_dmaAddr);
 
 			if (++dmc_dmaAddr == 0x10000)
 				dmc_dmaAddr = 0x8000;

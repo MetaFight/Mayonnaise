@@ -45,7 +45,7 @@ namespace MyNes
         /// </summary>
         /// <param name="time"></param>
         /// <returns></returns>
-        public static string ToDateOnly(DateTime time)
+        public string ToDateOnly(DateTime time)
         {
             string val = "";
             // YYYY-MM-DD
@@ -59,7 +59,7 @@ namespace MyNes
         /// </summary>
         /// <param name="time"></param>
         /// <returns></returns>
-        public static DateTime FromDateOnly(string time)
+        public DateTime FromDateOnly(string time)
         {
             string[] vals = time.Split(new char[] { '-' });
             return new DateTime(int.Parse(vals[0]), int.Parse(vals[1]), int.Parse(vals[2]));

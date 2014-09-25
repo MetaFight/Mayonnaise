@@ -23,7 +23,8 @@ namespace MyNes.Core
 {
     public partial class NesEmu
     {
-        public static bool IsVSUnisystem;
+        public bool IsVSUnisystem;
+
         /*TODO: fix these palettes*/
         private static int[] VS1 =
        {
@@ -74,7 +75,7 @@ namespace MyNes.Core
          0x3f,0x31,0x3f,0x2a,0x2c,0x0c,0x3f,0x3f,0x3f,0x07,0x34,0x06,0x3f,0x25,0x26,0x0f,
          0x3f,0x19,0x10,0x3f,0x3f,0x3f,0x3f,0x17,0x3f,0x11,0x3f,0x3f,0x3f,0x25,0x18,0x3f,
 	  };
-        private static void CheckGameVSUnisystem(string sha1, bool trueByHeader, int mapperNumber)
+        private void CheckGameVSUnisystem(string sha1, bool trueByHeader, int mapperNumber)
         {
             // TODO: finish all VSUnisystem games setup
             paletteIndexes = new int[512];

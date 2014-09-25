@@ -24,19 +24,19 @@ namespace MyNes.Core
     public partial class NesEmu
     {
         // TODO: controllers for zapper and vsunisystem
-        private static int PORT0;
-        private static int PORT1;
-        private static int inputStrobe;
-        private static IJoypadConnecter joypad1;
-        private static IJoypadConnecter joypad2;
-        private static IJoypadConnecter joypad3;
-        private static IJoypadConnecter joypad4;
-        private static IZapperConnecter zapper;
-        private static IVSUnisystemDIPConnecter VSUnisystemDIP;
-        public static bool IsFourPlayers;
-        public static bool IsZapperConnected;
+        public int PORT0;
+        public int PORT1;
+        public int inputStrobe;
+        public IJoypadConnecter joypad1;
+        public IJoypadConnecter joypad2;
+        public IJoypadConnecter joypad3;
+        public IJoypadConnecter joypad4;
+        public IZapperConnecter zapper;
+        public IVSUnisystemDIPConnecter VSUnisystemDIP;
+        public bool IsFourPlayers;
+        public bool IsZapperConnected;
 
-        private static void InputFinishFrame()
+        private void InputFinishFrame()
         {
             joypad1.Update();
             joypad2.Update();
@@ -50,7 +50,7 @@ namespace MyNes.Core
             if (IsVSUnisystem)
                 VSUnisystemDIP.Update();
         }
-        private static void InputInitialize()
+        private void InitializeInput()
         {
             // Initialize all controllers to blank
             joypad1 = new BlankJoypad();
@@ -60,7 +60,7 @@ namespace MyNes.Core
             zapper = new BlankZapper();
             VSUnisystemDIP = new BlankVSUnisystemDIP();
         }
-        public static void SetupJoypads(IJoypadConnecter joy1, IJoypadConnecter joy2, IJoypadConnecter joy3, IJoypadConnecter joy4)
+        public void SetupJoypads(IJoypadConnecter joy1, IJoypadConnecter joy2, IJoypadConnecter joy3, IJoypadConnecter joy4)
         {
             joypad1 = joy1;
             joypad2 = joy2;
@@ -75,11 +75,11 @@ namespace MyNes.Core
             if (joypad4 == null)
                 joypad4 = new BlankJoypad();
         }
-        public static void SetupZapper(IZapperConnecter zap)
+        public void SetupZapper(IZapperConnecter zap)
         {
             zapper = zap;
         }
-        public static void SetupVSUnisystemDIP(IVSUnisystemDIPConnecter vsUnisystemDIP)
+        public void SetupVSUnisystemDIP(IVSUnisystemDIPConnecter vsUnisystemDIP)
         {
             VSUnisystemDIP = vsUnisystemDIP;
         }

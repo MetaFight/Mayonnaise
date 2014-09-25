@@ -25,15 +25,16 @@ namespace MyNes.Core
 {
     public partial class NesEmu
     {
-        private const int IRQ_APU = 0x1;
+        public const int IRQ_APU = 0x1;
         public const int IRQ_BOARD = 0x2;
         public const int IRQ_DMC = 0x4;
         // Represents the current NMI pin (connected to ppu)
-        private static bool NMI_Current;
+        public bool NMI_Current;
         // Represents the old status if NMI pin, used to generate NMI in raising edge
         private static bool NMI_Old;
         // Determines that NMI is pending (active when NMI pin become true and was false)
         private static bool NMI_Detected;
+		[Obsolete("Unstaticify")]
         // Determines that IRQ flags (pins)
         public static int IRQFlags = 0;
         // Determines that IRQ is pending
@@ -42,12 +43,12 @@ namespace MyNes.Core
         private static int interrupt_vector;
         // This flag suspend interrupt polling
         private static bool interrupt_suspend;
-        private static bool nmi_enabled;
-        private static bool nmi_old;
-        private static bool vbl_flag;
-        private static bool vbl_flag_temp;
+        public bool nmi_enabled;
+        public bool nmi_old;
+        public bool vbl_flag;
+        public bool vbl_flag_temp;
 
-        private static void PollInterruptStatus()
+        public void PollInterruptStatus()
         {
             if (!interrupt_suspend)
             {
@@ -61,7 +62,7 @@ namespace MyNes.Core
                 interrupt_vector = NMI_Detected ? 0xFFFA : 0xFFFE;
             }
         }
-        private static void CheckNMI()
+        public void CheckNMI()
         {
             // At VBL time
             if ((VClock == vbl_vclock_Start) && (HClock < 3))

@@ -22,7 +22,7 @@ using System;
 
 namespace MyNes.Core
 {
-    struct BankInfo
+    public struct BankInfo
     {
         public BankInfo(string ID, bool IsRAM, bool Writable, bool Enabled, bool IsBattery, byte[] DATA)
         {

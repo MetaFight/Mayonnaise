@@ -26,7 +26,7 @@ namespace MyNes
 {
     class NesVSUnisystemDIPKeyboardConnection : IVSUnisystemDIPConnecter
     {
-        public NesVSUnisystemDIPKeyboardConnection(IntPtr handle, IInputSettingsVSUnisystemDIP settings)
+        public NesVSUnisystemDIPKeyboardConnection(IntPtr handle, IInputSettingsVSUnisystemDIP settings, NesEmu emulator)
         {
             DirectInput di = new DirectInput();
             keyboard = new Keyboard(di);
@@ -54,7 +54,7 @@ namespace MyNes
                 CreditLeftCoinSlot = (SlimDX.DirectInput.Key)Enum.Parse(typeof(SlimDX.DirectInput.Key), settings.CreditLeftCoinSlot);
             if (settings.CreditRightCoinSlot != "")
                 CreditRightCoinSlot = (SlimDX.DirectInput.Key)Enum.Parse(typeof(SlimDX.DirectInput.Key), settings.CreditRightCoinSlot);
-            NesEmu.EMUShutdown += NesEmu_EMUShutdown;
+			emulator.EMUShutdown += NesEmu_EMUShutdown;
         }
         private Key CreditServiceButton = Key.Unknown;
         private Key DIPSwitch1 = Key.Unknown;
