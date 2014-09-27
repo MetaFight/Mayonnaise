@@ -89,7 +89,7 @@ namespace MyNes
                         {
                             if (pixelX + x < 256 && pixelX + x >= 0 && pixelY + y < scanlinesCount && pixelY + y >= 0)
                             {
-                                c = this.emulator.GetPixel(pixelX + x, pixelY + y);
+								c = this.emulator.ppu.GetPixel(pixelX + x, pixelY + y);
                                 r = (byte)(c >> 0x10); // R
                                 g = (byte)(c >> 0x08); // G
                                 b = (byte)(c >> 0x00); // B

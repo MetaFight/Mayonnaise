@@ -78,9 +78,9 @@ namespace MyNes.Core
         private void CheckGameVSUnisystem(string sha1, bool trueByHeader, int mapperNumber)
         {
             // TODO: finish all VSUnisystem games setup
-            paletteIndexes = new int[512];
+			this.ppu.paletteIndexes = new int[512];
             for (int i = 0; i < 512; i++)
-                paletteIndexes[i] = i;
+                this.ppu.paletteIndexes[i] = i;
             IsVSUnisystem = false;
             if (trueByHeader)
             {
@@ -99,7 +99,7 @@ namespace MyNes.Core
                         case "035cc757cffedefaca2b420e12a2cfcf44409b9f"://Super Skater
                         case "b21aa940728ed80c72ee23c251c96e42cc84b2d6"://VS Super Mario Bros
                         case "7fd66e0a4cc0e404f404d8164fa221ee2acb7a38"://Clu Clu Land (VS)
-                            { IsVSUnisystem = true; paletteIndexes = VS1; return; }
+                            { IsVSUnisystem = true; this.ppu.paletteIndexes = VS1; return; }
 
                         case "e0572da111d05bf622ec137df8a658f7b0687ddf"://Battle City VS
                         case "1b516cf7688792f5dbd669850c047a7afe9eb59f"://Freedom Force (VS)
@@ -107,22 +107,22 @@ namespace MyNes.Core
                         case "cde1ecaf212a9f5a5a49f904f87951eda15d54dd"://Ladies Golf (VS)
                         case "f8a0f2c5a4b7212cb35f53ea7193b3dd85d6e1cd"://Mach Rider (VS)
                         case "68de623b2ad92ba19d18f17eaa0b97ee4523f6df"://VS Slalom (VS)
-                            { IsVSUnisystem = true; paletteIndexes = VS2; return; }
+                            { IsVSUnisystem = true; this.ppu.paletteIndexes = VS2; return; }
 
                         case "9eb3b75e7b45df51b8bcd29df84689a7e8557f4f"://VS Castlevania (VS)
-                            { IsVSUnisystem = true; paletteIndexes = VS3; return; }
+                            { IsVSUnisystem = true; this.ppu.paletteIndexes = VS3; return; }
 
                         case "bbb0af27b313d7c838a38fb772a6fe8afbafbb95"://Soccer
-                            { IsVSUnisystem = true; paletteIndexes = VS4; return; }
+                            { IsVSUnisystem = true; this.ppu.paletteIndexes = VS4; return; }
 
                         case "9f1943aade4233285589cea5bdc96b5380d49337"://Ice Climber (VS)
-                            { IsVSUnisystem = true; paletteIndexes = VS5; return; }
+                            { IsVSUnisystem = true; this.ppu.paletteIndexes = VS5; return; }
 
                         case "1a4ec64e576bad64daf320aeed0be1b8b50d21df"://Pinball (VS)
-                            { IsVSUnisystem = true; paletteIndexes = VS6; return; }
+                            { IsVSUnisystem = true; this.ppu.paletteIndexes = VS6; return; }
 
                         case "1a17df593c658f56d71b7026d2771396bff95b36"://Tetris
-                            { IsVSUnisystem = true; paletteIndexes = VS7; return; }
+                            { IsVSUnisystem = true; this.ppu.paletteIndexes = VS7; return; }
                     }
                 }
             }
@@ -134,7 +134,7 @@ namespace MyNes.Core
                     case "035cc757cffedefaca2b420e12a2cfcf44409b9f"://Super Skater
                     case "b21aa940728ed80c72ee23c251c96e42cc84b2d6"://VS Super Mario Bros
                     case "7fd66e0a4cc0e404f404d8164fa221ee2acb7a38"://Clu Clu Land (VS)
-                        { paletteIndexes = VS1; break; }
+                        { this.ppu.paletteIndexes = VS1; break; }
 
                     case "e0572da111d05bf622ec137df8a658f7b0687ddf"://Battle City VS
                     case "1b516cf7688792f5dbd669850c047a7afe9eb59f"://Freedom Force (VS)
@@ -142,22 +142,22 @@ namespace MyNes.Core
                     case "cde1ecaf212a9f5a5a49f904f87951eda15d54dd"://Ladies Golf (VS)
                     case "f8a0f2c5a4b7212cb35f53ea7193b3dd85d6e1cd"://Mach Rider (VS)
                     case "68de623b2ad92ba19d18f17eaa0b97ee4523f6df"://VS Slalom (VS)
-                        { paletteIndexes = VS2; break; }
+                        { this.ppu.paletteIndexes = VS2; break; }
 
                     case "9eb3b75e7b45df51b8bcd29df84689a7e8557f4f"://VS Castlevania (VS)
-                        { paletteIndexes = VS3; break; }
+                        { this.ppu.paletteIndexes = VS3; break; }
 
                     case "bbb0af27b313d7c838a38fb772a6fe8afbafbb95"://Soccer
-                        { paletteIndexes = VS4; break; }
+                        { this.ppu.paletteIndexes = VS4; break; }
 
                     case "9f1943aade4233285589cea5bdc96b5380d49337"://Ice Climber (VS)
-                        { paletteIndexes = VS5; break; }
+                        { this.ppu.paletteIndexes = VS5; break; }
 
                     case "1a4ec64e576bad64daf320aeed0be1b8b50d21df"://Pinball (VS)
-                        { paletteIndexes = VS6; break; }
+                        { this.ppu.paletteIndexes = VS6; break; }
 
                     case "1a17df593c658f56d71b7026d2771396bff95b36"://Tetris
-                        { paletteIndexes = VS7; break; }
+                        { this.ppu.paletteIndexes = VS7; break; }
                 }
             }
         }

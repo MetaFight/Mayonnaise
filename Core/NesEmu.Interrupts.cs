@@ -65,7 +65,7 @@ namespace MyNes.Core
         public void CheckNMI()
         {
             // At VBL time
-            if ((VClock == vbl_vclock_Start) && (HClock < 3))
+			if ((this.ppu.VClock == this.ppu.vbl_vclock_Start) && (this.ppu.HClock < 3))
             {
                 NMI_Current = (vbl_flag_temp & nmi_enabled);
                 // normally, ppu question for nmi at first 3 clocks of vblank

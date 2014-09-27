@@ -43,13 +43,15 @@ namespace MyNes.Core
 		private byte temp_4016;
 		private byte temp_4017;
 
-		private readonly NesEmu core;
 		[Obsolete("Mega-hack until I can figure out which bits of DMA and Memory code need to switch classes.")]
 		public Dma dma;
+		private readonly NesEmu core;
+		private readonly Ppu ppu;
 
-		public Memory(NesEmu nesEmu)
+		public Memory(NesEmu core, Ppu ppu)
 		{
-			this.core = nesEmu;
+			this.core = core;
+			this.ppu = ppu;
 		}
 
 		public void MEMInitialize(IRom rom)
@@ -152,20 +154,20 @@ namespace MyNes.Core
 			BUS_RW = true;
 
 			#region Clock Components
-			this.core.PPUClock();
+			this.ppu.PPUClock();
 			/*
 			 * NMI edge detector polls the status of the NMI line during φ2 of each CPU cycle 
 			 * (i.e., during the second half of each cycle) 
 			 */
 			this.core.PollInterruptStatus();
-			this.core.PPUClock();
-			this.core.PPUClock();
+			this.ppu.PPUClock();
+			this.ppu.PPUClock();
 			if (this.core.DoPalAdditionalClock)// In pal system ..
 			{
 				this.core.palCyc++;
 				if (this.core.palCyc == 5)
 				{
-					this.core.PPUClock();
+					this.ppu.PPUClock();
 					this.core.palCyc = 0;
 				}
 			}
@@ -186,81 +188,81 @@ namespace MyNes.Core
 				{
 					case 2:// $2002
 						{
-							this.core.ppu_2002_temp = 0;
+							this.ppu.ppu_2002_temp = 0;
 
 							if (this.core.vbl_flag)
-								this.core.ppu_2002_temp |= 0x80;
-							if (this.core.spr_0Hit)
-								this.core.ppu_2002_temp |= 0x40;
-							if (this.core.spr_overflow)
-								this.core.ppu_2002_temp |= 0x20;
+								this.ppu.ppu_2002_temp |= 0x80;
+							if (this.ppu.spr_0Hit)
+								this.ppu.ppu_2002_temp |= 0x40;
+							if (this.ppu.spr_overflow)
+								this.ppu.ppu_2002_temp |= 0x20;
 
 							this.core.vbl_flag_temp = false;
-							this.core.vram_flipflop = false;
+							this.ppu.vram_flipflop = false;
 
 							this.core.CheckNMI();// NMI disable effect only at vbl set period (HClock between 1 and 3)
 
-							return this.core.ppu_2002_temp;
+							return this.ppu.ppu_2002_temp;
 						}
 					case 4:// $2004
 						{
-							this.core.ppu_2004_temp = oam_ram[this.core.oam_address];
-							if (this.core.VClock < 240 && this.core.IsRenderingOn())
+							this.ppu.ppu_2004_temp = oam_ram[this.ppu.oam_address];
+							if (this.ppu.VClock < 240 && this.ppu.IsRenderingOn())
 							{
-								if (this.core.HClock < 64)
-									this.core.ppu_2004_temp = 0xFF;
-								else if (this.core.HClock < 192)
-									this.core.ppu_2004_temp = oam_ram[((this.core.HClock - 64) << 1) & 0xFC];
-								else if (this.core.HClock < 256)
-									this.core.ppu_2004_temp = ((this.core.HClock & 1) == 1) ? oam_ram[0xFC] : oam_ram[((this.core.HClock - 192) << 1) & 0xFC];
-								else if (this.core.HClock < 320)
-									this.core.ppu_2004_temp = 0xFF;
+								if (this.ppu.HClock < 64)
+									this.ppu.ppu_2004_temp = 0xFF;
+								else if (this.ppu.HClock < 192)
+									this.ppu.ppu_2004_temp = oam_ram[((this.ppu.HClock - 64) << 1) & 0xFC];
+								else if (this.ppu.HClock < 256)
+									this.ppu.ppu_2004_temp = ((this.ppu.HClock & 1) == 1) ? oam_ram[0xFC] : oam_ram[((this.ppu.HClock - 192) << 1) & 0xFC];
+								else if (this.ppu.HClock < 320)
+									this.ppu.ppu_2004_temp = 0xFF;
 								else
-									this.core.ppu_2004_temp = oam_ram[0];
+									this.ppu.ppu_2004_temp = oam_ram[0];
 							}
-							return this.core.ppu_2004_temp;
+							return this.ppu.ppu_2004_temp;
 						}
 					case 7:// $2007
 						{
-							this.core.ppu_2007_temp = 0;
+							this.ppu.ppu_2007_temp = 0;
 
-							if ((this.core.vram_address & 0x3F00) == 0x3F00)
+							if ((this.ppu.vram_address & 0x3F00) == 0x3F00)
 							{
 								// The return value should be from the palettes bank
-								this.core.ppu_2007_temp = (byte)(palettes_bank[this.core.vram_address & ((this.core.vram_address & 0x03) == 0 ? 0x0C : 0x1F)] & this.core.grayscale);
+								this.ppu.ppu_2007_temp = (byte)(palettes_bank[this.ppu.vram_address & ((this.ppu.vram_address & 0x03) == 0 ? 0x0C : 0x1F)] & this.ppu.grayscale);
 								// fill buffer from chr or nametables
-								this.core.vram_address_temp_access1 = this.core.vram_address & 0x2FFF;
-								if (this.core.vram_address_temp_access1 < 0x2000)
+								this.ppu.vram_address_temp_access1 = this.ppu.vram_address & 0x2FFF;
+								if (this.ppu.vram_address_temp_access1 < 0x2000)
 								{
-									this.core.reg2007buffer = board.ReadCHR(ref this.core.vram_address_temp_access1, false);
+									this.ppu.reg2007buffer = board.ReadCHR(ref this.ppu.vram_address_temp_access1, false);
 								}
 								else
 								{
-									this.core.reg2007buffer = board.ReadNMT(ref this.core.vram_address_temp_access1);
+									this.ppu.reg2007buffer = board.ReadNMT(ref this.ppu.vram_address_temp_access1);
 								}
 							}
 							else
 							{
-								this.core.ppu_2007_temp = this.core.reg2007buffer;
+								this.ppu.ppu_2007_temp = this.ppu.reg2007buffer;
 								// fill buffer
-								this.core.vram_address_temp_access1 = this.core.vram_address & 0x3FFF;
-								if (this.core.vram_address_temp_access1 < 0x2000)
+								this.ppu.vram_address_temp_access1 = this.ppu.vram_address & 0x3FFF;
+								if (this.ppu.vram_address_temp_access1 < 0x2000)
 								{
-									this.core.reg2007buffer = board.ReadCHR(ref this.core.vram_address_temp_access1, false);
+									this.ppu.reg2007buffer = board.ReadCHR(ref this.ppu.vram_address_temp_access1, false);
 								}
-								else if (this.core.vram_address_temp_access1 < 0x3F00)
+								else if (this.ppu.vram_address_temp_access1 < 0x3F00)
 								{
-									this.core.reg2007buffer = board.ReadNMT(ref this.core.vram_address_temp_access1);
+									this.ppu.reg2007buffer = board.ReadNMT(ref this.ppu.vram_address_temp_access1);
 								}
 								else
 								{
-									this.core.reg2007buffer = palettes_bank[this.core.vram_address_temp_access1 & ((this.core.vram_address_temp_access1 & 0x03) == 0 ? 0x0C : 0x1F)];
+									this.ppu.reg2007buffer = palettes_bank[this.ppu.vram_address_temp_access1 & ((this.ppu.vram_address_temp_access1 & 0x03) == 0 ? 0x0C : 0x1F)];
 								}
 							}
 
-							this.core.vram_address = (this.core.vram_address + this.core.vram_increament) & 0x7FFF;
-							board.OnPPUAddressUpdate(ref this.core.vram_address);
-							return this.core.ppu_2007_temp;
+							this.ppu.vram_address = (this.ppu.vram_address + this.ppu.vram_increament) & 0x7FFF;
+							board.OnPPUAddressUpdate(ref this.ppu.vram_address);
+							return this.ppu.ppu_2007_temp;
 						}
 				}
 				#endregion
@@ -347,20 +349,20 @@ namespace MyNes.Core
 			BUS_RW = false;
 
 			#region Clock Components
-			this.core.PPUClock();
+			this.ppu.PPUClock();
 			/*
 			 * NMI edge detector polls the status of the NMI line during φ2 of each CPU cycle 
 			 * (i.e., during the second half of each cycle) 
 			 */
 			this.core.PollInterruptStatus();
-			this.core.PPUClock();
-			this.core.PPUClock();
+			this.ppu.PPUClock();
+			this.ppu.PPUClock();
 			if (this.core.DoPalAdditionalClock)// In pal system ..
 			{
 				this.core.palCyc++;
 				if (this.core.palCyc == 5)
 				{
-					this.core.PPUClock();
+					this.ppu.PPUClock();
 					this.core.palCyc = 0;
 				}
 			}
@@ -381,11 +383,11 @@ namespace MyNes.Core
 				{
 					case 0:// $2000
 						{
-							this.core.vram_temp = (this.core.vram_temp & 0x73FF) | ((value & 0x3) << 10);
-							this.core.vram_increament = ((value & 0x4) != 0) ? 32 : 1;
-							this.core.spr_patternAddress = ((value & 0x8) != 0) ? 0x1000 : 0x0000;
-							this.core.bkg_patternAddress = ((value & 0x10) != 0) ? 0x1000 : 0x0000;
-							this.core.spr_size16 = (value & 0x20) != 0 ? 0x0010 : 0x0008;
+							this.ppu.vram_temp = (this.ppu.vram_temp & 0x73FF) | ((value & 0x3) << 10);
+							this.ppu.vram_increament = ((value & 0x4) != 0) ? 32 : 1;
+							this.ppu.spr_patternAddress = ((value & 0x8) != 0) ? 0x1000 : 0x0000;
+							this.ppu.bkg_patternAddress = ((value & 0x10) != 0) ? 0x1000 : 0x0000;
+							this.ppu.spr_size16 = (value & 0x20) != 0 ? 0x0010 : 0x0008;
 
 							this.core.nmi_old = this.core.nmi_enabled;
 							this.core.nmi_enabled = (value & 0x80) != 0;
@@ -398,75 +400,75 @@ namespace MyNes.Core
 						}
 					case 1:// $2001
 						{
-							this.core.grayscale = (value & 0x01) != 0 ? 0x30 : 0x3F;
-							this.core.emphasis = (value & 0xE0) << 1;
+							this.ppu.grayscale = (value & 0x01) != 0 ? 0x30 : 0x3F;
+							this.ppu.emphasis = (value & 0xE0) << 1;
 
-							this.core.bkg_clipped = (value & 0x02) == 0;
-							this.core.spr_clipped = (value & 0x04) == 0;
-							this.core.bkg_enabled = (value & 0x08) != 0;
-							this.core.spr_enabled = (value & 0x10) != 0;
+							this.ppu.bkg_clipped = (value & 0x02) == 0;
+							this.ppu.spr_clipped = (value & 0x04) == 0;
+							this.ppu.bkg_enabled = (value & 0x08) != 0;
+							this.ppu.spr_enabled = (value & 0x10) != 0;
 							break;
 						}
 					case 3:// $2003
 						{
-							this.core.oam_address = value;
+							this.ppu.oam_address = value;
 							break;
 						}
 					case 4:// $2004
 						{
-							if (this.core.VClock < 240 && this.core.IsRenderingOn())
+							if (this.ppu.VClock < 240 && this.ppu.IsRenderingOn())
 								value = 0xFF;
-							if ((this.core.oam_address & 0x03) == 0x02)
+							if ((this.ppu.oam_address & 0x03) == 0x02)
 								value &= 0xE3;
-							oam_ram[this.core.oam_address++] = value;
+							oam_ram[this.ppu.oam_address++] = value;
 							break;
 						}
 					case 5:// $2005
 						{
-							if (!this.core.vram_flipflop)
+							if (!this.ppu.vram_flipflop)
 							{
-								this.core.vram_temp = (this.core.vram_temp & 0x7FE0) | ((value & 0xF8) >> 3);
-								this.core.vram_fine = (byte)(value & 0x07);
+								this.ppu.vram_temp = (this.ppu.vram_temp & 0x7FE0) | ((value & 0xF8) >> 3);
+								this.ppu.vram_fine = (byte)(value & 0x07);
 							}
 							else
 							{
-								this.core.vram_temp = (this.core.vram_temp & 0x0C1F) | ((value & 0x7) << 12) | ((value & 0xF8) << 2);
+								this.ppu.vram_temp = (this.ppu.vram_temp & 0x0C1F) | ((value & 0x7) << 12) | ((value & 0xF8) << 2);
 							}
-							this.core.vram_flipflop = !this.core.vram_flipflop;
+							this.ppu.vram_flipflop = !this.ppu.vram_flipflop;
 							break;
 						}
 					case 6:// $2006
 						{
-							if (!this.core.vram_flipflop)
+							if (!this.ppu.vram_flipflop)
 							{
-								this.core.vram_temp = (this.core.vram_temp & 0x00FF) | ((value & 0x3F) << 8);
+								this.ppu.vram_temp = (this.ppu.vram_temp & 0x00FF) | ((value & 0x3F) << 8);
 							}
 							else
 							{
-								this.core.vram_temp = (this.core.vram_temp & 0x7F00) | value;
-								this.core.vram_address = this.core.vram_temp;
-								board.OnPPUAddressUpdate(ref this.core.vram_address);
+								this.ppu.vram_temp = (this.ppu.vram_temp & 0x7F00) | value;
+								this.ppu.vram_address = this.ppu.vram_temp;
+								board.OnPPUAddressUpdate(ref this.ppu.vram_address);
 							}
-							this.core.vram_flipflop = !this.core.vram_flipflop;
+							this.ppu.vram_flipflop = !this.ppu.vram_flipflop;
 							break;
 						}
 					case 7:// $2007
 						{
-							this.core.vram_address_temp_access = this.core.vram_address & 0x3FFF;
-							if (this.core.vram_address_temp_access < 0x2000)
+							this.ppu.vram_address_temp_access = this.ppu.vram_address & 0x3FFF;
+							if (this.ppu.vram_address_temp_access < 0x2000)
 							{
-								board.WriteCHR(ref this.core.vram_address_temp_access, ref value);
+								board.WriteCHR(ref this.ppu.vram_address_temp_access, ref value);
 							}
-							else if (this.core.vram_address_temp_access < 0x3F00)
+							else if (this.ppu.vram_address_temp_access < 0x3F00)
 							{
-								board.WriteNMT(ref this.core.vram_address_temp_access, ref value);
+								board.WriteNMT(ref this.ppu.vram_address_temp_access, ref value);
 							}
 							else
 							{
-								palettes_bank[this.core.vram_address_temp_access & ((this.core.vram_address_temp_access & 0x03) == 0 ? 0x0C : 0x1F)] = value;
+								palettes_bank[this.ppu.vram_address_temp_access & ((this.ppu.vram_address_temp_access & 0x03) == 0 ? 0x0C : 0x1F)] = value;
 							}
-							this.core.vram_address = (this.core.vram_address + this.core.vram_increament) & 0x7FFF;
-							board.OnPPUAddressUpdate(ref this.core.vram_address);
+							this.ppu.vram_address = (this.ppu.vram_address + this.ppu.vram_increament) & 0x7FFF;
+							board.OnPPUAddressUpdate(ref this.ppu.vram_address);
 							break;
 						}
 				}

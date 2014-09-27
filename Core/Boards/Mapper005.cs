@@ -478,7 +478,7 @@ namespace MyNes.Core
             }
             else
             {
-                if (this.Nes.spr_size16 == 0x10)
+                if (this.Nes.ppu.spr_size16 == 0x10)
                 {
                     // When in 8x16 sprite mode, both sets of registers are used. 
                     // The 'A' set is used for sprite tiles, and the 'B' set is used for BG.
@@ -656,7 +656,7 @@ namespace MyNes.Core
         public override void OnPPUScanlineTick()
         {
             // In frame signal
-			irq_current_inframe = (this.Nes.IsInRender() && this.Nes.IsRenderingOn()) ? 0x40 : 0x00;
+			irq_current_inframe = (this.Nes.ppu.IsInRender() && this.Nes.ppu.IsRenderingOn()) ? 0x40 : 0x00;
             if (irq_current_inframe == 0)
             {
                 irq_current_inframe = 0x40;

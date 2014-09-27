@@ -23,9 +23,9 @@ using System;
 /*PPU section*/
 namespace MyNes.Core
 {
-	public partial class NesEmu
+	public class Ppu
 	{
-		private static byte[] reverseLookup =
+		private readonly static byte[] reverseLookup =
             {
                 0x00, 0x80, 0x40, 0xC0, 0x20, 0xA0, 0x60, 0xE0, 0x10, 0x90, 0x50, 0xD0, 0x30, 0xB0, 0x70, 0xF0,
                 0x08, 0x88, 0x48, 0xC8, 0x28, 0xA8, 0x68, 0xE8, 0x18, 0x98, 0x58, 0xD8, 0x38, 0xB8, 0x78, 0xF8,
@@ -44,43 +44,44 @@ namespace MyNes.Core
                 0x07, 0x87, 0x47, 0xC7, 0x27, 0xA7, 0x67, 0xE7, 0x17, 0x97, 0x57, 0xD7, 0x37, 0xB7, 0x77, 0xF7,
                 0x0F, 0x8F, 0x4F, 0xCF, 0x2F, 0xAF, 0x6F, 0xEF, 0x1F, 0x9F, 0x5F, 0xDF, 0x3F, 0xBF, 0x7F, 0xFF,
             };
-		private static int[] paletteIndexes;
+		public int[] paletteIndexes;
+		[Obsolete("This shouldn't be part of the PPU.")]
 		public IVideoProvider videoOut;
-		private static int[] screen = new int[256 * 240];
-		private static int[] palette;
-		private static int[] bkg_pixels;
-		private static int[] spr_pixels;
+		private int[] screen = new int[256 * 240];
+		private int[] palette;
+		private int[] bkg_pixels;
+		private int[] spr_pixels;
 		// Frame Timing
-		private static int vbl_vclock_Start = 241;
-		private static int vbl_vclock_End = 261;
-		private static int frameEnd = 262;
+		public int vbl_vclock_Start = 241;
+		private int vbl_vclock_End = 261;
+		private int frameEnd = 262;
 		public int VClock;
 		public int HClock;
-		private static bool UseOddFrame = true;
-		private static bool oddSwap;
+		private bool UseOddFrame = true;
+		private bool oddSwap;
 		// Frame skip
-		private static bool FrameSkipEnabled = false;
-		private static byte FrameSkipTimer;
-		private static byte FrameSkipReload = 2;
-		private static int current_pixel;
-		private static int temp;
-		private static int temp_comparator;
-		private static int bkg_pos;
-		private static int spr_pos;
-		private static int object0;
-		private static int infront;
-		private static int bkgPixel;
-		private static int sprPixel;
-		private static int bkg_fetch_address;
-		private static byte bkg_fetch_nametable;
-		private static byte bkg_fetch_attr;
-		private static byte bkg_fetch_bit0;
-		private static byte bkg_fetch_bit1;
-		private static int spr_fetch_address;
-		private static byte spr_fetch_bit0;
-		private static byte spr_fetch_bit1;
-		private static byte spr_fetch_attr;
-		private static bool[] spr_zero_buffer;
+		private bool FrameSkipEnabled = false;
+		private byte FrameSkipTimer;
+		private byte FrameSkipReload = 2;
+		private int current_pixel;
+		private int temp;
+		private int temp_comparator;
+		private int bkg_pos;
+		private int spr_pos;
+		private int object0;
+		private int infront;
+		private int bkgPixel;
+		private int sprPixel;
+		private int bkg_fetch_address;
+		private byte bkg_fetch_nametable;
+		private byte bkg_fetch_attr;
+		private byte bkg_fetch_bit0;
+		private byte bkg_fetch_bit1;
+		private int spr_fetch_address;
+		private byte spr_fetch_bit0;
+		private byte spr_fetch_bit1;
+		private byte spr_fetch_attr;
+		private bool[] spr_zero_buffer;
 		// VRAM Address register
 		public int vram_temp;
 		public int vram_address;
@@ -110,15 +111,24 @@ namespace MyNes.Core
 		public byte ppu_2007_temp;
 		// OAM
 		public byte oam_address;
-		private static byte oam_fetch_data;
-		private static byte oam_evaluate_slot;
-		private static byte oam_evaluate_count;
-		private static bool oam_fetch_mode = false;
-		private static byte oam_phase_index = 0;
-		private static int spr_render_i;
-		private static int bkg_render_i;
-		private static int spr_evaluation_i;
-		private static int spr_render_temp_pixel;
+		private byte oam_fetch_data;
+		private byte oam_evaluate_slot;
+		private byte oam_evaluate_count;
+		private bool oam_fetch_mode = false;
+		private byte oam_phase_index = 0;
+		private int spr_render_i;
+		private int bkg_render_i;
+		private int spr_evaluation_i;
+		private int spr_render_temp_pixel;
+		
+		private readonly NesEmu core;
+		[Obsolete("Mega-hack until I can figure out which bits of PPU and Memory code need to switch classes.")]
+		public Memory memory;
+
+		public Ppu(NesEmu core)
+		{
+			this.core = core;
+		}
 
 		public bool IsRenderingOn()
 		{
@@ -128,9 +138,9 @@ namespace MyNes.Core
 		{
 			return (VClock < 240) || (VClock == vbl_vclock_End);
 		}
-		private void PPUHardReset()
+		public void PPUHardReset()
 		{
-			switch (this.TVFormat)
+			switch (this.core.TVFormat)
 			{
 				case TVSystem.NTSC:
 					{
@@ -226,11 +236,11 @@ namespace MyNes.Core
 			spr_evaluation_i = 0;
 			spr_render_temp_pixel = 0;
 		}
-		private static void PPUSoftReset()
+		public void PPUSoftReset()
 		{
 
 		}
-		private static void PPUShutdown()
+		public void PPUShutdown()
 		{
 
 		}
@@ -754,7 +764,7 @@ namespace MyNes.Core
 					#endregion
 				}
 			}
-			vbl_flag = vbl_flag_temp;
+			this.core.vbl_flag = this.core.vbl_flag_temp;
 			HClock++;
 			#region odd frame
 			if (HClock == 338)
@@ -772,7 +782,7 @@ namespace MyNes.Core
 				}
 			}
 			#endregion
-			CheckNMI();
+			this.core.CheckNMI();
 
 			#region VBLANK, NMI and frame end
 			if (HClock == 341)
@@ -783,13 +793,13 @@ namespace MyNes.Core
 				//set vbl
 				if (VClock == vbl_vclock_Start)
 				{
-					vbl_flag_temp = true;
+					this.core.vbl_flag_temp = true;
 				}
 				//clear vbl
 				else if (VClock == vbl_vclock_End)
 				{
 					spr_0Hit = false;
-					vbl_flag_temp = false;
+					this.core.vbl_flag_temp = false;
 					spr_overflow = false;
 				}
 				else if (VClock == frameEnd)
@@ -812,12 +822,13 @@ namespace MyNes.Core
 						videoOut.SubmitBuffer(ref screen);
 					}
 
-					OnFinishFrame();
+					this.core.OnFinishFrame();
 					#endregion
 				}
 			}
 			#endregion
 		}
+
 		public void SetupVideoRenderer(IVideoProvider video)
 		{
 			videoOut = video;
@@ -838,6 +849,127 @@ namespace MyNes.Core
 		public void SetPalette(int[] newPalette)
 		{
 			palette = newPalette;
+		}
+
+		[Obsolete("Refactor all LoadState/SaveState methods into a IRecordableState interface or something")]
+		internal void LoadState(System.IO.BinaryReader bin)
+		{
+			VClock = bin.ReadInt32();
+			HClock = bin.ReadInt32();
+			oddSwap = bin.ReadBoolean();
+			current_pixel = bin.ReadInt32();
+			temp = bin.ReadInt32();
+			temp_comparator = bin.ReadInt32();
+			bkg_pos = bin.ReadInt32();
+			spr_pos = bin.ReadInt32();
+			object0 = bin.ReadInt32();
+			infront = bin.ReadInt32();
+			bkgPixel = bin.ReadInt32();
+			sprPixel = bin.ReadInt32();
+			bkg_fetch_address = bin.ReadInt32();
+			bkg_fetch_nametable = bin.ReadByte();
+			bkg_fetch_attr = bin.ReadByte();
+			bkg_fetch_bit0 = bin.ReadByte();
+			bkg_fetch_bit1 = bin.ReadByte();
+			spr_fetch_address = bin.ReadInt32();
+			spr_fetch_bit0 = bin.ReadByte();
+			spr_fetch_bit1 = bin.ReadByte();
+			spr_fetch_attr = bin.ReadByte();
+			for (int i = 0; i < spr_zero_buffer.Length; i++)
+				spr_zero_buffer[i] = bin.ReadBoolean();
+			vram_temp = bin.ReadInt32();
+			vram_address = bin.ReadInt32();
+			vram_address_temp_access = bin.ReadInt32();
+			vram_address_temp_access1 = bin.ReadInt32();
+			vram_increament = bin.ReadInt32();
+			vram_flipflop = bin.ReadBoolean();
+			vram_fine = bin.ReadByte();
+			reg2007buffer = bin.ReadByte();
+			bkg_enabled = bin.ReadBoolean();
+			bkg_clipped = bin.ReadBoolean();
+			bkg_patternAddress = bin.ReadInt32();
+			spr_enabled = bin.ReadBoolean();
+			spr_clipped = bin.ReadBoolean();
+			spr_patternAddress = bin.ReadInt32();
+			spr_size16 = bin.ReadInt32();
+			spr_0Hit = bin.ReadBoolean();
+			spr_overflow = bin.ReadBoolean();
+			grayscale = bin.ReadInt32();
+			emphasis = bin.ReadInt32();
+			ppu_2002_temp = bin.ReadByte();
+			ppu_2004_temp = bin.ReadByte();
+			ppu_2007_temp = bin.ReadByte();
+			oam_address = bin.ReadByte();
+			oam_fetch_data = bin.ReadByte();
+			oam_evaluate_slot = bin.ReadByte();
+			oam_evaluate_count = bin.ReadByte();
+			oam_fetch_mode = bin.ReadBoolean();
+			oam_phase_index = bin.ReadByte();
+			spr_render_i = bin.ReadInt32();
+			bkg_render_i = bin.ReadInt32();
+			spr_evaluation_i = bin.ReadInt32();
+			spr_render_temp_pixel = bin.ReadInt32();
+		}
+
+		internal void SaveState(System.IO.BinaryWriter bin)
+		{
+			bin.Write(VClock);
+			bin.Write(HClock);
+			bin.Write(oddSwap);
+			bin.Write(current_pixel);
+			bin.Write(temp);
+			bin.Write(temp_comparator);
+			bin.Write(bkg_pos);
+			bin.Write(spr_pos);
+			bin.Write(object0);
+			bin.Write(infront);
+			bin.Write(bkgPixel);
+			bin.Write(sprPixel);
+			bin.Write(bkg_fetch_address);
+			bin.Write(bkg_fetch_nametable);
+			bin.Write(bkg_fetch_attr);
+			bin.Write(bkg_fetch_bit0);
+			bin.Write(bkg_fetch_bit1);
+			bin.Write(spr_fetch_address);
+			bin.Write(spr_fetch_bit0);
+			bin.Write(spr_fetch_bit1);
+			bin.Write(spr_fetch_attr);
+			for (int i = 0; i < spr_zero_buffer.Length; i++)
+			{
+				bin.Write(spr_zero_buffer[i]);
+			}
+			bin.Write(vram_temp);
+			bin.Write(vram_address);
+			bin.Write(vram_address_temp_access);
+			bin.Write(vram_address_temp_access1);
+			bin.Write(vram_increament);
+			bin.Write(vram_flipflop);
+			bin.Write(vram_fine);
+			bin.Write(reg2007buffer);
+			bin.Write(bkg_enabled);
+			bin.Write(bkg_clipped);
+			bin.Write(bkg_patternAddress);
+			bin.Write(spr_enabled);
+			bin.Write(spr_clipped);
+			bin.Write(spr_patternAddress);
+			bin.Write(spr_size16);
+			bin.Write(spr_0Hit);
+			bin.Write(spr_overflow);
+			bin.Write(grayscale);
+			bin.Write(emphasis);
+			bin.Write(ppu_2002_temp);
+			bin.Write(ppu_2004_temp);
+			bin.Write(ppu_2007_temp);
+			bin.Write(oam_address);
+			bin.Write(oam_fetch_data);
+			bin.Write(oam_evaluate_slot);
+			bin.Write(oam_evaluate_count);
+			bin.Write(oam_fetch_mode);
+			bin.Write(oam_phase_index);
+			bin.Write(spr_render_i);
+			bin.Write(bkg_render_i);
+			bin.Write(spr_evaluation_i);
+			bin.Write(spr_render_temp_pixel);
 		}
 	}
 }

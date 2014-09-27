@@ -401,7 +401,7 @@
     <Compile Include="Dma.cs" />
     <Compile Include="NesEmu.Interrupts.cs" />
     <Compile Include="Memory.cs" />
-    <Compile Include="NesEmu.Ppu.cs" />
+    <Compile Include="Ppu.cs" />
     <Compile Include="Palettes\NTSCPaletteGenerator.cs" />
     <Compile Include="Palettes\PALBPaletteGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

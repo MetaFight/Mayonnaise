@@ -63,13 +63,13 @@ namespace MyNes.Core
             if (state_is_loading_state)
             {
                 EmulationPaused = false;
-                videoOut.WriteNotification("Can't save state while loading a state !", 120, Color.Red);
+				this.ppu.videoOut.WriteNotification("Can't save state while loading a state !", 120, Color.Red);
                 return;
             } 
             if (state_is_saving_state)
             {
                 EmulationPaused = false;
-                videoOut.WriteNotification("Already saving state !!", 120, Color.Red);
+				this.ppu.videoOut.WriteNotification("Already saving state !!", 120, Color.Red);
                 return;
             }
             state_is_saving_state = true;
@@ -152,61 +152,7 @@ namespace MyNes.Core
 			this.noiseChannel.SaveState(bin);
             #endregion
             #region PPU
-            bin.Write(VClock);
-            bin.Write(HClock);
-            bin.Write(oddSwap);
-            bin.Write(current_pixel);
-            bin.Write(temp);
-            bin.Write(temp_comparator);
-            bin.Write(bkg_pos);
-            bin.Write(spr_pos);
-            bin.Write(object0);
-            bin.Write(infront);
-            bin.Write(bkgPixel);
-            bin.Write(sprPixel);
-            bin.Write(bkg_fetch_address);
-            bin.Write(bkg_fetch_nametable);
-            bin.Write(bkg_fetch_attr);
-            bin.Write(bkg_fetch_bit0);
-            bin.Write(bkg_fetch_bit1);
-            bin.Write(spr_fetch_address);
-            bin.Write(spr_fetch_bit0);
-            bin.Write(spr_fetch_bit1);
-            bin.Write(spr_fetch_attr);
-            for (int i = 0; i < spr_zero_buffer.Length; i++)
-                bin.Write(spr_zero_buffer[i]);
-            bin.Write(vram_temp);
-            bin.Write(vram_address);
-            bin.Write(vram_address_temp_access);
-            bin.Write(vram_address_temp_access1);
-            bin.Write(vram_increament);
-            bin.Write(vram_flipflop);
-            bin.Write(vram_fine);
-            bin.Write(reg2007buffer);
-            bin.Write(bkg_enabled);
-            bin.Write(bkg_clipped);
-            bin.Write(bkg_patternAddress);
-            bin.Write(spr_enabled);
-            bin.Write(spr_clipped);
-            bin.Write(spr_patternAddress);
-            bin.Write(spr_size16);
-            bin.Write(spr_0Hit);
-            bin.Write(spr_overflow);
-            bin.Write(grayscale);
-            bin.Write(emphasis);
-            bin.Write(ppu_2002_temp);
-            bin.Write(ppu_2004_temp);
-            bin.Write(ppu_2007_temp);
-            bin.Write(oam_address);
-            bin.Write(oam_fetch_data);
-            bin.Write(oam_evaluate_slot);
-            bin.Write(oam_evaluate_count);
-            bin.Write(oam_fetch_mode);
-            bin.Write(oam_phase_index);
-            bin.Write(spr_render_i);
-            bin.Write(bkg_render_i);
-            bin.Write(spr_evaluation_i);
-            bin.Write(spr_render_temp_pixel);
+			this.ppu.SaveState(bin);
             #endregion
             #region Pulse 1
 			this.pulse1Channel.SaveState(bin);
@@ -225,7 +171,7 @@ namespace MyNes.Core
             Stream fileStream = new FileStream(fileName, FileMode.Create, FileAccess.Write);
             fileStream.Write(outData, 0, outData.Length);
             // Save snapshot
-            videoOut.TakeSnapshot(STATEFolder, Path.GetFileNameWithoutExtension(fileName), ".jpg", true);
+            this.ppu.videoOut.TakeSnapshot(STATEFolder, Path.GetFileNameWithoutExtension(fileName), ".jpg", true);
 
             // Finished !
             bin.Flush();
@@ -234,7 +180,7 @@ namespace MyNes.Core
             fileStream.Close();
             state_is_saving_state = false;
             EmulationPaused = false;
-            videoOut.WriteNotification("State saved at slot " + STATESlot, 120, Color.Green);
+            this.ppu.videoOut.WriteNotification("State saved at slot " + STATESlot, 120, Color.Green);
         }
         /// <summary>
         /// Load current game state from file
@@ -245,13 +191,13 @@ namespace MyNes.Core
             if (state_is_saving_state)
             {
                 EmulationPaused = false;
-                videoOut.WriteNotification("Can't load state while it's saving state !", 120, Color.Red);
+				this.ppu.videoOut.WriteNotification("Can't load state while it's saving state !", 120, Color.Red);
                 return;
             } 
             if (state_is_loading_state)
             {
                 EmulationPaused = false;
-                videoOut.WriteNotification("Already loading a state !", 120, Color.Red);
+				this.ppu.videoOut.WriteNotification("Already loading a state !", 120, Color.Red);
                 return;
             } 
             state_is_loading_state = true;
@@ -272,7 +218,7 @@ namespace MyNes.Core
             if (Encoding.ASCII.GetString(header) != "MNS")
             {
                 EmulationPaused = false;
-                videoOut.WriteNotification("Unable load state at slot " + STATESlot + "; Not My Nes State File !", 120, Color.Red);
+				this.ppu.videoOut.WriteNotification("Unable load state at slot " + STATESlot + "; Not My Nes State File !", 120, Color.Red);
                 state_is_loading_state = false; 
                 return;
             }
@@ -280,7 +226,7 @@ namespace MyNes.Core
             if (bin.ReadByte() != state_version)
             {
                 EmulationPaused = false;
-                videoOut.WriteNotification("Unable load state at slot " + STATESlot + "; Not compatible state file version !", 120, Color.Red);
+				this.ppu.videoOut.WriteNotification("Unable load state at slot " + STATESlot + "; Not compatible state file version !", 120, Color.Red);
                 state_is_loading_state = false; 
                 return;
             }
@@ -292,7 +238,7 @@ namespace MyNes.Core
 			if (sha1.ToLower() != this.memory.board.RomSHA1.ToLower())
             {
                 EmulationPaused = false;
-                videoOut.WriteNotification("Unable load state at slot " + STATESlot + "; This state file is not for this game; not same SHA1 !", 120, Color.Red);
+				this.ppu.videoOut.WriteNotification("Unable load state at slot " + STATESlot + "; This state file is not for this game; not same SHA1 !", 120, Color.Red);
                 state_is_loading_state = false; 
                 return;
             }
@@ -363,61 +309,7 @@ namespace MyNes.Core
 			this.noiseChannel.LoadState(bin);
             #endregion
             #region PPU
-            VClock = bin.ReadInt32();
-            HClock = bin.ReadInt32();
-            oddSwap = bin.ReadBoolean();
-            current_pixel = bin.ReadInt32();
-            temp = bin.ReadInt32();
-            temp_comparator = bin.ReadInt32();
-            bkg_pos = bin.ReadInt32();
-            spr_pos = bin.ReadInt32();
-            object0 = bin.ReadInt32();
-            infront = bin.ReadInt32();
-            bkgPixel = bin.ReadInt32();
-            sprPixel = bin.ReadInt32();
-            bkg_fetch_address = bin.ReadInt32();
-            bkg_fetch_nametable = bin.ReadByte();
-            bkg_fetch_attr = bin.ReadByte();
-            bkg_fetch_bit0 = bin.ReadByte();
-            bkg_fetch_bit1 = bin.ReadByte();
-            spr_fetch_address = bin.ReadInt32();
-            spr_fetch_bit0 = bin.ReadByte();
-            spr_fetch_bit1 = bin.ReadByte();
-            spr_fetch_attr = bin.ReadByte();
-            for (int i = 0; i < spr_zero_buffer.Length; i++)
-                spr_zero_buffer[i] = bin.ReadBoolean();
-            vram_temp = bin.ReadInt32();
-            vram_address = bin.ReadInt32();
-            vram_address_temp_access = bin.ReadInt32();
-            vram_address_temp_access1 = bin.ReadInt32();
-            vram_increament = bin.ReadInt32();
-            vram_flipflop = bin.ReadBoolean();
-            vram_fine = bin.ReadByte();
-            reg2007buffer = bin.ReadByte();
-            bkg_enabled = bin.ReadBoolean();
-            bkg_clipped = bin.ReadBoolean();
-            bkg_patternAddress = bin.ReadInt32();
-            spr_enabled = bin.ReadBoolean();
-            spr_clipped = bin.ReadBoolean();
-            spr_patternAddress = bin.ReadInt32();
-            spr_size16 = bin.ReadInt32();
-            spr_0Hit = bin.ReadBoolean();
-            spr_overflow = bin.ReadBoolean();
-            grayscale = bin.ReadInt32();
-            emphasis = bin.ReadInt32();
-            ppu_2002_temp = bin.ReadByte();
-            ppu_2004_temp = bin.ReadByte();
-            ppu_2007_temp = bin.ReadByte();
-            oam_address = bin.ReadByte();
-            oam_fetch_data = bin.ReadByte();
-            oam_evaluate_slot = bin.ReadByte();
-            oam_evaluate_count = bin.ReadByte();
-            oam_fetch_mode = bin.ReadBoolean();
-            oam_phase_index = bin.ReadByte();
-            spr_render_i = bin.ReadInt32();
-            bkg_render_i = bin.ReadInt32();
-            spr_evaluation_i = bin.ReadInt32();
-            spr_render_temp_pixel = bin.ReadInt32();
+			this.ppu.LoadState(bin);
             #endregion
             #region Pulse
 			this.pulse1Channel.LoadState(bin);
@@ -431,7 +323,7 @@ namespace MyNes.Core
             bin.Close();
             EmulationPaused = false;
             state_is_loading_state = false; 
-            videoOut.WriteNotification("State loaded from slot " + STATESlot, 120, Color.Green);
+            this.ppu.videoOut.WriteNotification("State loaded from slot " + STATESlot, 120, Color.Green);
         }
     }
 }

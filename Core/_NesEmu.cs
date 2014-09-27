@@ -32,15 +32,18 @@ namespace MyNes.Core
     /// <summary>
     /// The nes emulation engine.
     /// </summary>
+	[Obsolete("Reminder to not inject this class into other classes.  When refactorying is complete there should be very little logic left in here.")]
     public partial class NesEmu
     {
 		public NesEmu(TVSystem tvFormat)
 		{
 			this.TVFormat = tvFormat;
-			this.memory = new Memory(this);
+			this.ppu = new Ppu(this);
+			this.memory = new Memory(this, this.ppu);
 			this.dma = new Dma(this, this.memory);
 
 			this.memory.dma = this.dma;
+			this.ppu.memory = this.memory;
 			
 
 			InitializeInput();
@@ -126,9 +129,11 @@ namespace MyNes.Core
 		[Obsolete("Mega-hack until I can figure out how Memory and sound channel classes should interact.")]
 		public TriangleSoundChannel triangleChannel;
 		[Obsolete("Mega-hack until I can figure out how Memory and sound channel classes should interact.")]
-		public DmcSoundChannel dmcChannel;
+		public readonly DmcSoundChannel dmcChannel;
 		private readonly Dma dma;
 		private readonly Memory memory;
+		[Obsolete("Mega-hack until I can figure out how PPU and other classes should interact.")]
+		public readonly Ppu ppu;
 
         /// <summary>
         /// Call this at application start up to set nes default stuff
@@ -309,7 +314,7 @@ namespace MyNes.Core
                     if (request_snapshot)
                     {
                         request_snapshot = false;
-                        videoOut.TakeSnapshot(SNAPSFolder, SNAPSFileName, SNAPSFormat, SNAPSReplace);
+                        this.ppu.videoOut.TakeSnapshot(SNAPSFolder, SNAPSFileName, SNAPSFormat, SNAPSReplace);
                         EmulationPaused = false;
                     }
                     Thread.Sleep(100);
@@ -344,8 +349,8 @@ namespace MyNes.Core
                 return;
             EmulationON = false;
 			this.memory.MEMShutdown();
-            if (videoOut != null)
-                videoOut.ShutDown();
+            if (this.ppu.videoOut != null)
+				this.ppu.videoOut.ShutDown();
             // videoOut = null;
             if (AudioOut != null)
                 AudioOut.Shutdown();
@@ -353,7 +358,7 @@ namespace MyNes.Core
             System.GC.Collect();
 
             CPUShutdown();
-            PPUShutdown();
+			this.ppu.PPUShutdown();
             APUShutdown();
 
             if (EMUShutdown != null)
@@ -413,20 +418,20 @@ namespace MyNes.Core
         // Internal methods
         public void ClockComponents()
         {
-            PPUClock();
+            this.ppu.PPUClock();
             /*
              * NMI edge detector polls the status of the NMI line during φ2 of each CPU cycle 
              * (i.e., during the second half of each cycle) 
              */
             PollInterruptStatus();
-            PPUClock();
-            PPUClock();
+			this.ppu.PPUClock();
+			this.ppu.PPUClock();
             if (DoPalAdditionalClock)// In pal system ..
             {
                 palCyc++;
                 if (palCyc == 5)
                 {
-                    PPUClock();
+					this.ppu.PPUClock();
                     palCyc = 0;
                 }
             }
@@ -435,7 +440,8 @@ namespace MyNes.Core
 
 			this.memory.board.OnCPUClock();
         }
-        private void OnFinishFrame()
+		[Obsolete("Refactor this as a subscription to a this.ppu.FrameFinished event")]
+        public void OnFinishFrame()
         {
             InputFinishFrame();
             // Sound
@@ -528,7 +534,7 @@ namespace MyNes.Core
             // Anyway, it sounds good using these values :)
 			this.memory.MEMHardReset();
             CPUHardReset();
-            PPUHardReset();
+			this.ppu.PPUHardReset();
             APUHardReset();
             this.dma.DMAHardReset();
         }
@@ -537,7 +543,7 @@ namespace MyNes.Core
         {
             this.memory.MEMSoftReset();
             CPUSoftReset();
-            PPUSoftReset();
+			this.ppu.PPUSoftReset();
             APUSoftReset();
             this.dma.DMASoftReset();
         }
