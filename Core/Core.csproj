@@ -83,6 +83,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="zlib.net">
+      <HintPath>..\packages\zlib.net.1.0.4.0\lib\zlib.net.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\BoardInfo.cs" />
@@ -383,20 +386,6 @@
     <Compile Include="SoundChannels\TriangleSoundChannel.cs" />
     <Compile Include="Palettes\PaletteFileWrapper.cs" />
     <Compile Include="Types\ZlipWrapper.cs" />
-    <Compile Include="ZLIP\Adler32.cs" />
-    <Compile Include="ZLIP\Deflate.cs" />
-    <Compile Include="ZLIP\InfBlocks.cs" />
-    <Compile Include="ZLIP\InfCodes.cs" />
-    <Compile Include="ZLIP\Inflate.cs" />
-    <Compile Include="ZLIP\InfTree.cs" />
-    <Compile Include="ZLIP\StaticTree.cs" />
-    <Compile Include="ZLIP\SupportClass.cs" />
-    <Compile Include="ZLIP\Tree.cs" />
-    <Compile Include="ZLIP\ZInputStream.cs" />
-    <Compile Include="ZLIP\Zlib.cs" />
-    <Compile Include="ZLIP\ZOutputStream.cs" />
-    <Compile Include="ZLIP\ZStream.cs" />
-    <Compile Include="ZLIP\ZStreamException.cs" />
     <Compile Include="_NesEmu.cs" />
     <Compile Include="Dma.cs" />
     <Compile Include="NesEmu.Interrupts.cs" />
@@ -414,13 +403,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Boards\_TODO.txt" />
-    <Content Include="ZLIP\history.txt" />
-    <Content Include="ZLIP\license.txt" />
-    <Content Include="ZLIP\readme.txt" />
-    <Content Include="ZLIP\zlib.net.csproj" />
-    <Content Include="ZLIP\zlib.net.sln" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
