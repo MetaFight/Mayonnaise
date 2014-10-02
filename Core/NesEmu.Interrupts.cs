@@ -31,18 +31,18 @@ namespace MyNes.Core
         // Represents the current NMI pin (connected to ppu)
         public bool NMI_Current;
         // Represents the old status if NMI pin, used to generate NMI in raising edge
-        private static bool NMI_Old;
+        public bool NMI_Old;
         // Determines that NMI is pending (active when NMI pin become true and was false)
-        private static bool NMI_Detected;
+        public bool NMI_Detected;
 		[Obsolete("Unstaticify")]
         // Determines that IRQ flags (pins)
         public static int IRQFlags = 0;
         // Determines that IRQ is pending
-        private static bool IRQ_Detected;
+        public bool IRQ_Detected;
         // This is the interrupt vector to jump in the last 2 cycles of BRK/IRQ/NMI
-        private static int interrupt_vector;
+        public int interrupt_vector;
         // This flag suspend interrupt polling
-        private static bool interrupt_suspend;
+        public bool interrupt_suspend;
         public bool nmi_enabled;
         public bool nmi_old;
         public bool vbl_flag;
@@ -57,7 +57,7 @@ namespace MyNes.Core
                     NMI_Detected = true;
                 NMI_Old = NMI_Current = false;// NMI detected or not, low both lines for this form ___|-|__
                 // irq level detector
-                IRQ_Detected = (!registers.i && IRQFlags != 0);
+				IRQ_Detected = (!this.cpu.registers.i && IRQFlags != 0);
                 // Update interrupt vector !
                 interrupt_vector = NMI_Detected ? 0xFFFA : 0xFFFE;
             }

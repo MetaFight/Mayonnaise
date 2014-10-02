@@ -38,8 +38,10 @@ namespace MyNes.Core
 		public NesEmu(TVSystem tvFormat)
 		{
 			this.TVFormat = tvFormat;
+
 			this.ppu = new Ppu(this);
 			this.memory = new Memory(this, this.ppu);
+			this.cpu = new Cpu(this, this.memory);
 			this.dma = new Dma(this, this.memory);
 
 			this.memory.dma = this.dma;
@@ -134,6 +136,7 @@ namespace MyNes.Core
 		private readonly Memory memory;
 		[Obsolete("Mega-hack until I can figure out how PPU and other classes should interact.")]
 		public readonly Ppu ppu;
+		private readonly Cpu cpu;
 
         /// <summary>
         /// Call this at application start up to set nes default stuff
@@ -272,7 +275,7 @@ namespace MyNes.Core
             {
                 if (!EmulationPaused)
                 {
-                    CPUClock();
+                    this.cpu.Clock();
                 }
                 else
                 {
@@ -357,8 +360,8 @@ namespace MyNes.Core
             // AudioOut = null;
             System.GC.Collect();
 
-            CPUShutdown();
-			this.ppu.PPUShutdown();
+            this.cpu.Shutdown();
+			this.ppu.Shutdown();
             APUShutdown();
 
             if (EMUShutdown != null)
@@ -533,7 +536,7 @@ namespace MyNes.Core
             // and APU passes all tests.
             // Anyway, it sounds good using these values :)
 			this.memory.MEMHardReset();
-            CPUHardReset();
+            this.cpu.HardReset();
 			this.ppu.PPUHardReset();
             APUHardReset();
             this.dma.DMAHardReset();
@@ -542,7 +545,7 @@ namespace MyNes.Core
         private void SoftReset()
         {
             this.memory.MEMSoftReset();
-            CPUSoftReset();
+            this.cpu.SoftReset();
 			this.ppu.PPUSoftReset();
             APUSoftReset();
             this.dma.DMASoftReset();

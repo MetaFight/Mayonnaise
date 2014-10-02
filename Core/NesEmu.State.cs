@@ -99,27 +99,7 @@ namespace MyNes.Core
             bin.Write(oddCycle);
             #endregion
             #region CPU
-            bin.Write(registers.a);
-            bin.Write(registers.c);
-            bin.Write(registers.d);
-            bin.Write(registers.eah);
-            bin.Write(registers.eal);
-            bin.Write(registers.i);
-            bin.Write(registers.n);
-            bin.Write(registers.pch);
-            bin.Write(registers.pcl);
-            bin.Write(registers.sph);
-            bin.Write(registers.spl);
-            bin.Write(registers.v);
-            bin.Write(registers.x);
-            bin.Write(registers.y);
-            bin.Write(registers.z);
-            bin.Write(M);
-            bin.Write(opcode);
-            bin.Write(byte_temp);
-            bin.Write(int_temp);
-            bin.Write(int_temp1);
-            bin.Write(dummy);
+			this.cpu.SaveState(bin);
             #endregion
             #region DMA
 			this.dma.SaveState(bin);
@@ -256,27 +236,7 @@ namespace MyNes.Core
             oddCycle = bin.ReadBoolean();
             #endregion
             #region CPU
-            registers.a = bin.ReadByte();
-            registers.c = bin.ReadBoolean();
-            registers.d = bin.ReadBoolean();
-            registers.eah = bin.ReadByte();
-            registers.eal = bin.ReadByte();
-            registers.i = bin.ReadBoolean();
-            registers.n = bin.ReadBoolean();
-            registers.pch = bin.ReadByte();
-            registers.pcl = bin.ReadByte();
-            registers.sph = bin.ReadByte();
-            registers.spl = bin.ReadByte();
-            registers.v = bin.ReadBoolean();
-            registers.x = bin.ReadByte();
-            registers.y = bin.ReadByte();
-            registers.z = bin.ReadBoolean();
-            M = bin.ReadByte();
-            opcode = bin.ReadByte();
-            byte_temp = bin.ReadByte();
-            int_temp = bin.ReadInt32();
-            int_temp1 = bin.ReadInt32();
-            dummy = bin.ReadByte();
+			this.cpu.LoadState(bin);
             #endregion
             #region DMA
 			this.dma.LoadState(bin);

@@ -19,22 +19,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.IO;
 
 /*CPU 6502 section*/
 namespace MyNes.Core
 {
-	public partial class NesEmu
+	public class Cpu
 	{
-		private static CPURegisters registers;
-		private static byte M;
-		private static byte opcode;
-		// Using temp valus increase performance by avoiding memory allocation.
-		private static byte byte_temp;
-		private static int int_temp;
-		private static int int_temp1;
-		private static byte dummy;
+		public Cpu(NesEmu core, Memory memory)
+		{
+			this.core = core;
+			this.memory = memory;
+		}
 
-		private void CPUHardReset()
+		internal CPURegisters registers;
+		private byte M;
+		private byte opcode;
+		// Using temp valus increase performance by avoiding memory allocation.
+		private byte byte_temp;
+		private int int_temp;
+		private int int_temp1;
+		private byte dummy;
+		private readonly NesEmu core;
+		private readonly Memory memory;
+
+		public void HardReset()
 		{
 			// registers
 			registers.a = 0x00;
@@ -52,25 +61,26 @@ namespace MyNes.Core
 			registers.i = true;
 			registers.ea = 0;
 			//interrupts
-			NMI_Current = false;
-			NMI_Old = false;
-			NMI_Detected = false;
-			IRQFlags = 0;
-			IRQ_Detected = false;
-			interrupt_vector = 0;
-			interrupt_suspend = false;
-			nmi_enabled = false;
-			nmi_old = false;
-			vbl_flag = false;
-			vbl_flag_temp = false;
+			this.core.NMI_Current = false;
+			this.core.NMI_Old = false;
+			this.core.NMI_Detected = false;
+			NesEmu.IRQFlags = 0;
+			this.core.IRQ_Detected = false;
+			this.core.interrupt_vector = 0;
+			this.core.interrupt_suspend = false;
+			this.core.nmi_enabled = false;
+			this.core.nmi_old = false;
+			this.core.vbl_flag = false;
+			this.core.vbl_flag_temp = false;
 			//others
 			opcode = 0;
 		}
-		private static void CPUShutdown()
+		public void Shutdown()
 		{
 
 		}
-		private void CPUSoftReset()
+
+		public void SoftReset()
 		{
 			registers.i = true;
 			registers.sp -= 3;
@@ -78,7 +88,8 @@ namespace MyNes.Core
 			registers.pcl = this.memory.Read(0xFFFC);
 			registers.pch = this.memory.Read(0xFFFD);
 		}
-		private void CPUClock()
+
+		public void Clock()
 		{
 			// First clock is to fetch opcode
 			opcode = this.memory.Read(registers.pc);
@@ -1575,13 +1586,13 @@ namespace MyNes.Core
 			}
 			#endregion
 			// Handle interrupts...
-			if (NMI_Detected)
+			if (this.core.NMI_Detected)
 			{
 				Interrupt();
 
-				NMI_Detected = false;// NMI handled !
+				this.core.NMI_Detected = false;// NMI handled !
 			}
-			else if (IRQ_Detected)
+			else if (this.core.IRQ_Detected)
 			{
 				Interrupt();
 			}
@@ -1878,14 +1889,14 @@ namespace MyNes.Core
 
 			Push(registers.p);
 			// the vector is detected during φ2 of previous cycle (before push about 2 ppu cycles)
-			int_temp = interrupt_vector;
+			int_temp = this.core.interrupt_vector;
 
-			interrupt_suspend = true;
+			this.core.interrupt_suspend = true;
 			registers.pcl = this.memory.Read(int_temp);
 			int_temp++;
 			registers.i = true;
 			registers.pch = this.memory.Read(int_temp);
-			interrupt_suspend = false;
+			this.core.interrupt_suspend = false;
 		}
 		private void Branch(bool condition)
 		{
@@ -1894,10 +1905,10 @@ namespace MyNes.Core
 
 			if (condition)
 			{
-				interrupt_suspend = true;
+				this.core.interrupt_suspend = true;
 				this.memory.Read(registers.pc);
 				registers.pcl += byte_temp;
-				interrupt_suspend = false;
+				this.core.interrupt_suspend = false;
 				if (byte_temp >= 0x80)
 				{
 					if (registers.pcl >= byte_temp)
@@ -1927,7 +1938,7 @@ namespace MyNes.Core
 			registers.spl++;
 			return this.memory.Read(registers.sp);
 		}
-		private static void ADC()
+		private void ADC()
 		{
 			int_temp = (registers.a + M + (registers.c ? 1 : 0));
 
@@ -1943,7 +1954,7 @@ namespace MyNes.Core
 			byte_temp = (byte)((registers.a & registers.x) & 7);
 			this.memory.Write(registers.ea, byte_temp);
 		}
-		private static void ALR()
+		private void ALR()
 		{
 			registers.a &= M;
 
@@ -1954,20 +1965,20 @@ namespace MyNes.Core
 			registers.n = (registers.a & 0x80) != 0;
 			registers.z = registers.a == 0;
 		}
-		private static void ANC()
+		private void ANC()
 		{
 			registers.a &= M;
 			registers.n = (registers.a & 0x80) != 0;
 			registers.z = registers.a == 0;
 			registers.c = (registers.a & 0x80) != 0;
 		}
-		private static void AND()
+		private void AND()
 		{
 			registers.a &= M;
 			registers.n = (registers.a & 0x80) == 0x80;
 			registers.z = (registers.a == 0);
 		}
-		private static void ARR()
+		private void ARR()
 		{
 			registers.a = (byte)(((M & registers.a) >> 1) | (registers.c ? 0x80 : 0x00));
 
@@ -1976,7 +1987,7 @@ namespace MyNes.Core
 			registers.c = (registers.a & 0x40) != 0;
 			registers.v = ((registers.a << 1 ^ registers.a) & 0x40) != 0;
 		}
-		private static void AXS()
+		private void AXS()
 		{
 			int_temp = (registers.a & registers.x) - M;
 
@@ -1998,7 +2009,7 @@ namespace MyNes.Core
 			registers.n = (M & 0x80) == 0x80;
 			registers.z = (M == 0);
 		}
-		private static void ASL_A()
+		private void ASL_A()
 		{
 			registers.c = (registers.a & 0x80) == 0x80;
 
@@ -2007,7 +2018,7 @@ namespace MyNes.Core
 			registers.n = (registers.a & 0x80) == 0x80;
 			registers.z = (registers.a == 0);
 		}
-		private static void BIT()
+		private void BIT()
 		{
 			registers.n = (M & 0x80) != 0;
 			registers.v = (M & 0x40) != 0;
@@ -2023,30 +2034,30 @@ namespace MyNes.Core
 
 			Push(registers.pb());
 			// the vector is detected during φ2 of previous cycle (before push about 2 ppu cycles)
-			int_temp = interrupt_vector;
+			int_temp = this.core.interrupt_vector;
 
-			interrupt_suspend = true;
+			this.core.interrupt_suspend = true;
 			registers.pcl = this.memory.Read(int_temp);
 			int_temp++;
 			registers.i = true;
 			registers.pch = this.memory.Read(int_temp);
-			interrupt_suspend = false;
+			this.core.interrupt_suspend = false;
 		}
-		private static void CMP()
+		private void CMP()
 		{
 			int_temp = registers.a - M;
 			registers.n = (int_temp & 0x80) == 0x80;
 			registers.c = (registers.a >= M);
 			registers.z = (int_temp == 0);
 		}
-		private static void CPX()
+		private void CPX()
 		{
 			int_temp = registers.x - M;
 			registers.n = (int_temp & 0x80) == 0x80;
 			registers.c = (registers.x >= M);
 			registers.z = (int_temp == 0);
 		}
-		private static void CPY()
+		private void CPY()
 		{
 			int_temp = registers.y - M;
 			registers.n = (int_temp & 0x80) == 0x80;
@@ -2074,19 +2085,19 @@ namespace MyNes.Core
 			registers.n = (M & 0x80) == 0x80;
 			registers.z = (M == 0);
 		}
-		private static void DEY()
+		private void DEY()
 		{
 			registers.y--;
 			registers.z = (registers.y == 0);
 			registers.n = (registers.y & 0x80) == 0x80;
 		}
-		private static void DEX()
+		private void DEX()
 		{
 			registers.x--;
 			registers.z = (registers.x == 0);
 			registers.n = (registers.x & 0x80) == 0x80;
 		}
-		private static void EOR()
+		private void EOR()
 		{
 			registers.a ^= M;
 			registers.n = (registers.a & 0x80) == 0x80;
@@ -2100,13 +2111,13 @@ namespace MyNes.Core
 			registers.n = (M & 0x80) == 0x80;
 			registers.z = (M == 0);
 		}
-		private static void INX()
+		private void INX()
 		{
 			registers.x++;
 			registers.z = (registers.x == 0);
 			registers.n = (registers.x & 0x80) == 0x80;
 		}
-		private static void INY()
+		private void INY()
 		{
 			registers.y++;
 			registers.n = (registers.y & 0x80) == 0x80;
@@ -2154,7 +2165,7 @@ namespace MyNes.Core
 			registers.eah = this.memory.Read(registers.pc);
 			registers.pc = registers.ea;
 		}
-		private static void LAR()
+		private void LAR()
 		{
 			registers.spl &= M;
 			registers.a = registers.spl;
@@ -2163,32 +2174,32 @@ namespace MyNes.Core
 			registers.n = (registers.spl & 0x80) != 0;
 			registers.z = (registers.spl & 0xFF) == 0;
 		}
-		private static void LAX()
+		private void LAX()
 		{
 			registers.x = registers.a = M;
 
 			registers.n = (registers.x & 0x80) != 0;
 			registers.z = (registers.x & 0xFF) == 0;
 		}
-		private static void LDA()
+		private void LDA()
 		{
 			registers.a = M;
 			registers.n = (registers.a & 0x80) == 0x80;
 			registers.z = (registers.a == 0);
 		}
-		private static void LDX()
+		private void LDX()
 		{
 			registers.x = M;
 			registers.n = (registers.x & 0x80) == 0x80;
 			registers.z = (registers.x == 0);
 		}
-		private static void LDY()
+		private void LDY()
 		{
 			registers.y = M;
 			registers.n = (registers.y & 0x80) == 0x80;
 			registers.z = (registers.y == 0);
 		}
-		private static void LSR_A()
+		private void LSR_A()
 		{
 			registers.c = (registers.a & 1) == 1;
 			registers.a >>= 1;
@@ -2205,7 +2216,7 @@ namespace MyNes.Core
 			registers.z = (M == 0);
 			registers.n = (M & 0x80) != 0;
 		}
-		private static void ORA()
+		private void ORA()
 		{
 			registers.a |= M;
 			registers.n = (registers.a & 0x80) == 0x80;
@@ -2249,7 +2260,7 @@ namespace MyNes.Core
 			registers.n = (registers.a & 0x80) != 0;
 			registers.z = (registers.a & 0xFF) == 0;
 		}
-		private static void ROL_A()
+		private void ROL_A()
 		{
 			byte_temp = (byte)((registers.a << 1) | (registers.c ? 0x01 : 0x00));
 
@@ -2269,7 +2280,7 @@ namespace MyNes.Core
 			registers.z = (byte_temp & 0xFF) == 0;
 			registers.c = (M & 0x80) != 0;
 		}
-		private static void ROR_A()
+		private void ROR_A()
 		{
 			byte_temp = (byte)((registers.a >> 1) | (registers.c ? 0x80 : 0x00));
 
@@ -2335,7 +2346,7 @@ namespace MyNes.Core
 		{
 			this.memory.Write(registers.ea, (byte)(registers.x & registers.a));
 		}
-		private static void SBC()
+		private void SBC()
 		{
 			M ^= 0xFF;
 			int_temp = (registers.a + M + (registers.c ? 1 : 0));
@@ -2419,41 +2430,41 @@ namespace MyNes.Core
 		{
 			this.memory.Write(registers.ea, registers.y);
 		}
-		private static void TAX()
+		private void TAX()
 		{
 			registers.x = registers.a;
 			registers.n = (registers.x & 0x80) == 0x80;
 			registers.z = (registers.x == 0);
 		}
-		private static void TAY()
+		private void TAY()
 		{
 			registers.y = registers.a;
 			registers.n = (registers.y & 0x80) == 0x80;
 			registers.z = (registers.y == 0);
 		}
-		private static void TSX()
+		private void TSX()
 		{
 			registers.x = registers.spl;
 			registers.n = (registers.x & 0x80) != 0;
 			registers.z = registers.x == 0;
 		}
-		private static void TXA()
+		private void TXA()
 		{
 			registers.a = registers.x;
 			registers.n = (registers.a & 0x80) == 0x80;
 			registers.z = (registers.a == 0);
 		}
-		private static void TXS()
+		private void TXS()
 		{
 			registers.spl = registers.x;
 		}
-		private static void TYA()
+		private void TYA()
 		{
 			registers.a = registers.y;
 			registers.n = (registers.a & 0x80) == 0x80;
 			registers.z = (registers.a == 0);
 		}
-		private static void XAA()
+		private void XAA()
 		{
 			registers.a = (byte)(registers.x & M);
 			registers.n = (registers.a & 0x80) != 0;
@@ -2465,6 +2476,56 @@ namespace MyNes.Core
 			this.memory.Write(registers.ea, registers.spl);
 		}
 		#endregion
+
+		internal void SaveState(BinaryWriter bin)
+		{
+			bin.Write(registers.a);
+			bin.Write(registers.c);
+			bin.Write(registers.d);
+			bin.Write(registers.eah);
+			bin.Write(registers.eal);
+			bin.Write(registers.i);
+			bin.Write(registers.n);
+			bin.Write(registers.pch);
+			bin.Write(registers.pcl);
+			bin.Write(registers.sph);
+			bin.Write(registers.spl);
+			bin.Write(registers.v);
+			bin.Write(registers.x);
+			bin.Write(registers.y);
+			bin.Write(registers.z);
+			bin.Write(M);
+			bin.Write(opcode);
+			bin.Write(byte_temp);
+			bin.Write(int_temp);
+			bin.Write(int_temp1);
+			bin.Write(dummy);
+		}
+
+		internal void LoadState(BinaryReader bin)
+		{
+			registers.a = bin.ReadByte();
+			registers.c = bin.ReadBoolean();
+			registers.d = bin.ReadBoolean();
+			registers.eah = bin.ReadByte();
+			registers.eal = bin.ReadByte();
+			registers.i = bin.ReadBoolean();
+			registers.n = bin.ReadBoolean();
+			registers.pch = bin.ReadByte();
+			registers.pcl = bin.ReadByte();
+			registers.sph = bin.ReadByte();
+			registers.spl = bin.ReadByte();
+			registers.v = bin.ReadBoolean();
+			registers.x = bin.ReadByte();
+			registers.y = bin.ReadByte();
+			registers.z = bin.ReadBoolean();
+			M = bin.ReadByte();
+			opcode = bin.ReadByte();
+			byte_temp = bin.ReadByte();
+			int_temp = bin.ReadInt32();
+			int_temp1 = bin.ReadInt32();
+			dummy = bin.ReadByte();
+		}
 	}
 }
 

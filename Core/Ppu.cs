@@ -240,7 +240,7 @@ namespace MyNes.Core
 		{
 
 		}
-		public void PPUShutdown()
+		public void Shutdown()
 		{
 
 		}
