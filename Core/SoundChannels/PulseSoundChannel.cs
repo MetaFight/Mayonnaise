@@ -33,14 +33,14 @@ namespace MyNes.Core.SoundChannels
             new byte[] {  1, 0, 0, 1, 1, 1, 1, 1 }, // 75.0% (25.0% negated)
         };
 
-		public PulseSoundChannel(NesEmu core, int addressOffset)
+		public PulseSoundChannel(Apu apu, int addressOffset)
 		{
 			if (addressOffset != 0x4000 && addressOffset != 0x4004)
 			{
 				throw new InvalidOperationException("Invalid address offset for Pulse channel.");
 			}
 
-			this.core = core;
+			this.apu = apu;
 			this.addressOffset = addressOffset;
 		}
 
@@ -72,7 +72,7 @@ namespace MyNes.Core.SoundChannels
 		public byte Output;
 		private int sweep;
 		private int cycles;
-		private readonly NesEmu core;
+		private readonly Apu apu;
 		private readonly int addressOffset;
 
 		public void HardReset()
@@ -170,7 +170,7 @@ else
 		public void ClockSingle()
 		{
 			length_counter_halt_flag = duration_haltRequset;
-			if (this.core.IsClockingDuration && Duration_counter > 0)
+			if (this.apu.IsClockingDuration && Duration_counter > 0)
 				duration_reloadRequst = false;
 			if (duration_reloadRequst)
 			{
@@ -287,7 +287,7 @@ if (this.addressOffset == 0x4000)
 					break;
 
 				case 0x0003:
-					duration_reload = NesEmu.DurationTable[value >> 3];
+					duration_reload = Apu.DurationTable[value >> 3];
 					duration_reloadRequst = true;
 					frequency = (frequency & 0x00FF) | ((value & 7) << 8);
 					dutyStep = 0;

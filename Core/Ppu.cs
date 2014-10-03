@@ -246,7 +246,7 @@ namespace MyNes.Core
 		}
 
 		[Obsolete("This will need to be redesigned.")]
-		public void PPUClock()
+		public void Clock()
 		{
 			this.memory.board.OnPPUClock();
 			if ((VClock < 240) || (VClock == vbl_vclock_End))

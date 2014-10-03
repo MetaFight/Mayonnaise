@@ -1,4 +1,5 @@
-﻿/* This file is part of My Nes
+﻿using MyNes.Core.SoundChannels;
+/* This file is part of My Nes
  * 
  * A Nintendo Entertainment System / Family Computer (Nes/Famicom) 
  * Emulator written in C#.
@@ -19,12 +20,36 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 using System;
+using System.IO;
 
 /*APU section*/
 namespace MyNes.Core
 {
-    public partial class NesEmu
+    public class Apu
     {
+		[Obsolete("Mega-hack until I can figure out how Memory and sound channel classes should interact.")]
+		public readonly NoiseSoundChannel noiseChannel;
+		[Obsolete("Mega-hack until I can figure out how Memory and sound channel classes should interact.")]
+		public readonly PulseSoundChannel pulse1Channel;
+		[Obsolete("Mega-hack until I can figure out how Memory and sound channel classes should interact.")]
+		public readonly PulseSoundChannel pulse2Channel;
+		[Obsolete("Mega-hack until I can figure out how Memory and sound channel classes should interact.")]
+		public readonly TriangleSoundChannel triangleChannel;
+		[Obsolete("Mega-hack until I can figure out how Memory and sound channel classes should interact.")]
+		public readonly DmcSoundChannel dmcChannel;
+
+		public Apu(NesEmu core, Dma dma, Memory memory)
+		{
+			this.noiseChannel = new NoiseSoundChannel(this);
+			this.pulse1Channel = new PulseSoundChannel(this, 0x4000);
+			this.pulse2Channel = new PulseSoundChannel(this, 0x4004);
+			this.triangleChannel = new TriangleSoundChannel(this);
+			this.dmcChannel = new DmcSoundChannel(this, dma, memory);
+
+			this.core = core;
+			this.memory = memory;
+		}
+
         public static readonly int[][] SequenceMode0 =
         { 
             new int[] { 7459, 7456, 7458, 7457, 1, 1, 7457 }, // NTSC
@@ -42,23 +67,24 @@ namespace MyNes.Core
             0x0A, 0xFE, 0x14, 0x02, 0x28, 0x04, 0x50, 0x06, 0xA0, 0x08, 0x3C, 0x0A, 0x0E, 0x0C, 0x1A, 0x0E,
             0x0C, 0x10, 0x18, 0x12, 0x30, 0x14, 0x60, 0x16, 0xC0, 0x18, 0x48, 0x1A, 0x10, 0x1C, 0x20, 0x1E,
         };
+
+		public bool oddCycle;
         public int Cycles = 0;
         public bool SequencingMode;
         public byte CurrentSeq = 0;
         public bool IsClockingDuration = false;
         public bool FrameIrqEnabled;
         public bool FrameIrqFlag;
-        public bool oddCycle;
         /*Playback*/
-        private static IAudioProvider AudioOut;
+        public IAudioProvider AudioOut;
         private static double[][][][][] mix_table;
-        private static bool SoundEnabled;
+        public bool SoundEnabled;
         // default to 44.1KHz settings
         private static float audio_playback_sampleCycles;
-        private static float audio_playback_samplePeriod;
+        public float audio_playback_samplePeriod;
         private static float audio_playback_sampleReload;
         private static float audio_playback_frequency;
-        private static byte[] audio_playback_buffer = new byte[44100];
+        public byte[] audio_playback_buffer = new byte[44100];
         private static int audio_playback_bufferSize;
         private static bool audio_playback_first_render;
         public int audio_playback_w_pos = 0;//Write position
@@ -68,10 +94,12 @@ namespace MyNes.Core
         private static double x, x_1, y, y_1;
         private const double R = 1;// 0.995 for 44100 Hz
         private static double amplitude = 160;
+		private readonly NesEmu core;
+		private readonly Memory memory;
 
-        private void APUHardReset()
+        public void HardReset()
         {
-            switch (TVFormat)
+            switch (this.core.TVFormat)
             {
                 case TVSystem.NTSC: SystemIndex = 0; audio_playback_samplePeriod = 1789772.67f; break;
                 case TVSystem.PALB: SystemIndex = 1; audio_playback_samplePeriod = 1662607f; break;
@@ -86,13 +114,13 @@ namespace MyNes.Core
             oddCycle = false;
             IsClockingDuration = false;
 
-            this.pulse1Channel.HardReset();
+			this.pulse1Channel.HardReset();
 			this.pulse2Channel.HardReset();
-            this.triangleChannel.HardReset();
-            this.noiseChannel.HardReset();
-            this.dmcChannel.HardReset();
+			this.triangleChannel.HardReset();
+			this.noiseChannel.HardReset();
+			this.dmcChannel.HardReset();
         }
-        private void APUSoftReset()
+        public void SoftReset()
         {
             Cycles = SequenceMode0[SystemIndex][0] - 10;
             FrameIrqFlag = false;
@@ -104,11 +132,11 @@ namespace MyNes.Core
 
             this.pulse1Channel.HardReset();
 			this.pulse2Channel.HardReset();
-            this.triangleChannel.HardReset();
-            this.noiseChannel.HardReset();
-            this.dmcChannel.HardReset();
+			this.triangleChannel.HardReset();
+			this.noiseChannel.HardReset();
+			this.dmcChannel.HardReset();
         }
-        private static void APUShutdown()
+        public void Shutdown()
         {
             if (audio_playback_buffer == null) return;
             // Noise on shutdown; MISC
@@ -116,7 +144,7 @@ namespace MyNes.Core
             for (int i = 0; i < audio_playback_buffer.Length; i++)
                 audio_playback_buffer[i] = (byte)r.Next(0, 20);
         }
-        private static void InitializeSoundMixTable()
+        public void InitializeSoundMixTable()
         {
             mix_table = new double[16][][][][];
 
@@ -235,13 +263,14 @@ namespace MyNes.Core
             if (FrameIrqEnabled)
                 FrameIrqFlag = true;
             if (FrameIrqFlag)
-                IRQFlags |= IRQ_APU;
+                NesEmu.IRQFlags |= NesEmu.IRQ_APU;
         }
-        public void APUClock()
+
+        public void Clock()
         {
             this.IsClockingDuration = false;
             Cycles--;
-            oddCycle = !oddCycle;
+			this.oddCycle = !this.oddCycle;
 
             if (Cycles == 0)
             {
@@ -287,6 +316,28 @@ namespace MyNes.Core
             // Playback
             APUUpdatePlayback();
         }
-    }
+
+		internal void SaveState(BinaryWriter bin)
+		{
+			bin.Write(Cycles);
+			bin.Write(SequencingMode);
+			bin.Write(CurrentSeq);
+			bin.Write(IsClockingDuration);
+			bin.Write(FrameIrqEnabled);
+			bin.Write(FrameIrqFlag);
+			bin.Write(this.oddCycle);
+		}
+
+		internal void LoadState(BinaryReader bin)
+		{
+			Cycles = bin.ReadInt32();
+			SequencingMode = bin.ReadBoolean();
+			CurrentSeq = bin.ReadByte();
+			IsClockingDuration = bin.ReadBoolean();
+			FrameIrqEnabled = bin.ReadBoolean();
+			FrameIrqFlag = bin.ReadBoolean();
+			oddCycle = bin.ReadBoolean();
+		}
+	}
 }
 

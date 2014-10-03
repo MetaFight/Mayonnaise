@@ -90,13 +90,7 @@ namespace MyNes.Core
             bin.Write(palCyc);
             #endregion
             #region APU
-            bin.Write(Cycles);
-            bin.Write(SequencingMode);
-            bin.Write(CurrentSeq);
-            bin.Write(IsClockingDuration);
-            bin.Write(FrameIrqEnabled);
-            bin.Write(FrameIrqFlag);
-            bin.Write(oddCycle);
+			this.apu.SaveState(bin);
             #endregion
             #region CPU
 			this.cpu.SaveState(bin);
@@ -105,7 +99,7 @@ namespace MyNes.Core
 			this.dma.SaveState(bin);
             #endregion
             #region DMC
-			this.dmcChannel.SaveState(bin);
+			this.apu.dmcChannel.SaveState(bin);
             #endregion
             #region Input
             bin.Write(PORT0);
@@ -129,19 +123,19 @@ namespace MyNes.Core
 			this.memory.SaveState(bin);
             #endregion
             #region Noise
-			this.noiseChannel.SaveState(bin);
+			this.apu.noiseChannel.SaveState(bin);
             #endregion
             #region PPU
 			this.ppu.SaveState(bin);
             #endregion
             #region Pulse 1
-			this.pulse1Channel.SaveState(bin);
+			this.apu.pulse1Channel.SaveState(bin);
             #endregion
             #region Pulse 2
-			this.pulse2Channel.SaveState(bin);
+			this.apu.pulse2Channel.SaveState(bin);
             #endregion
             #region Triangle
-			this.triangleChannel.SaveState(bin);
+			this.apu.triangleChannel.SaveState(bin);
             #endregion
 
             // Compress data !
@@ -227,13 +221,7 @@ namespace MyNes.Core
             palCyc = bin.ReadByte();
             #endregion
             #region APU
-            Cycles = bin.ReadInt32();
-            SequencingMode = bin.ReadBoolean();
-            CurrentSeq = bin.ReadByte();
-            IsClockingDuration = bin.ReadBoolean();
-            FrameIrqEnabled = bin.ReadBoolean();
-            FrameIrqFlag = bin.ReadBoolean();
-            oddCycle = bin.ReadBoolean();
+			this.apu.LoadState(bin);
             #endregion
             #region CPU
 			this.cpu.LoadState(bin);
@@ -242,7 +230,7 @@ namespace MyNes.Core
 			this.dma.LoadState(bin);
             #endregion
             #region DMC
-			this.dmcChannel.LoadState(bin);
+			this.apu.dmcChannel.LoadState(bin);
             #endregion
             #region Input
             PORT0 = bin.ReadInt32();
@@ -266,17 +254,17 @@ namespace MyNes.Core
 			this.memory.LoadState(bin);
             #endregion
             #region Noise
-			this.noiseChannel.LoadState(bin);
+			this.apu.noiseChannel.LoadState(bin);
             #endregion
             #region PPU
 			this.ppu.LoadState(bin);
             #endregion
             #region Pulse
-			this.pulse1Channel.LoadState(bin);
-			this.pulse2Channel.LoadState(bin);
+			this.apu.pulse1Channel.LoadState(bin);
+			this.apu.pulse2Channel.LoadState(bin);
             #endregion
             #region Triangle
-			this.triangleChannel.LoadState(bin);
+			this.apu.triangleChannel.LoadState(bin);
             #endregion
 
             // Finished !

@@ -40,20 +40,22 @@ namespace MyNes.Core
         // This chip (somehow, not confirmed yet) is responsible for dma operations inside nes
         // This class emulate the dma behaviors, not as the real chip.
 
-        private static int dmaDMCDMAWaitCycles;
-        private static int dmaOAMDMAWaitCycles;
-        private static bool isOamDma;
-        private static int oamdma_i;
-        private static bool dmaDMCOn;
-        private static bool dmaOAMOn;
-        private static bool dmaDMC_occurring;
-        private static bool dmaOAM_occurring;
-        private static int dmaOAMFinishCounter;
+        private int dmaDMCDMAWaitCycles;
+        private int dmaOAMDMAWaitCycles;
+        private bool isOamDma;
+        private int oamdma_i;
+        private bool dmaDMCOn;
+        private bool dmaOAMOn;
+        private bool dmaDMC_occurring;
+        private bool dmaOAM_occurring;
+        private int dmaOAMFinishCounter;
         public int dmaOamaddress;
-        private static int OAMCYCLE;
-        private static byte latch;
-		private NesEmu core;
-		private Memory memory;
+        private int OAMCYCLE;
+        private byte latch;
+		private readonly NesEmu core;
+		private readonly Memory memory;
+		[Obsolete("Mega-hack until I can figure out how DMA and APU classes should interact.")]
+		public Apu apu;
 
         public void DMAHardReset()
         {
@@ -94,7 +96,7 @@ namespace MyNes.Core
                 if (OAMCYCLE < 508)
                     // OAM DMA is occurring here, then use the oam logic for waiting cycles
                     // which depends on apu's odd toggle
-                    dmaDMCDMAWaitCycles = this.core.oddCycle ? 0 : 1;
+                    dmaDMCDMAWaitCycles = this.apu.oddCycle ? 0 : 1;
                 else
                 {
                     // Here the oam dma is about to finish
@@ -138,12 +140,12 @@ namespace MyNes.Core
             else
             {
                 // OAM DMA depends on the apu odd timer to add the waiting cycles
-                dmaOAMDMAWaitCycles = this.core.oddCycle ? 1 : 2;
+                dmaOAMDMAWaitCycles = this.apu.oddCycle ? 1 : 2;
             }
             dmaOAMOn = true;
             dmaOAMFinishCounter = 0;
         }
-        public void DMAClock()
+        public void Clock()
         {
             if (dmaOAMFinishCounter > 0)
                 dmaOAMFinishCounter--;

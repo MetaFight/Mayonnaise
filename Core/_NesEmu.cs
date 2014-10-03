@@ -43,8 +43,11 @@ namespace MyNes.Core
 			this.memory = new Memory(this, this.ppu);
 			this.cpu = new Cpu(this, this.memory);
 			this.dma = new Dma(this, this.memory);
+			this.apu = new Apu(this, this.dma, this.memory);
 
+			this.dma.apu = this.apu;
 			this.memory.dma = this.dma;
+			this.memory.apu = this.apu;
 			this.ppu.memory = this.memory;
 			
 
@@ -53,28 +56,22 @@ namespace MyNes.Core
 			switch (TVFormat)
 			{
 				case TVSystem.NTSC:
-					SystemIndex = 0;
-					audio_playback_samplePeriod = 1789772.67f;
+					this.apu.SystemIndex = 0;
+					this.apu.audio_playback_samplePeriod = 1789772.67f;
 					break;
 				case TVSystem.PALB:
-					SystemIndex = 1;
-					audio_playback_samplePeriod = 1662607f;
+					this.apu.SystemIndex = 1;
+					this.apu.audio_playback_samplePeriod = 1662607f;
 					break;
 				case TVSystem.DENDY:
-					SystemIndex = 2;
-					audio_playback_samplePeriod = 1773448f;
+					this.apu.SystemIndex = 2;
+					this.apu.audio_playback_samplePeriod = 1773448f;
 					break;
 			}
 			if (TVFormat == TVSystem.NTSC)
 				FramePeriod = (1.0 / (FPS = 60.0));
 			else//PALB, DENDY
 				FramePeriod = (1.0 / (FPS = 50.0));
-
-			this.noiseChannel = new NoiseSoundChannel(this);
-			this.pulse1Channel = new PulseSoundChannel(this, 0x4000);
-			this.pulse2Channel = new PulseSoundChannel(this, 0x4004);
-			this.triangleChannel = new TriangleSoundChannel(this);
-			this.dmcChannel = new DmcSoundChannel(this, this.dma, this.memory);
 		}
 
         public TVSystemSetting TVFormatSetting;
@@ -122,28 +119,19 @@ namespace MyNes.Core
 		[Obsolete("Nothing ever seems to unsubscribe from this.  Check for leaks.")]
         public event EventHandler EMUShutdown;
 
-		[Obsolete("Mega-hack until I can figure out how Memory and sound channel classes should interact.")]
-		public NoiseSoundChannel noiseChannel;
-		[Obsolete("Mega-hack until I can figure out how Memory and sound channel classes should interact.")]
-		public PulseSoundChannel pulse1Channel;
-		[Obsolete("Mega-hack until I can figure out how Memory and sound channel classes should interact.")]
-		public PulseSoundChannel pulse2Channel;
-		[Obsolete("Mega-hack until I can figure out how Memory and sound channel classes should interact.")]
-		public TriangleSoundChannel triangleChannel;
-		[Obsolete("Mega-hack until I can figure out how Memory and sound channel classes should interact.")]
-		public readonly DmcSoundChannel dmcChannel;
 		private readonly Dma dma;
 		private readonly Memory memory;
 		[Obsolete("Mega-hack until I can figure out how PPU and other classes should interact.")]
 		public readonly Ppu ppu;
 		private readonly Cpu cpu;
+		public readonly Apu apu;
 
         /// <summary>
         /// Call this at application start up to set nes default stuff
         /// </summary>
         public void WarmUp()
         {
-            InitializeSoundMixTable();
+			this.apu.InitializeSoundMixTable();
             NesCartDatabase.LoadDatabase("database.xml");
         }
 
@@ -279,10 +267,10 @@ namespace MyNes.Core
                 }
                 else
                 {
-                    if (AudioOut != null)
+					if (this.apu.AudioOut != null)
                     {
-                        AudioOut.Pause();
-                        audio_playback_w_pos = AudioOut.CurrentWritePosition;
+						this.apu.AudioOut.Pause();
+						this.apu.audio_playback_w_pos = this.apu.AudioOut.CurrentWritePosition;
                     }
                     if (request_save_sram)
                     {
@@ -355,14 +343,14 @@ namespace MyNes.Core
             if (this.ppu.videoOut != null)
 				this.ppu.videoOut.ShutDown();
             // videoOut = null;
-            if (AudioOut != null)
-                AudioOut.Shutdown();
+			if (this.apu.AudioOut != null)
+                this.apu.Shutdown();
             // AudioOut = null;
             System.GC.Collect();
 
             this.cpu.Shutdown();
 			this.ppu.Shutdown();
-            APUShutdown();
+			this.apu.Shutdown();
 
             if (EMUShutdown != null)
                 EMUShutdown(null, new EventArgs());
@@ -421,25 +409,25 @@ namespace MyNes.Core
         // Internal methods
         public void ClockComponents()
         {
-            this.ppu.PPUClock();
+            this.ppu.Clock();
             /*
              * NMI edge detector polls the status of the NMI line during φ2 of each CPU cycle 
              * (i.e., during the second half of each cycle) 
              */
             PollInterruptStatus();
-			this.ppu.PPUClock();
-			this.ppu.PPUClock();
+			this.ppu.Clock();
+			this.ppu.Clock();
             if (DoPalAdditionalClock)// In pal system ..
             {
                 palCyc++;
                 if (palCyc == 5)
                 {
-					this.ppu.PPUClock();
+					this.ppu.Clock();
                     palCyc = 0;
                 }
             }
-            APUClock();
-            this.dma.DMAClock();
+            this.apu.Clock();
+            this.dma.Clock();
 
 			this.memory.board.OnCPUClock();
         }
@@ -448,22 +436,24 @@ namespace MyNes.Core
         {
             InputFinishFrame();
             // Sound
-            if (SoundEnabled)
+            if (this.apu.SoundEnabled)
             {
-                if (!AudioOut.IsPlaying)
+                if (!this.apu.AudioOut.IsPlaying)
                 {
-                    AudioOut.Play();
+					this.apu.AudioOut.Play();
                     // Reset buffer
-                    audio_playback_w_pos = AudioOut.CurrentWritePosition + audio_playback_latency;
+					this.apu.audio_playback_w_pos = this.apu.AudioOut.CurrentWritePosition + this.apu.audio_playback_latency;
                 }
                 // Submit sound buffer
-                AudioOut.SubmitBuffer(ref audio_playback_buffer);
+				this.apu.AudioOut.SubmitBuffer(ref this.apu.audio_playback_buffer);
             }
             // Speed
             ImmediateFrameTime = CurrentFrameTime = GetTime() - LastFrameTime;
             DeadTime = FramePeriod - CurrentFrameTime;
-            if (DeadTime < 0)
-                audio_playback_w_pos = AudioOut.CurrentWritePosition + audio_playback_latency;
+			if (DeadTime < 0)
+			{
+				this.apu.audio_playback_w_pos = this.apu.AudioOut.CurrentWritePosition + this.apu.audio_playback_latency;
+			}
             if (SpeedLimitterON)
             {
                 while (ImmediateFrameTime < FramePeriod)
@@ -538,7 +528,7 @@ namespace MyNes.Core
 			this.memory.MEMHardReset();
             this.cpu.HardReset();
 			this.ppu.PPUHardReset();
-            APUHardReset();
+			this.apu.HardReset();
             this.dma.DMAHardReset();
         }
 
@@ -547,7 +537,7 @@ namespace MyNes.Core
             this.memory.MEMSoftReset();
             this.cpu.SoftReset();
 			this.ppu.PPUSoftReset();
-            APUSoftReset();
+            this.apu.SoftReset();
             this.dma.DMASoftReset();
         }
 

@@ -375,7 +375,7 @@
     <Compile Include="ExternalSoundChannels\MMC5SqrSoundChannel.cs" />
     <Compile Include="Boards\Mapper026.cs" />
     <Compile Include="Interfaces\IZapperConnecter.cs" />
-    <Compile Include="NesEmu.Apu.cs" />
+    <Compile Include="Apu.cs" />
     <Compile Include="Cpu.cs" />
     <Compile Include="SoundChannels\DmcSoundChannel.cs" />
     <Compile Include="NesEmu.VSUnisystem.cs" />

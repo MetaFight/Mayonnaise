@@ -423,8 +423,7 @@ namespace MyNes
 			if (audio != null)
 				audio.Dispose();
 			audio = new DirectSoundRenderer(this.Handle);
-			this.emulator.SetupSoundPlayback(audio, Program.Settings.Audio_SoundEnabled, Program.Settings.Audio_Frequency,
-				audio.BufferSize, audio.latency_in_bytes);
+			this.emulator.apu.SetupSoundPlayback(audio, Program.Settings.Audio_SoundEnabled, Program.Settings.Audio_Frequency, audio.BufferSize, audio.latency_in_bytes);
 		}
 		public void InitializePalette()
 		{

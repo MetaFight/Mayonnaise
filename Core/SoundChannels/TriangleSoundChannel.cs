@@ -31,9 +31,9 @@ namespace MyNes.Core.SoundChannels
             0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F,
         };
 
-		public TriangleSoundChannel(NesEmu core)
+		public TriangleSoundChannel(Apu apu)
 		{
-			this.core = core;
+			this.apu = apu;
 		}
 
 		private bool length_counter_halt_flag;
@@ -50,7 +50,7 @@ namespace MyNes.Core.SoundChannels
 		private int frequency;
 		public byte Output;
 		private int cycles;
-		private readonly NesEmu core;
+		private readonly Apu apu;
 
 		public void HardReset()
 		{
@@ -98,7 +98,7 @@ namespace MyNes.Core.SoundChannels
 		public void ClockSingle()
 		{
 			length_counter_halt_flag = duration_haltRequset;
-			if (this.core.IsClockingDuration && Duration_counter > 0)
+			if (this.apu.IsClockingDuration && Duration_counter > 0)
 				duration_reloadRequst = false;
 			if (duration_reloadRequst)
 			{
@@ -155,7 +155,7 @@ namespace MyNes.Core.SoundChannels
 				case 0x400B:
 					frequency = (frequency & 0x00FF) | ((value & 7) << 8);
 
-					duration_reload = NesEmu.DurationTable[value >> 3];
+					duration_reload = Apu.DurationTable[value >> 3];
 					duration_reloadRequst = true;
 					halt = true;
 					break;

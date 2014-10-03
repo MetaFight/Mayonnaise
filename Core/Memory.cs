@@ -47,6 +47,8 @@ namespace MyNes.Core
 		public Dma dma;
 		private readonly NesEmu core;
 		private readonly Ppu ppu;
+		[Obsolete("Mega-hack until I can figure out which bits of DMA and Memory code need to switch classes.")]
+		public Apu apu;
 
 		public Memory(NesEmu core, Ppu ppu)
 		{
@@ -154,25 +156,25 @@ namespace MyNes.Core
 			BUS_RW = true;
 
 			#region Clock Components
-			this.ppu.PPUClock();
+			this.ppu.Clock();
 			/*
 			 * NMI edge detector polls the status of the NMI line during φ2 of each CPU cycle 
 			 * (i.e., during the second half of each cycle) 
 			 */
 			this.core.PollInterruptStatus();
-			this.ppu.PPUClock();
-			this.ppu.PPUClock();
+			this.ppu.Clock();
+			this.ppu.Clock();
 			if (this.core.DoPalAdditionalClock)// In pal system ..
 			{
 				this.core.palCyc++;
 				if (this.core.palCyc == 5)
 				{
-					this.ppu.PPUClock();
+					this.ppu.Clock();
 					this.core.palCyc = 0;
 				}
 			}
-			this.core.APUClock();
-			this.dma.DMAClock();
+			this.apu.Clock();
+			this.dma.Clock();
 
 			board.OnCPUClock();
 			#endregion
@@ -276,23 +278,23 @@ namespace MyNes.Core
 						{
 							temp_4015 = 0;
 							// Channels enable
-							if (this.core.pulse1Channel.Duration_counter > 0)
+							if (this.apu.pulse1Channel.Duration_counter > 0)
 								temp_4015 |= 0x01;
-							if (this.core.pulse2Channel.Duration_counter > 0)
+							if (this.apu.pulse2Channel.Duration_counter > 0)
 								temp_4015 |= 0x02;
-							if (this.core.triangleChannel.Duration_counter > 0)
+							if (this.apu.triangleChannel.Duration_counter > 0)
 								temp_4015 |= 0x04;
-							if (this.core.noiseChannel.Duration_counter > 0)
+							if (this.apu.noiseChannel.Duration_counter > 0)
 								temp_4015 |= 0x08;
-							if (this.core.dmcChannel.dmc_dmaSize > 0)
+							if (this.apu.dmcChannel.dmc_dmaSize > 0)
 								temp_4015 |= 0x10;
 							// IRQ
-							if (this.core.FrameIrqFlag)
+							if (this.apu.FrameIrqFlag)
 								temp_4015 |= 0x40;
-							if (this.core.dmcChannel.DeltaIrqOccur)
+							if (this.apu.dmcChannel.DeltaIrqOccur)
 								temp_4015 |= 0x80;
 
-							this.core.FrameIrqFlag = false;
+							this.apu.FrameIrqFlag = false;
 							NesEmu.IRQFlags &= ~NesEmu.IRQ_APU;
 
 							return temp_4015;
@@ -349,25 +351,25 @@ namespace MyNes.Core
 			BUS_RW = false;
 
 			#region Clock Components
-			this.ppu.PPUClock();
+			this.ppu.Clock();
 			/*
 			 * NMI edge detector polls the status of the NMI line during φ2 of each CPU cycle 
 			 * (i.e., during the second half of each cycle) 
 			 */
 			this.core.PollInterruptStatus();
-			this.ppu.PPUClock();
-			this.ppu.PPUClock();
+			this.ppu.Clock();
+			this.ppu.Clock();
 			if (this.core.DoPalAdditionalClock)// In pal system ..
 			{
 				this.core.palCyc++;
 				if (this.core.palCyc == 5)
 				{
-					this.ppu.PPUClock();
+					this.ppu.Clock();
 					this.core.palCyc = 0;
 				}
 			}
-			this.core.APUClock();
-			this.dma.DMAClock();
+			this.apu.Clock();
+			this.dma.Clock();
 
 			board.OnCPUClock();
 			#endregion
@@ -485,7 +487,7 @@ namespace MyNes.Core
 					case 0x4002:
 					case 0x4003:
 						{
-							this.core.pulse1Channel.WriteByte(address, value);
+							this.apu.pulse1Channel.WriteByte(address, value);
 							break;
 						}
 					/*Pulse 2*/
@@ -494,7 +496,7 @@ namespace MyNes.Core
 					case 0x4006:
 					case 0x4007:
 						{
-							this.core.pulse2Channel.WriteByte(address, value);
+							this.apu.pulse2Channel.WriteByte(address, value);
 							break;
 						}
 					/*Triangle*/
@@ -502,7 +504,7 @@ namespace MyNes.Core
 					case 0x400A:
 					case 0x400B:
 						{
-							this.core.triangleChannel.WriteByte(address, value);
+							this.apu.triangleChannel.WriteByte(address, value);
 							break;
 						}
 					/*Noise*/
@@ -510,36 +512,36 @@ namespace MyNes.Core
 					case 0x400E:
 					case 0x400F:
 						{
-							this.core.noiseChannel.WriteByte(address, value);
+							this.apu.noiseChannel.WriteByte(address, value);
 							break;
 						}
 					/*DMC*/
 					case 0x4010:
 						{
-							this.core.dmcChannel.DMCIrqEnabled = (value & 0x80) != 0;
-							this.core.dmcChannel.dmc_dmaLooping = (value & 0x40) != 0;
+							this.apu.dmcChannel.DMCIrqEnabled = (value & 0x80) != 0;
+							this.apu.dmcChannel.dmc_dmaLooping = (value & 0x40) != 0;
 
-							if (!this.core.dmcChannel.DMCIrqEnabled)
+							if (!this.apu.dmcChannel.DMCIrqEnabled)
 							{
-								this.core.dmcChannel.DeltaIrqOccur = false;
+								this.apu.dmcChannel.DeltaIrqOccur = false;
 								NesEmu.IRQFlags &= ~NesEmu.IRQ_DMC;
 							}
-							this.core.dmcChannel.dmc_freqTimer = value & 0x0F;
+							this.apu.dmcChannel.dmc_freqTimer = value & 0x0F;
 							break;
 						}
 					case 0x4011:
 						{
-							this.core.dmcChannel.Output = (byte)(value & 0x7F);
+							this.apu.dmcChannel.Output = (byte)(value & 0x7F);
 							break;
 						}
 					case 0x4012:
 						{
-							this.core.dmcChannel.dmc_dmaAddrRefresh = (value << 6) | 0xC000;
+							this.apu.dmcChannel.dmc_dmaAddrRefresh = (value << 6) | 0xC000;
 							break;
 						}
 					case 0x4013:
 						{
-							this.core.dmcChannel.dmc_dmaSizeRefresh = (value << 4) | 0x0001;
+							this.apu.dmcChannel.dmc_dmaSizeRefresh = (value << 4) | 0x0001;
 							break;
 						}
 					case 0x4014:
@@ -551,39 +553,39 @@ namespace MyNes.Core
 					case 0x4015:
 						{
 							// SQ1
-							this.core.pulse1Channel.Duration_reloadEnabled = (value & 0x01) != 0;
-							if (!this.core.pulse1Channel.Duration_reloadEnabled)
-								this.core.pulse1Channel.Duration_counter = 0;
+							this.apu.pulse1Channel.Duration_reloadEnabled = (value & 0x01) != 0;
+							if (!this.apu.pulse1Channel.Duration_reloadEnabled)
+								this.apu.pulse1Channel.Duration_counter = 0;
 							// SQ2
-							this.core.pulse2Channel.Duration_reloadEnabled = (value & 0x02) != 0;
-							if (!this.core.pulse2Channel.Duration_reloadEnabled)
-								this.core.pulse2Channel.Duration_counter = 0;
+							this.apu.pulse2Channel.Duration_reloadEnabled = (value & 0x02) != 0;
+							if (!this.apu.pulse2Channel.Duration_reloadEnabled)
+								this.apu.pulse2Channel.Duration_counter = 0;
 							// TRL
-							this.core.triangleChannel.Duration_reloadEnabled = (value & 0x04) != 0;
-							if (!this.core.triangleChannel.Duration_reloadEnabled)
-								this.core.triangleChannel.Duration_counter = 0;
+							this.apu.triangleChannel.Duration_reloadEnabled = (value & 0x04) != 0;
+							if (!this.apu.triangleChannel.Duration_reloadEnabled)
+								this.apu.triangleChannel.Duration_counter = 0;
 							// NOZ
-							this.core.noiseChannel.Duration_reloadEnabled = (value & 0x08) != 0;
-							if (!this.core.noiseChannel.Duration_reloadEnabled)
-								this.core.noiseChannel.Duration_counter = 0;
+							this.apu.noiseChannel.Duration_reloadEnabled = (value & 0x08) != 0;
+							if (!this.apu.noiseChannel.Duration_reloadEnabled)
+								this.apu.noiseChannel.Duration_counter = 0;
 							// DMC
 							if ((value & 0x10) != 0)
 							{
-								if (this.core.dmcChannel.dmc_dmaSize == 0)
+								if (this.apu.dmcChannel.dmc_dmaSize == 0)
 								{
-									this.core.dmcChannel.dmc_dmaSize = this.core.dmcChannel.dmc_dmaSizeRefresh;
-									this.core.dmcChannel.dmc_dmaAddr = this.core.dmcChannel.dmc_dmaAddrRefresh;
+									this.apu.dmcChannel.dmc_dmaSize = this.apu.dmcChannel.dmc_dmaSizeRefresh;
+									this.apu.dmcChannel.dmc_dmaAddr = this.apu.dmcChannel.dmc_dmaAddrRefresh;
 								}
 							}
 							else
 							{
-								this.core.dmcChannel.dmc_dmaSize = 0;
+								this.apu.dmcChannel.dmc_dmaSize = 0;
 							}
 							// Disable DMC IRQ
-							this.core.dmcChannel.DeltaIrqOccur = false;
+							this.apu.dmcChannel.DeltaIrqOccur = false;
 							NesEmu.IRQFlags &= ~NesEmu.IRQ_DMC;
 							// RDY ?
-							if (!this.core.dmcChannel.dmc_bufferFull && this.core.dmcChannel.dmc_dmaSize > 0)
+							if (!this.apu.dmcChannel.dmc_bufferFull && this.apu.dmcChannel.dmc_dmaSize > 0)
 							{
 								this.dma.AssertDMCDMA();
 							}
@@ -630,24 +632,24 @@ namespace MyNes.Core
 						}
 					case 0x4017:
 						{
-							this.core.SequencingMode = (value & 0x80) != 0;
-							this.core.FrameIrqEnabled = (value & 0x40) == 0;
+							this.apu.SequencingMode = (value & 0x80) != 0;
+							this.apu.FrameIrqEnabled = (value & 0x40) == 0;
 
-							this.core.CurrentSeq = 0;
+							this.apu.CurrentSeq = 0;
 
-							if (!this.core.SequencingMode)
-								this.core.Cycles = NesEmu.SequenceMode0[this.core.SystemIndex][0];
+							if (!this.apu.SequencingMode)
+								this.apu.Cycles = Apu.SequenceMode0[this.apu.SystemIndex][0];
 							else
-								this.core.Cycles = NesEmu.SequenceMode1[this.core.SystemIndex][0];
+								this.apu.Cycles = Apu.SequenceMode1[this.apu.SystemIndex][0];
 
-							if (!this.core.oddCycle)
-								this.core.Cycles++;
+							if (!this.apu.oddCycle)
+								this.apu.Cycles++;
 							else
-								this.core.Cycles += 2;
+								this.apu.Cycles += 2;
 
-							if (!this.core.FrameIrqEnabled)
+							if (!this.apu.FrameIrqEnabled)
 							{
-								this.core.FrameIrqFlag = false;
+								this.apu.FrameIrqFlag = false;
 								NesEmu.IRQFlags &= ~NesEmu.IRQ_APU;
 							}
 							break;

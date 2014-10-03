@@ -25,9 +25,9 @@ namespace MyNes.Core.SoundChannels
 {
 	public class NoiseSoundChannel
 	{
-		public NoiseSoundChannel(NesEmu core)
+		public NoiseSoundChannel(Apu apu)
 		{
-			this.core = core;
+			this.apu = apu;
 		}
 
 		private static readonly int[][] FrequencyTable = 
@@ -63,7 +63,7 @@ namespace MyNes.Core.SoundChannels
 		private int freqTimer;
 		private int cycles;
 		public int Output;
-		private readonly NesEmu core;
+		private readonly Apu apu;
 
 		public void HardReset()
 		{
@@ -121,7 +121,7 @@ namespace MyNes.Core.SoundChannels
 		public void ClockSingle()
 		{
 			length_counter_halt_flag = duration_haltRequset;
-			if (this.core.IsClockingDuration && Duration_counter > 0)
+			if (this.apu.IsClockingDuration && Duration_counter > 0)
 				duration_reloadRequst = false;
 			if (duration_reloadRequst)
 			{
@@ -132,7 +132,7 @@ namespace MyNes.Core.SoundChannels
 
 			if (--cycles <= 0)
 			{
-				cycles = FrequencyTable[this.core.SystemIndex][freqTimer];
+				cycles = FrequencyTable[this.apu.SystemIndex][freqTimer];
 				if (modeFlag)
 					feedback = (shiftRegister >> 6 & 0x1) ^ (shiftRegister & 0x1);
 				else
@@ -206,7 +206,7 @@ namespace MyNes.Core.SoundChannels
 					break;
 
 				case 0x400F:
-					duration_reload = NesEmu.DurationTable[value >> 3];
+					duration_reload = Apu.DurationTable[value >> 3];
 					duration_reloadRequst = true;
 					env_startflag = true;
 					break;

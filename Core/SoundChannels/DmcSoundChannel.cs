@@ -53,13 +53,13 @@ namespace MyNes.Core.SoundChannels
         public byte Output;
         private int dmc_cycles;
         public int dmc_freqTimer;
-		private readonly NesEmu core;
+		private readonly Apu apu;
 		private readonly Dma dma;
 		private readonly Memory memory;
 
-		public DmcSoundChannel(NesEmu core, Dma dma, Memory memory)
+		public DmcSoundChannel(Apu apu, Dma dma, Memory memory)
 		{
-			this.core = core;
+			this.apu = apu;
 			this.dma = dma;
 			this.memory = memory;
 			this.dma.DmcDma += this.OnDmcDma;
@@ -107,13 +107,13 @@ namespace MyNes.Core.SoundChannels
             dmc_dmaAddr = 0;
             dmc_dmaBuffer = 0;
             dmc_freqTimer = 0;
-            dmc_cycles = DMCFrequencyTable[this.core.SystemIndex][dmc_freqTimer];
+			dmc_cycles = DMCFrequencyTable[this.apu.SystemIndex][dmc_freqTimer];
         }
         public void ClockSingle()
         {
             if (--dmc_cycles <= 0)
             {
-                dmc_cycles = DMCFrequencyTable[this.core.SystemIndex][dmc_freqTimer];
+                dmc_cycles = DMCFrequencyTable[this.apu.SystemIndex][dmc_freqTimer];
                 if (dmc_dmaEnabled)
                 {
                     if ((dmc_dmaByte & 0x01) != 0)
