@@ -71,7 +71,7 @@ namespace MyNes.Core
                 case 0xE002: irqRelaod = (irqRelaod & 0xF0FF) | ((data & 0x0F) << 08); break;
                 case 0xE003: irqRelaod = (irqRelaod & 0x0FFF) | ((data & 0x0F) << 12); break;
 
-                case 0xF000: irqCounter = irqRelaod; NesEmu.IRQFlags &= ~NesEmu.IRQ_BOARD; break;
+                case 0xF000: irqCounter = irqRelaod; Interrupts.IRQFlags &= ~Interrupts.IRQ_BOARD; break;
                 case 0xF001:
                     {
                         irqEnable = (data & 1) == 1;
@@ -83,7 +83,7 @@ namespace MyNes.Core
                             irqMask = 0x0FFF;
                         else
                             irqMask = 0xFFFF;
-                        NesEmu.IRQFlags &= ~NesEmu.IRQ_BOARD; break;
+                        Interrupts.IRQFlags &= ~Interrupts.IRQ_BOARD; break;
                     }
                 case 0xF002:
                     switch (data & 0x3)
@@ -103,7 +103,7 @@ namespace MyNes.Core
                 if (((irqCounter & irqMask) > 0) && ((--irqCounter & irqMask) == 0))
                 {
                     irqEnable = false;
-                    NesEmu.IRQFlags |= NesEmu.IRQ_BOARD;
+                    Interrupts.IRQFlags |= Interrupts.IRQ_BOARD;
                 }
             }
         }

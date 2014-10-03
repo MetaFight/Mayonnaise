@@ -41,8 +41,8 @@ namespace MyNes.Core
             {
                 case 0x8000: Switch08KPRG(data, 0x8000, true); break;
                 case 0x9001: SwitchNMT((data & 0x80) == 0x80 ? Mirroring.Horz : Mirroring.Vert); break;
-                case 0x9003: irq_enable = (data & 0x80) == 0x80; NesEmu.IRQFlags &= ~NesEmu.IRQ_BOARD; break;
-                case 0x9004: irq_counter = irq_reload; NesEmu.IRQFlags &= ~NesEmu.IRQ_BOARD; break;
+                case 0x9003: irq_enable = (data & 0x80) == 0x80; Interrupts.IRQFlags &= ~Interrupts.IRQ_BOARD; break;
+                case 0x9004: irq_counter = irq_reload; Interrupts.IRQFlags &= ~Interrupts.IRQ_BOARD; break;
                 case 0x9005: irq_reload = (irq_reload & 0x00FF) | (data << 8); break;
                 case 0x9006: irq_reload = (irq_reload & 0xFF00) | data; break;
                 case 0xA000: Switch08KPRG(data, 0xA000, true); break;
@@ -66,7 +66,7 @@ namespace MyNes.Core
                 else if (irq_counter == 0)
                 {
                     irq_counter = -1;
-                    NesEmu.IRQFlags |= NesEmu.IRQ_BOARD;
+                    Interrupts.IRQFlags |= Interrupts.IRQ_BOARD;
                 }
             }
         }

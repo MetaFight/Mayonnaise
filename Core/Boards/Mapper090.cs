@@ -142,7 +142,7 @@ Write at $C002 : $40*/
                     {
                         IrqEnable = (data & 1) == 1;
                         if (!IrqEnable)
-                            NesEmu.IRQFlags &= ~NesEmu.IRQ_BOARD;
+                            Interrupts.IRQFlags &= ~Interrupts.IRQ_BOARD;
                         break;
                     }
                 case 0xC001:
@@ -154,7 +154,7 @@ Write at $C002 : $40*/
                         irqSource = data & 3;
                         break;
                     }
-                case 0xC002: IrqEnable = false; NesEmu.IRQFlags &= ~NesEmu.IRQ_BOARD; break;
+                case 0xC002: IrqEnable = false; Interrupts.IRQFlags &= ~Interrupts.IRQ_BOARD; break;
                 case 0xC003: IrqEnable = true; break;
                 case 0xC004: irqPrescaler = data ^ irqPrescalerXOR; break;
                 case 0xC005: irqCounter = data ^ irqPrescalerXOR; break;
@@ -476,7 +476,7 @@ Write at $C002 : $40*/
                 {
                     irqCounter = 0xFF;
                     if (IrqEnable)
-                        NesEmu.IRQFlags |= NesEmu.IRQ_BOARD;
+                        Interrupts.IRQFlags |= Interrupts.IRQ_BOARD;
                 }
             }
             else if (irqCountUpMode)
@@ -486,7 +486,7 @@ Write at $C002 : $40*/
                 {
                     irqCounter = 0;
                     if (IrqEnable)
-                        NesEmu.IRQFlags |= NesEmu.IRQ_BOARD;
+                        Interrupts.IRQFlags |= Interrupts.IRQ_BOARD;
                 }
             }
         }

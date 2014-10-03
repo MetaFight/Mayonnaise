@@ -86,11 +86,11 @@ namespace MyNes.Core
                             irq_counter = irq_reload;
                             prescaler = 341;
                         }
-                        NesEmu.IRQFlags &= ~NesEmu.IRQ_BOARD;
+                        Interrupts.IRQFlags &= ~Interrupts.IRQ_BOARD;
                         break;
                     }
                 case 0xF008:
-                case 0xF010: NesEmu.IRQFlags &= ~NesEmu.IRQ_BOARD; irq_enable = irq_enable_on_ak; break;
+                case 0xF010: Interrupts.IRQFlags &= ~Interrupts.IRQ_BOARD; irq_enable = irq_enable_on_ak; break;
             }
         }
         public override void OnCPUClock()
@@ -107,7 +107,7 @@ namespace MyNes.Core
                         irq_counter++;
                         if (irq_counter == 0xFF)
                         {
-                            NesEmu.IRQFlags |= NesEmu.IRQ_BOARD;
+                            Interrupts.IRQFlags |= Interrupts.IRQ_BOARD;
                             irq_counter = irq_reload;
                         }
                     }
@@ -117,7 +117,7 @@ namespace MyNes.Core
                     irq_counter++;
                     if (irq_counter == 0xFF)
                     {
-                        NesEmu.IRQFlags |= NesEmu.IRQ_BOARD;
+                        Interrupts.IRQFlags |= Interrupts.IRQ_BOARD;
                         irq_counter = irq_reload;
                     }
                 }

@@ -388,7 +388,7 @@
     <Compile Include="Types\ZlipWrapper.cs" />
     <Compile Include="_NesEmu.cs" />
     <Compile Include="Dma.cs" />
-    <Compile Include="NesEmu.Interrupts.cs" />
+    <Compile Include="Interrupts.cs" />
     <Compile Include="Memory.cs" />
     <Compile Include="Ppu.cs" />
     <Compile Include="Palettes\NTSCPaletteGenerator.cs" />

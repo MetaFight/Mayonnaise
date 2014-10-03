@@ -109,7 +109,7 @@ namespace MyNes.Core
                         irq_reload = data;
                         break;
                     }
-                case 0xE000: irq_enabled = false; NesEmu.IRQFlags &= ~NesEmu.IRQ_BOARD; break;
+                case 0xE000: irq_enabled = false; Interrupts.IRQFlags &= ~Interrupts.IRQ_BOARD; break;
                 case 0xE001: irq_enabled = true; break;
             }
         }
@@ -152,7 +152,7 @@ namespace MyNes.Core
                 irq_counter = (byte)(irq_counter - 1);
 
             if ((!mmc3_alt_behavior || old_irq_counter != 0 || irq_clear) && irq_counter == 0 && irq_enabled)
-                NesEmu.IRQFlags |= NesEmu.IRQ_BOARD;
+                Interrupts.IRQFlags |= Interrupts.IRQ_BOARD;
 
             irq_clear = false;
         }

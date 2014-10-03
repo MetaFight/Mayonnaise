@@ -39,7 +39,7 @@ namespace MyNes.Core
                 case 0x4501:
                     {
                         irqEnable = false;
-                        NesEmu.IRQFlags &= ~NesEmu.IRQ_BOARD;
+                        Interrupts.IRQFlags &= ~Interrupts.IRQ_BOARD;
                         break;
                     }
                 case 0x4502:
@@ -63,7 +63,7 @@ namespace MyNes.Core
                 if (irqCounter >= 0xFFFF)
                 {
                     irqCounter = 0;
-                    NesEmu.IRQFlags |= NesEmu.IRQ_BOARD;
+                    Interrupts.IRQFlags |= Interrupts.IRQ_BOARD;
                 }
             }
         }

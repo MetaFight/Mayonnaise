@@ -85,7 +85,7 @@ namespace MyNes.Core.SoundChannels
 				}
 				else if (DMCIrqEnabled)
 				{
-					NesEmu.IRQFlags |= NesEmu.IRQ_DMC;
+					Interrupts.IRQFlags |= Interrupts.IRQ_DMC;
 					DeltaIrqOccur = true;
 				}
 			}

@@ -434,7 +434,7 @@ namespace MyNes.Core
                     {
                         temp_val = (byte)(irq_current_inframe | irq_pending);
                         irq_pending = 0;
-                        NesEmu.IRQFlags &= ~NesEmu.IRQ_BOARD;
+                        Interrupts.IRQFlags &= ~Interrupts.IRQ_BOARD;
                         return temp_val;
                     }
                 case 0x5205: return (byte)(product & 0xFF);
@@ -662,7 +662,7 @@ namespace MyNes.Core
                 irq_current_inframe = 0x40;
                 irq_current_counter = 0;
                 irq_pending = 0;
-                NesEmu.IRQFlags &= ~NesEmu.IRQ_BOARD;
+                Interrupts.IRQFlags &= ~Interrupts.IRQ_BOARD;
             }
             else
             {
@@ -671,7 +671,7 @@ namespace MyNes.Core
                 {
                     irq_pending = 0x80;// IRQ pending flag is raised *regardless* of whether or not IRQs are enabled.
                     if (irq_enable == 0x80)// Trigger an IRQ on the 6502 if both this flag *and* the IRQ enable flag is set.
-                        NesEmu.IRQFlags |= NesEmu.IRQ_BOARD;
+                        Interrupts.IRQFlags |= Interrupts.IRQ_BOARD;
                 }
             }
         }

@@ -23,11 +23,17 @@ using System;
 /*Interrupts section*/
 namespace MyNes.Core
 {
-    public partial class NesEmu
+	public class Interrupts
     {
         public const int IRQ_APU = 0x1;
         public const int IRQ_BOARD = 0x2;
         public const int IRQ_DMC = 0x4;
+
+		public Interrupts(Ppu ppu)
+		{
+			this.ppu = ppu;
+		}
+
         // Represents the current NMI pin (connected to ppu)
         public bool NMI_Current;
         // Represents the old status if NMI pin, used to generate NMI in raising edge
@@ -47,6 +53,9 @@ namespace MyNes.Core
         public bool nmi_old;
         public bool vbl_flag;
         public bool vbl_flag_temp;
+		[Obsolete("Mega-hack until I can figure out how the CPU and Interrupts code interact.")]
+		public Cpu cpu;
+		private readonly Ppu ppu;
 
         public void PollInterruptStatus()
         {
@@ -71,6 +80,36 @@ namespace MyNes.Core
                 // normally, ppu question for nmi at first 3 clocks of vblank
             }
         }
-    }
+
+		internal void SaveState(System.IO.BinaryWriter bin)
+		{
+			bin.Write(NMI_Current);
+			bin.Write(NMI_Old);
+			bin.Write(NMI_Detected);
+			bin.Write(Interrupts.IRQFlags);
+			bin.Write(IRQ_Detected);
+			bin.Write(interrupt_vector);
+			bin.Write(interrupt_suspend);
+			bin.Write(nmi_enabled);
+			bin.Write(nmi_old);
+			bin.Write(vbl_flag);
+			bin.Write(vbl_flag_temp);
+		}
+
+		internal void LoadState(System.IO.BinaryReader bin)
+		{
+			NMI_Current = bin.ReadBoolean();
+			NMI_Old = bin.ReadBoolean();
+			NMI_Detected = bin.ReadBoolean();
+			Interrupts.IRQFlags = bin.ReadInt32();
+			IRQ_Detected = bin.ReadBoolean();
+			interrupt_vector = bin.ReadInt32();
+			interrupt_suspend = bin.ReadBoolean();
+			nmi_enabled = bin.ReadBoolean();
+			nmi_old = bin.ReadBoolean();
+			vbl_flag = bin.ReadBoolean();
+			vbl_flag_temp = bin.ReadBoolean();
+		}
+	}
 }
 

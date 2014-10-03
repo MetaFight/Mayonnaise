@@ -52,7 +52,7 @@ namespace MyNes.Core
                         if (!irq_enabled)
                         {
                             irq_counter = 0;
-                            NesEmu.IRQFlags &= ~NesEmu.IRQ_BOARD;
+                            Interrupts.IRQFlags &= ~Interrupts.IRQ_BOARD;
                         }
                         break;
                     }
@@ -65,7 +65,7 @@ namespace MyNes.Core
                 irq_counter++;
                 if (irq_counter == 0x1000)
                 {
-                    NesEmu.IRQFlags |= NesEmu.IRQ_BOARD;
+                    Interrupts.IRQFlags |= Interrupts.IRQ_BOARD;
                     irq_counter = 0;
                 }
             }

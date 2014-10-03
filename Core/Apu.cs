@@ -263,7 +263,7 @@ namespace MyNes.Core
             if (FrameIrqEnabled)
                 FrameIrqFlag = true;
             if (FrameIrqFlag)
-                NesEmu.IRQFlags |= NesEmu.IRQ_APU;
+				Interrupts.IRQFlags |= Interrupts.IRQ_APU;
         }
 
         public void Clock()

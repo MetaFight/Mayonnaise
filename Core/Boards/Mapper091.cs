@@ -45,7 +45,7 @@ namespace MyNes.Core
                 case 0x6003: Switch02KCHR(data, 0x1800, chr_01K_rom_count > 0); break;
                 case 0x7000: Switch08KPRG(data & 0xF, 0x8000, true); break;
                 case 0x7001: Switch08KPRG(data & 0xF, 0xA000, true); break;
-                case 0x7002: irq_enabled = false; NesEmu.IRQFlags &= ~NesEmu.IRQ_BOARD; break;
+                case 0x7002: irq_enabled = false; Interrupts.IRQFlags &= ~Interrupts.IRQ_BOARD; break;
                 case 0x7003:
                     {
                         irq_enabled = true;
@@ -65,7 +65,7 @@ namespace MyNes.Core
                 irq_counter = (byte)(irq_counter - 1);
 
             if ((old_irq_counter != 0 || irq_clear) && irq_counter == 0 && irq_enabled)
-                NesEmu.IRQFlags |= NesEmu.IRQ_BOARD;
+                Interrupts.IRQFlags |= Interrupts.IRQ_BOARD;
 
             irq_clear = false;
         }

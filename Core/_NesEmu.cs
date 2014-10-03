@@ -29,29 +29,25 @@ using MyNes.Core.SoundChannels;
 */
 namespace MyNes.Core
 {
-    /// <summary>
-    /// The nes emulation engine.
-    /// </summary>
+	/// <summary>
+	/// The nes emulation engine.
+	/// </summary>
 	[Obsolete("Reminder to not inject this class into other classes.  When refactorying is complete there should be very little logic left in here.")]
-    public partial class NesEmu
-    {
+	public partial class NesEmu
+	{
 		public NesEmu(TVSystem tvFormat)
 		{
 			this.TVFormat = tvFormat;
 
-			this.ppu = new Ppu(this);
-			this.memory = new Memory(this, this.ppu);
-			this.cpu = new Cpu(this, this.memory);
-			this.dma = new Dma(this, this.memory);
-			this.apu = new Apu(this, this.dma, this.memory);
+			this.InitializeComponents(
+				out this.ppu,
+				out this.interrupts,
+				out this.memory,
+				out this.dma,
+				out this.apu,
+				out this.cpu);
 
-			this.dma.apu = this.apu;
-			this.memory.dma = this.dma;
-			this.memory.apu = this.apu;
-			this.ppu.memory = this.memory;
-			
-
-			InitializeInput();
+			this.InitializeInput();
 
 			switch (TVFormat)
 			{
@@ -74,50 +70,74 @@ namespace MyNes.Core
 				FramePeriod = (1.0 / (FPS = 50.0));
 		}
 
-        public TVSystemSetting TVFormatSetting;
-        public TVSystem TVFormat;
-        public Thread EmulationThread;
+		private void InitializeComponents(out Ppu ppu, out Interrupts interrupts, out Memory memory, out Dma dma, out Apu apu, out Cpu cpu)
+		{
+			var ppuWip = new Ppu(this);
+			var interruptsWip = new Interrupts(ppuWip);
+			var memoryWip = new Memory(this, ppuWip, interruptsWip);
+			var dmaWip = new Dma(this, memoryWip);
+			var apuWip = new Apu(this, dmaWip, memoryWip);
+			var cpuWip = new Cpu(interruptsWip, memoryWip);
+
+			dmaWip.apu = apuWip;
+			memoryWip.dma = dmaWip;
+			memoryWip.apu = apuWip;
+			interruptsWip.cpu = cpuWip;
+			ppuWip.memory = memoryWip;
+			ppuWip.interrupts = interruptsWip;
+
+			ppu = ppuWip;
+			interrupts = interruptsWip;
+			memory = memoryWip;
+			dma = dmaWip;
+			apu = apuWip;
+			cpu = cpuWip;
+		}
+
+		public TVSystemSetting TVFormatSetting;
+		public TVSystem TVFormat;
+		public Thread EmulationThread;
 		public bool EmulationON;
-        public bool EmulationPaused;
-        public string GAMEFILE;
-        public bool DoPalAdditionalClock;
-        public byte palCyc;
-        private bool initialized;
-        /*SRAM*/
-        public bool SaveSRAMAtShutdown;
-        public string SRAMFileName;
-        private string SRAMFolder;
-        /*STATE*/
-        private string STATEFileName;
-        private string STATEFolder;
-        public int STATESlot;
-        /*Snapshot*/
-        private string SNAPSFolder;
-        private string SNAPSFileName;
-        private string SNAPSFormat;
-        private bool SNAPSReplace;
-        /*SPEED LIMITER*/
-        public bool SpeedLimitterON = true;
-        public double CurrentFrameTime;
-        public double ImmediateFrameTime;
-        private double DeadTime;
-        private double LastFrameTime;
-        private double FramePeriod = (1.0 / 60.0988);
-        private double FPS = 0;
-        // Requests !
-        private bool request_pauseAtFrameFinish;
-        private bool request_hardReset;
-        private bool request_softReset;
-        private bool request_state_save;
-        private bool request_state_load;
-        private bool request_snapshot;
-        private bool request_save_sram;
-        // Events !
-        /// <summary>
-        /// Raised when the emu engine finished shutdown.
-        /// </summary>
+		public bool EmulationPaused;
+		public string GAMEFILE;
+		public bool DoPalAdditionalClock;
+		public byte palCyc;
+		private bool initialized;
+		/*SRAM*/
+		public bool SaveSRAMAtShutdown;
+		public string SRAMFileName;
+		private string SRAMFolder;
+		/*STATE*/
+		private string STATEFileName;
+		private string STATEFolder;
+		public int STATESlot;
+		/*Snapshot*/
+		private string SNAPSFolder;
+		private string SNAPSFileName;
+		private string SNAPSFormat;
+		private bool SNAPSReplace;
+		/*SPEED LIMITER*/
+		public bool SpeedLimitterON = true;
+		public double CurrentFrameTime;
+		public double ImmediateFrameTime;
+		private double DeadTime;
+		private double LastFrameTime;
+		private double FramePeriod = (1.0 / 60.0988);
+		private double FPS = 0;
+		// Requests !
+		private bool request_pauseAtFrameFinish;
+		private bool request_hardReset;
+		private bool request_softReset;
+		private bool request_state_save;
+		private bool request_state_load;
+		private bool request_snapshot;
+		private bool request_save_sram;
+		// Events !
+		/// <summary>
+		/// Raised when the emu engine finished shutdown.
+		/// </summary>
 		[Obsolete("Nothing ever seems to unsubscribe from this.  Check for leaks.")]
-        public event EventHandler EMUShutdown;
+		public event EventHandler EMUShutdown;
 
 		private readonly Dma dma;
 		private readonly Memory memory;
@@ -125,426 +145,439 @@ namespace MyNes.Core
 		public readonly Ppu ppu;
 		private readonly Cpu cpu;
 		public readonly Apu apu;
+		private readonly Interrupts interrupts;
 
-        /// <summary>
-        /// Call this at application start up to set nes default stuff
-        /// </summary>
-        public void WarmUp()
-        {
+		/// <summary>
+		/// Call this at application start up to set nes default stuff
+		/// </summary>
+		public void WarmUp()
+		{
 			this.apu.InitializeSoundMixTable();
-            NesCartDatabase.LoadDatabase("database.xml");
-        }
+			NesCartDatabase.LoadDatabase("database.xml");
+		}
 
-        /// <summary>
-        /// Check a rom file to see if it can be used or not
-        /// </summary>
-        /// <param name="fileName">The complete file path. Archive is NOT supported.</param>
-        /// <param name="is_supported_mapper">Indicates if this rom mapper is supported or not</param>
-        /// <param name="has_issues">Indicates if this rom mapper have issues or not</param>
-        /// <param name="known_issues">Issues with this mapper.</param>
-        /// <returns>True if My Nes car run this game otherwise false.</returns>
-        public bool CheckRom(string fileName, out bool is_supported_mapper, 
-            out bool has_issues, out string known_issues)
-        {
-            switch (Path.GetExtension(fileName).ToLower())
-            {
-                case ".nes":
-                    {
-                        INes header = new INes();
-                        header.Load(fileName, true);
-                        if (header.IsValid)
-                        {
-                            // Check board existince
-                            bool found = false;
-                            string mapperName = "MyNes.Core.Mapper" + header.MapperNumber.ToString("D3");
-                            Type[] types = Assembly.GetExecutingAssembly().GetTypes();
-                            foreach (Type tp in types)
-                            {
-                                if (tp.FullName == mapperName)
-                                {
-                                    this.memory.board = Activator.CreateInstance(tp) as Board;
+		/// <summary>
+		/// Check a rom file to see if it can be used or not
+		/// </summary>
+		/// <param name="fileName">The complete file path. Archive is NOT supported.</param>
+		/// <param name="is_supported_mapper">Indicates if this rom mapper is supported or not</param>
+		/// <param name="has_issues">Indicates if this rom mapper have issues or not</param>
+		/// <param name="known_issues">Issues with this mapper.</param>
+		/// <returns>True if My Nes car run this game otherwise false.</returns>
+		public bool CheckRom(string fileName, out bool is_supported_mapper,
+			out bool has_issues, out string known_issues)
+		{
+			switch (Path.GetExtension(fileName).ToLower())
+			{
+				case ".nes":
+					{
+						INes header = new INes();
+						header.Load(fileName, true);
+						if (header.IsValid)
+						{
+							// Check board existince
+							bool found = false;
+							string mapperName = "MyNes.Core.Mapper" + header.MapperNumber.ToString("D3");
+							Type[] types = Assembly.GetExecutingAssembly().GetTypes();
+							foreach (Type tp in types)
+							{
+								if (tp.FullName == mapperName)
+								{
+									this.memory.board = Activator.CreateInstance(tp) as Board;
 									this.memory.board.Nes = this;
 									is_supported_mapper = this.memory.board.Supported;
-                                    has_issues = this.memory.board.NotImplementedWell;
-                                    known_issues = this.memory.board.Issues;
-                                    found = true;
-                                    return true;
-                                }
-                            }
-                            if (!found)
-                            {
-                                throw new MapperNotSupportedException(header.MapperNumber);
-                            }
-                            is_supported_mapper = false;
-                            has_issues = false;
-                            known_issues = "";
-                            return false;
-                        }
-                        is_supported_mapper = false;
-                        has_issues = false;
-                        known_issues = "";
-                        return false;
-                    }
-            }
-            is_supported_mapper = false;
-            has_issues = false;
-            known_issues = "";
-            return false;
-        }
-        /// <summary>
-        /// Create new emulation engine
-        /// </summary>
-        /// <param name="fileName">The rom complete path. Not compressed</param>
-        /// <param name="tvsetting">The tv system setting to use</param>
-        /// <param name="makeThread">Indicates if the emulation engine should make an internal thread and run through it. Otherwise you should make a thread and use EMUClock to run the loop.</param>
-        public void CreateNew(string fileName, TVSystemSetting tvsetting, bool makeThread)
-        {
-            switch (Path.GetExtension(fileName).ToLower())
-            {
-                case ".nes":
-                    {
-                        INes header = new INes();
-                        header.Load(fileName, true);
-                        if (header.IsValid)
-                        {
-                            initialized = false;
-                            GAMEFILE = fileName;
-                            CheckGameVSUnisystem(header.SHA1, header.IsVSUnisystem, header.MapperNumber);
-                            // Make SRAM file name
-                            SRAMFileName = Path.Combine(SRAMFolder, Path.GetFileNameWithoutExtension(fileName) + ".srm");
-                            STATESlot = 0;
-                            UpdateStateSlot(STATESlot);
-                            // Make snapshots file name
-                            SNAPSFileName = Path.GetFileNameWithoutExtension(fileName);
-                            // Initialzie
+									has_issues = this.memory.board.NotImplementedWell;
+									known_issues = this.memory.board.Issues;
+									found = true;
+									return true;
+								}
+							}
+							if (!found)
+							{
+								throw new MapperNotSupportedException(header.MapperNumber);
+							}
+							is_supported_mapper = false;
+							has_issues = false;
+							known_issues = "";
+							return false;
+						}
+						is_supported_mapper = false;
+						has_issues = false;
+						known_issues = "";
+						return false;
+					}
+			}
+			is_supported_mapper = false;
+			has_issues = false;
+			known_issues = "";
+			return false;
+		}
+		/// <summary>
+		/// Create new emulation engine
+		/// </summary>
+		/// <param name="fileName">The rom complete path. Not compressed</param>
+		/// <param name="tvsetting">The tv system setting to use</param>
+		/// <param name="makeThread">Indicates if the emulation engine should make an internal thread and run through it. Otherwise you should make a thread and use EMUClock to run the loop.</param>
+		public void CreateNew(string fileName, TVSystemSetting tvsetting, bool makeThread)
+		{
+			switch (Path.GetExtension(fileName).ToLower())
+			{
+				case ".nes":
+					{
+						INes header = new INes();
+						header.Load(fileName, true);
+						if (header.IsValid)
+						{
+							initialized = false;
+							GAMEFILE = fileName;
+							CheckGameVSUnisystem(header.SHA1, header.IsVSUnisystem, header.MapperNumber);
+							// Make SRAM file name
+							SRAMFileName = Path.Combine(SRAMFolder, Path.GetFileNameWithoutExtension(fileName) + ".srm");
+							STATESlot = 0;
+							UpdateStateSlot(STATESlot);
+							// Make snapshots file name
+							SNAPSFileName = Path.GetFileNameWithoutExtension(fileName);
+							// Initialzie
 							this.memory.MEMInitialize(header);
 
-                            TVFormatSetting = tvsetting;
+							TVFormatSetting = tvsetting;
 
-                            // Hard reset
-                            HardReset();
-                            // Run emu
-                            EmulationPaused = true;
-                            EmulationON = true;
-                            // Let's go !
-                            if (makeThread)
-                            {
-                                EmulationThread = new Thread(new ThreadStart(EMUClock));
-                                EmulationThread.Start();
-                            }
-                            // Done !
-                            initialized = true;
-                        }
-                        else
-                        {
-                            throw new RomNotValidException();
-                        }
-                        break;
-                    }
-            }
-        }
+							// Hard reset
+							HardReset();
+							// Run emu
+							EmulationPaused = true;
+							EmulationON = true;
+							// Let's go !
+							if (makeThread)
+							{
+								EmulationThread = new Thread(new ThreadStart(EMUClock));
+								EmulationThread.Start();
+							}
+							// Done !
+							initialized = true;
+						}
+						else
+						{
+							throw new RomNotValidException();
+						}
+						break;
+					}
+			}
+		}
 
-        public void ApplySettings(bool saveSramOnSutdown, string sramFolder, string stateFolder,
-            string snapshotsFolder, string snapFormat, bool replaceSnap)
-        {
-            SaveSRAMAtShutdown = saveSramOnSutdown;
-            SRAMFolder = sramFolder;
-            STATEFolder = stateFolder;
-            SNAPSFolder = snapshotsFolder;
-            SNAPSFormat = snapFormat;
-            SNAPSReplace = replaceSnap;
-        }
-        /// <summary>
-        /// Run the emulation loop while EmulationON is true.
-        /// </summary>
-        public void EMUClock()
-        {
-            while (EmulationON)
-            {
-                if (!EmulationPaused)
-                {
-                    this.cpu.Clock();
-                }
-                else
-                {
+		public void ApplySettings(bool saveSramOnSutdown, string sramFolder, string stateFolder,
+			string snapshotsFolder, string snapFormat, bool replaceSnap)
+		{
+			SaveSRAMAtShutdown = saveSramOnSutdown;
+			SRAMFolder = sramFolder;
+			STATEFolder = stateFolder;
+			SNAPSFolder = snapshotsFolder;
+			SNAPSFormat = snapFormat;
+			SNAPSReplace = replaceSnap;
+		}
+		/// <summary>
+		/// Run the emulation loop while EmulationON is true.
+		/// </summary>
+		public void EMUClock()
+		{
+			while (EmulationON)
+			{
+				if (!EmulationPaused)
+				{
+					this.cpu.Clock();
+				}
+				else
+				{
 					if (this.apu.AudioOut != null)
-                    {
+					{
 						this.apu.AudioOut.Pause();
 						this.apu.audio_playback_w_pos = this.apu.AudioOut.CurrentWritePosition;
-                    }
-                    if (request_save_sram)
-                    {
-                        request_save_sram = false;
+					}
+					if (request_save_sram)
+					{
+						request_save_sram = false;
 						this.memory.SaveSRAM();
-                        EmulationPaused = false;
-                    }
-                    if (request_hardReset)
-                    {
-                        request_hardReset = false;
-                        HardReset();
-                        EmulationPaused = false;
-                    }
-                    if (request_softReset)
-                    {
-                        request_softReset = false;
-                        SoftReset();
-                        EmulationPaused = false;
-                    }
-                    if (request_state_save)
-                    {
-                        request_state_save = false;
-                        SaveStateAs(STATEFileName);
-                        EmulationPaused = false;
-                    }
-                    if (request_state_load)
-                    {
-                        request_state_load = false;
-                        LoadStateAs(STATEFileName);
-                        EmulationPaused = false;
-                    }
-                    if (request_snapshot)
-                    {
-                        request_snapshot = false;
-                        this.ppu.videoOut.TakeSnapshot(SNAPSFolder, SNAPSFileName, SNAPSFormat, SNAPSReplace);
-                        EmulationPaused = false;
-                    }
-                    Thread.Sleep(100);
-                }
-            }
-            // Shutdown
-            ShutDown();
-        }
-        /// <summary>
-        /// Request a hard reset in the next frame.
-        /// </summary>
-        public void EMUHardReset()
-        {
-            request_pauseAtFrameFinish = true;
-            request_hardReset = true;
-            request_save_sram = true;
-        }
-        /// <summary>
-        /// Request a soft reset in the next frame
-        /// </summary>
-        public void EMUSoftReset()
-        {
-            request_pauseAtFrameFinish = true;
-            request_softReset = true;
-        }
-        /// <summary>
-        /// Shutdown the emulation. This will set the EmulationON to false as well.
-        /// </summary>
-        public void ShutDown()
-        {
-            if (!initialized)
-                return;
-            EmulationON = false;
+						EmulationPaused = false;
+					}
+					if (request_hardReset)
+					{
+						request_hardReset = false;
+						HardReset();
+						EmulationPaused = false;
+					}
+					if (request_softReset)
+					{
+						request_softReset = false;
+						SoftReset();
+						EmulationPaused = false;
+					}
+					if (request_state_save)
+					{
+						request_state_save = false;
+						SaveStateAs(STATEFileName);
+						EmulationPaused = false;
+					}
+					if (request_state_load)
+					{
+						request_state_load = false;
+						LoadStateAs(STATEFileName);
+						EmulationPaused = false;
+					}
+					if (request_snapshot)
+					{
+						request_snapshot = false;
+						this.ppu.videoOut.TakeSnapshot(SNAPSFolder, SNAPSFileName, SNAPSFormat, SNAPSReplace);
+						EmulationPaused = false;
+					}
+					Thread.Sleep(100);
+				}
+			}
+			// Shutdown
+			ShutDown();
+		}
+		/// <summary>
+		/// Request a hard reset in the next frame.
+		/// </summary>
+		public void EMUHardReset()
+		{
+			request_pauseAtFrameFinish = true;
+			request_hardReset = true;
+			request_save_sram = true;
+		}
+		/// <summary>
+		/// Request a soft reset in the next frame
+		/// </summary>
+		public void EMUSoftReset()
+		{
+			request_pauseAtFrameFinish = true;
+			request_softReset = true;
+		}
+		/// <summary>
+		/// Shutdown the emulation. This will set the EmulationON to false as well.
+		/// </summary>
+		public void ShutDown()
+		{
+			if (!initialized)
+				return;
+			EmulationON = false;
 			this.memory.MEMShutdown();
-            if (this.ppu.videoOut != null)
+			if (this.ppu.videoOut != null)
 				this.ppu.videoOut.ShutDown();
-            // videoOut = null;
+			// videoOut = null;
 			if (this.apu.AudioOut != null)
-                this.apu.Shutdown();
-            // AudioOut = null;
-            System.GC.Collect();
+				this.apu.Shutdown();
+			// AudioOut = null;
+			System.GC.Collect();
 
-            this.cpu.Shutdown();
+			this.cpu.Shutdown();
 			this.ppu.Shutdown();
 			this.apu.Shutdown();
 
-            if (EMUShutdown != null)
-                EMUShutdown(null, new EventArgs());
+			if (EMUShutdown != null)
+				EMUShutdown(null, new EventArgs());
 
-            initialized = false;
-        }
-        /// <summary>
-        /// Take game snapshot
-        /// </summary>
-        public void TakeSnapshot()
-        {
-            request_pauseAtFrameFinish = true;
-            request_snapshot = true;
-        }
-        public void SetupGameGenie(bool IsGameGenieActive, GameGenieCode[] GameGenieCodes)
-        {
+			initialized = false;
+		}
+		/// <summary>
+		/// Take game snapshot
+		/// </summary>
+		public void TakeSnapshot()
+		{
+			request_pauseAtFrameFinish = true;
+			request_snapshot = true;
+		}
+		public void SetupGameGenie(bool IsGameGenieActive, GameGenieCode[] GameGenieCodes)
+		{
 			if (this.memory.board != null)
 				this.memory.board.SetupGameGenie(IsGameGenieActive, GameGenieCodes);
-        }
+		}
 		[Obsolete("Unstaticify")]
-        public GameGenieCode[] GameGenieCodes
+		public GameGenieCode[] GameGenieCodes
 		{
 			get
 			{
 				return this.memory.board.GameGenieCodes;
 			}
 		}
-        public bool IsGameGenieActive
+		public bool IsGameGenieActive
 		{
 			get
 			{
 				return this.memory.board.IsGameGenieActive;
 			}
 		}
-        public bool IsGameFoundOnDB
+		public bool IsGameFoundOnDB
 		{
 			get
 			{
 				return this.memory.board.IsGameFoundOnDB;
 			}
 		}
-        public NesCartDatabaseGameInfo GameInfo
+		public NesCartDatabaseGameInfo GameInfo
 		{
 			get
 			{
 				return this.memory.board.GameInfo;
 			}
 		}
-        public NesCartDatabaseCartridgeInfo GameCartInfo
+		public NesCartDatabaseCartridgeInfo GameCartInfo
 		{
 			get
 			{
 				return this.memory.board.GameCartInfo;
 			}
 		}
-        // Internal methods
-        public void ClockComponents()
-        {
-            this.ppu.Clock();
-            /*
-             * NMI edge detector polls the status of the NMI line during φ2 of each CPU cycle 
-             * (i.e., during the second half of each cycle) 
-             */
-            PollInterruptStatus();
+		// Internal methods
+		public void ClockComponents()
+		{
+			this.ppu.Clock();
+			/*
+			 * NMI edge detector polls the status of the NMI line during φ2 of each CPU cycle 
+			 * (i.e., during the second half of each cycle) 
+			 */
+			this.interrupts.PollInterruptStatus();
 			this.ppu.Clock();
 			this.ppu.Clock();
-            if (DoPalAdditionalClock)// In pal system ..
-            {
-                palCyc++;
-                if (palCyc == 5)
-                {
+			if (DoPalAdditionalClock)// In pal system ..
+			{
+				palCyc++;
+				if (palCyc == 5)
+				{
 					this.ppu.Clock();
-                    palCyc = 0;
-                }
-            }
-            this.apu.Clock();
-            this.dma.Clock();
+					palCyc = 0;
+				}
+			}
+			this.apu.Clock();
+			this.dma.Clock();
 
 			this.memory.board.OnCPUClock();
-        }
+		}
 		[Obsolete("Refactor this as a subscription to a this.ppu.FrameFinished event")]
-        public void OnFinishFrame()
-        {
-            InputFinishFrame();
-            // Sound
-            if (this.apu.SoundEnabled)
-            {
-                if (!this.apu.AudioOut.IsPlaying)
-                {
+		public void OnFinishFrame()
+		{
+			InputFinishFrame();
+			// Sound
+			if (this.apu.SoundEnabled)
+			{
+				if (!this.apu.AudioOut.IsPlaying)
+				{
 					this.apu.AudioOut.Play();
-                    // Reset buffer
+					// Reset buffer
 					this.apu.audio_playback_w_pos = this.apu.AudioOut.CurrentWritePosition + this.apu.audio_playback_latency;
-                }
-                // Submit sound buffer
+				}
+				// Submit sound buffer
 				this.apu.AudioOut.SubmitBuffer(ref this.apu.audio_playback_buffer);
-            }
-            // Speed
-            ImmediateFrameTime = CurrentFrameTime = GetTime() - LastFrameTime;
-            DeadTime = FramePeriod - CurrentFrameTime;
+			}
+			// Speed
+			ImmediateFrameTime = CurrentFrameTime = GetTime() - LastFrameTime;
+			DeadTime = FramePeriod - CurrentFrameTime;
 			if (DeadTime < 0)
 			{
 				this.apu.audio_playback_w_pos = this.apu.AudioOut.CurrentWritePosition + this.apu.audio_playback_latency;
 			}
-            if (SpeedLimitterON)
-            {
-                while (ImmediateFrameTime < FramePeriod)
-                {
-                    ImmediateFrameTime = GetTime() - LastFrameTime;
-                }
-            }
-            LastFrameTime = GetTime();
-            if (request_pauseAtFrameFinish)
-            {
-                request_pauseAtFrameFinish = false;
-                EmulationPaused = true;
-            }
-        }
+			if (SpeedLimitterON)
+			{
+				while (ImmediateFrameTime < FramePeriod)
+				{
+					ImmediateFrameTime = GetTime() - LastFrameTime;
+				}
+			}
+			LastFrameTime = GetTime();
+			if (request_pauseAtFrameFinish)
+			{
+				request_pauseAtFrameFinish = false;
+				EmulationPaused = true;
+			}
+		}
 
-        private void HardReset()
-        {
-            switch (TVFormatSetting)
-            {
-                case TVSystemSetting.AUTO:
-                    {
+		private void HardReset()
+		{
+			switch (TVFormatSetting)
+			{
+				case TVSystemSetting.AUTO:
+					{
 						if (this.memory.board.GameInfo.Cartridges != null)
-                        {
+						{
 							if (this.memory.board.GameCartInfo.System.ToUpper().Contains("PAL"))
-                                TVFormat = TVSystem.PALB;
+								TVFormat = TVSystem.PALB;
 							else if (this.memory.board.GameCartInfo.System.ToUpper().Contains("DENDY"))
-                                TVFormat = TVSystem.DENDY;
-                            else
-                                TVFormat = TVSystem.NTSC;
-                        }
-                        else
-                        {
-                            TVFormat = TVSystem.NTSC;// force NTSC
-                        }
-                        break;
-                    }
-                case TVSystemSetting.NTSC: { TVFormat = TVSystem.NTSC; break; }
-                case TVSystemSetting.PALB: { TVFormat = TVSystem.PALB; break; }
-                case TVSystemSetting.DENDY: { TVFormat = TVSystem.DENDY; break; }
-            }
-            DoPalAdditionalClock = TVFormat == TVSystem.PALB;
-            palCyc = 0;
-            // SPEED LIMITTER
-            SpeedLimitterON = true;
-            // NOTE !!
-            // These values are calculated depending on cpu speed
-            // provided by Nes Wiki.
-            // NTSC = 1789772.67 Hz
-            // PALB = 1662607 Hz
-            // DENDY = 1773448 Hz
-            if (TVFormat == TVSystem.NTSC)
-                FramePeriod = (1.0 / (FPS = 61.58));// Yes not 60.0988 for 1789772.67 Hz
-            else if (TVFormat == TVSystem.PALB)
-                FramePeriod = (1.0 / (FPS = 51.33));// Not 50.070 for 1662607 Hz
-            else if (TVFormat == TVSystem.DENDY)
-                FramePeriod = (1.0 / (FPS = 51.25));// Not 50.070 for 1773448 Hz
-            // Changing any value of FPS or CPU FREQ will slightly affect
-            // sound playback sync and the sound itself for high frequencies.
-            // 
-            // For example, if we put NTSC = 1789772 Hz instead of 1789772.67 Hz
-            // and the FPS = 60.0988 as provided in wiki, the sound record (record
-            // by adding sample sample on nes cpu clock, **not via playback on run 
-            // time**) show bad sample on high freq generated by square 1 and 2. 
-            // The best game to test this is Rygar at the first stage music. 
-            // Silence all channels but the square 2, record the sound and see the choppy.
-            // 
-            // The question is: is there something wrong I did or the
-            // Nes Wiki infromation is not accurate ?
-            // I'm sure all sound channels implemented exactly as it should by Wiki
-            // and APU passes all tests.
-            // Anyway, it sounds good using these values :)
+								TVFormat = TVSystem.DENDY;
+							else
+								TVFormat = TVSystem.NTSC;
+						}
+						else
+						{
+							TVFormat = TVSystem.NTSC;// force NTSC
+						}
+						break;
+					}
+				case TVSystemSetting.NTSC:
+					{
+						TVFormat = TVSystem.NTSC;
+						break;
+					}
+				case TVSystemSetting.PALB:
+					{
+						TVFormat = TVSystem.PALB;
+						break;
+					}
+				case TVSystemSetting.DENDY:
+					{
+						TVFormat = TVSystem.DENDY;
+						break;
+					}
+			}
+			DoPalAdditionalClock = TVFormat == TVSystem.PALB;
+			palCyc = 0;
+			// SPEED LIMITTER
+			SpeedLimitterON = true;
+			// NOTE !!
+			// These values are calculated depending on cpu speed
+			// provided by Nes Wiki.
+			// NTSC = 1789772.67 Hz
+			// PALB = 1662607 Hz
+			// DENDY = 1773448 Hz
+			if (TVFormat == TVSystem.NTSC)
+				FramePeriod = (1.0 / (FPS = 61.58));// Yes not 60.0988 for 1789772.67 Hz
+			else if (TVFormat == TVSystem.PALB)
+				FramePeriod = (1.0 / (FPS = 51.33));// Not 50.070 for 1662607 Hz
+			else if (TVFormat == TVSystem.DENDY)
+				FramePeriod = (1.0 / (FPS = 51.25));// Not 50.070 for 1773448 Hz
+			// Changing any value of FPS or CPU FREQ will slightly affect
+			// sound playback sync and the sound itself for high frequencies.
+			// 
+			// For example, if we put NTSC = 1789772 Hz instead of 1789772.67 Hz
+			// and the FPS = 60.0988 as provided in wiki, the sound record (record
+			// by adding sample sample on nes cpu clock, **not via playback on run 
+			// time**) show bad sample on high freq generated by square 1 and 2. 
+			// The best game to test this is Rygar at the first stage music. 
+			// Silence all channels but the square 2, record the sound and see the choppy.
+			// 
+			// The question is: is there something wrong I did or the
+			// Nes Wiki infromation is not accurate ?
+			// I'm sure all sound channels implemented exactly as it should by Wiki
+			// and APU passes all tests.
+			// Anyway, it sounds good using these values :)
 			this.memory.MEMHardReset();
-            this.cpu.HardReset();
+			this.cpu.HardReset();
 			this.ppu.PPUHardReset();
 			this.apu.HardReset();
-            this.dma.DMAHardReset();
-        }
+			this.dma.DMAHardReset();
+		}
 
-        private void SoftReset()
-        {
-            this.memory.MEMSoftReset();
-            this.cpu.SoftReset();
+		private void SoftReset()
+		{
+			this.memory.MEMSoftReset();
+			this.cpu.SoftReset();
 			this.ppu.PPUSoftReset();
-            this.apu.SoftReset();
-            this.dma.DMASoftReset();
-        }
+			this.apu.SoftReset();
+			this.dma.DMASoftReset();
+		}
 
-        private double GetTime()
-        {
-            return (double)Stopwatch.GetTimestamp() / (double)Stopwatch.Frequency;
-        }
-    }
+		private double GetTime()
+		{
+			return (double)Stopwatch.GetTimestamp() / (double)Stopwatch.Frequency;
+		}
+	}
 }
 

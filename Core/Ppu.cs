@@ -44,6 +44,7 @@ namespace MyNes.Core
                 0x07, 0x87, 0x47, 0xC7, 0x27, 0xA7, 0x67, 0xE7, 0x17, 0x97, 0x57, 0xD7, 0x37, 0xB7, 0x77, 0xF7,
                 0x0F, 0x8F, 0x4F, 0xCF, 0x2F, 0xAF, 0x6F, 0xEF, 0x1F, 0x9F, 0x5F, 0xDF, 0x3F, 0xBF, 0x7F, 0xFF,
             };
+
 		public int[] paletteIndexes;
 		[Obsolete("This shouldn't be part of the PPU.")]
 		public IVideoProvider videoOut;
@@ -120,10 +121,12 @@ namespace MyNes.Core
 		private int bkg_render_i;
 		private int spr_evaluation_i;
 		private int spr_render_temp_pixel;
-		
+
 		private readonly NesEmu core;
 		[Obsolete("Mega-hack until I can figure out which bits of PPU and Memory code need to switch classes.")]
 		public Memory memory;
+		[Obsolete("Mega-hack until I can figure out which bits of PPU and Interrupts code need to switch classes.")]
+		public Interrupts interrupts;
 
 		public Ppu(NesEmu core)
 		{
@@ -764,7 +767,7 @@ namespace MyNes.Core
 					#endregion
 				}
 			}
-			this.core.vbl_flag = this.core.vbl_flag_temp;
+			this.interrupts.vbl_flag = this.interrupts.vbl_flag_temp;
 			HClock++;
 			#region odd frame
 			if (HClock == 338)
@@ -782,7 +785,7 @@ namespace MyNes.Core
 				}
 			}
 			#endregion
-			this.core.CheckNMI();
+			this.interrupts.CheckNMI();
 
 			#region VBLANK, NMI and frame end
 			if (HClock == 341)
@@ -793,13 +796,13 @@ namespace MyNes.Core
 				//set vbl
 				if (VClock == vbl_vclock_Start)
 				{
-					this.core.vbl_flag_temp = true;
+					this.interrupts.vbl_flag_temp = true;
 				}
 				//clear vbl
 				else if (VClock == vbl_vclock_End)
 				{
 					spr_0Hit = false;
-					this.core.vbl_flag_temp = false;
+					this.interrupts.vbl_flag_temp = false;
 					spr_overflow = false;
 				}
 				else if (VClock == frameEnd)

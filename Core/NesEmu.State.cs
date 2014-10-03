@@ -107,17 +107,7 @@ namespace MyNes.Core
             bin.Write(inputStrobe);
             #endregion
             #region Interrupts
-            bin.Write(NMI_Current);
-            bin.Write(NMI_Old);
-            bin.Write(NMI_Detected);
-            bin.Write(IRQFlags);
-            bin.Write(IRQ_Detected);
-            bin.Write(interrupt_vector);
-            bin.Write(interrupt_suspend);
-            bin.Write(nmi_enabled);
-            bin.Write(nmi_old);
-            bin.Write(vbl_flag);
-            bin.Write(vbl_flag_temp);
+			this.interrupts.SaveState(bin);
             #endregion
             #region Memory
 			this.memory.SaveState(bin);
@@ -238,17 +228,7 @@ namespace MyNes.Core
             inputStrobe = bin.ReadInt32();
             #endregion
             #region Interrupts
-            NMI_Current = bin.ReadBoolean();
-            NMI_Old = bin.ReadBoolean();
-            NMI_Detected = bin.ReadBoolean();
-            IRQFlags = bin.ReadInt32();
-            IRQ_Detected = bin.ReadBoolean();
-            interrupt_vector = bin.ReadInt32();
-            interrupt_suspend = bin.ReadBoolean();
-            nmi_enabled = bin.ReadBoolean();
-            nmi_old = bin.ReadBoolean();
-            vbl_flag = bin.ReadBoolean();
-            vbl_flag_temp = bin.ReadBoolean();
+			this.interrupts.LoadState(bin);
             #endregion
             #region Memory
 			this.memory.LoadState(bin);

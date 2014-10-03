@@ -49,11 +49,13 @@ namespace MyNes.Core
 		private readonly Ppu ppu;
 		[Obsolete("Mega-hack until I can figure out which bits of DMA and Memory code need to switch classes.")]
 		public Apu apu;
+		private readonly Interrupts interrupts;
 
-		public Memory(NesEmu core, Ppu ppu)
+		public Memory(NesEmu core, Ppu ppu, Interrupts interrupts)
 		{
 			this.core = core;
 			this.ppu = ppu;
+			this.interrupts = interrupts;
 		}
 
 		public void MEMInitialize(IRom rom)
@@ -161,7 +163,7 @@ namespace MyNes.Core
 			 * NMI edge detector polls the status of the NMI line during φ2 of each CPU cycle 
 			 * (i.e., during the second half of each cycle) 
 			 */
-			this.core.PollInterruptStatus();
+			this.interrupts.PollInterruptStatus();
 			this.ppu.Clock();
 			this.ppu.Clock();
 			if (this.core.DoPalAdditionalClock)// In pal system ..
@@ -192,17 +194,17 @@ namespace MyNes.Core
 						{
 							this.ppu.ppu_2002_temp = 0;
 
-							if (this.core.vbl_flag)
+							if (this.interrupts.vbl_flag)
 								this.ppu.ppu_2002_temp |= 0x80;
 							if (this.ppu.spr_0Hit)
 								this.ppu.ppu_2002_temp |= 0x40;
 							if (this.ppu.spr_overflow)
 								this.ppu.ppu_2002_temp |= 0x20;
 
-							this.core.vbl_flag_temp = false;
+							this.interrupts.vbl_flag_temp = false;
 							this.ppu.vram_flipflop = false;
 
-							this.core.CheckNMI();// NMI disable effect only at vbl set period (HClock between 1 and 3)
+							this.interrupts.CheckNMI();// NMI disable effect only at vbl set period (HClock between 1 and 3)
 
 							return this.ppu.ppu_2002_temp;
 						}
@@ -295,7 +297,7 @@ namespace MyNes.Core
 								temp_4015 |= 0x80;
 
 							this.apu.FrameIrqFlag = false;
-							NesEmu.IRQFlags &= ~NesEmu.IRQ_APU;
+							Interrupts.IRQFlags &= ~Interrupts.IRQ_APU;
 
 							return temp_4015;
 						}
@@ -356,7 +358,7 @@ namespace MyNes.Core
 			 * NMI edge detector polls the status of the NMI line during φ2 of each CPU cycle 
 			 * (i.e., during the second half of each cycle) 
 			 */
-			this.core.PollInterruptStatus();
+			this.interrupts.PollInterruptStatus();
 			this.ppu.Clock();
 			this.ppu.Clock();
 			if (this.core.DoPalAdditionalClock)// In pal system ..
@@ -391,13 +393,13 @@ namespace MyNes.Core
 							this.ppu.bkg_patternAddress = ((value & 0x10) != 0) ? 0x1000 : 0x0000;
 							this.ppu.spr_size16 = (value & 0x20) != 0 ? 0x0010 : 0x0008;
 
-							this.core.nmi_old = this.core.nmi_enabled;
-							this.core.nmi_enabled = (value & 0x80) != 0;
+							this.interrupts.nmi_old = this.interrupts.nmi_enabled;
+							this.interrupts.nmi_enabled = (value & 0x80) != 0;
 
-							if (!this.core.nmi_enabled)// NMI disable effect only at vbl set period (HClock between 1 and 3)
-								this.core.CheckNMI();
-							else if (this.core.vbl_flag_temp & !this.core.nmi_old)// Special case ! NMI can be enabled anytime if vbl already set
-								this.core.NMI_Current = true;
+							if (!this.interrupts.nmi_enabled)// NMI disable effect only at vbl set period (HClock between 1 and 3)
+								this.interrupts.CheckNMI();
+							else if (this.interrupts.vbl_flag_temp & !this.interrupts.nmi_old)// Special case ! NMI can be enabled anytime if vbl already set
+								this.interrupts.NMI_Current = true;
 							break;
 						}
 					case 1:// $2001
@@ -524,7 +526,7 @@ namespace MyNes.Core
 							if (!this.apu.dmcChannel.DMCIrqEnabled)
 							{
 								this.apu.dmcChannel.DeltaIrqOccur = false;
-								NesEmu.IRQFlags &= ~NesEmu.IRQ_DMC;
+								Interrupts.IRQFlags &= ~Interrupts.IRQ_DMC;
 							}
 							this.apu.dmcChannel.dmc_freqTimer = value & 0x0F;
 							break;
@@ -583,7 +585,7 @@ namespace MyNes.Core
 							}
 							// Disable DMC IRQ
 							this.apu.dmcChannel.DeltaIrqOccur = false;
-							NesEmu.IRQFlags &= ~NesEmu.IRQ_DMC;
+							Interrupts.IRQFlags &= ~Interrupts.IRQ_DMC;
 							// RDY ?
 							if (!this.apu.dmcChannel.dmc_bufferFull && this.apu.dmcChannel.dmc_dmaSize > 0)
 							{
@@ -650,7 +652,7 @@ namespace MyNes.Core
 							if (!this.apu.FrameIrqEnabled)
 							{
 								this.apu.FrameIrqFlag = false;
-								NesEmu.IRQFlags &= ~NesEmu.IRQ_APU;
+								Interrupts.IRQFlags &= ~Interrupts.IRQ_APU;
 							}
 							break;
 						}

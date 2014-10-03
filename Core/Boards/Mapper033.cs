@@ -76,7 +76,7 @@ namespace MyNes.Core
                     case 0xA003: base.Switch01KCHR(data, 0x1C00, chr_01K_rom_count > 0); break;
                     case 0xC000: irq_reload = (byte)(data ^ 0xFF); break;
                     case 0xC001: if (mmc3_alt_behavior) irq_clear = true; irq_counter = 0; break;
-                    case 0xC002: irq_enabled = false; NesEmu.IRQFlags &= ~NesEmu.IRQ_BOARD; break;
+                    case 0xC002: irq_enabled = false; Interrupts.IRQFlags &= ~Interrupts.IRQ_BOARD; break;
                     case 0xC003: irq_enabled = true; break;
                     case 0xE000: SwitchNMT((data & 0x40) == 0x40 ? Mirroring.Horz : Mirroring.Vert); break;
                 }
@@ -114,7 +114,7 @@ namespace MyNes.Core
                 irq_counter = (byte)(irq_counter - 1);
 
             if ((!mmc3_alt_behavior || old_irq_counter != 0 || irq_clear) && irq_counter == 0 && irq_enabled)
-                NesEmu.IRQFlags |= NesEmu.IRQ_BOARD;
+                Interrupts.IRQFlags |= Interrupts.IRQ_BOARD;
 
             irq_clear = false;
         }

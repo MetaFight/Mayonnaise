@@ -26,9 +26,9 @@ namespace MyNes.Core
 {
 	public class Cpu
 	{
-		public Cpu(NesEmu core, Memory memory)
+		public Cpu(Interrupts interrupts, Memory memory)
 		{
-			this.core = core;
+			this.interrupts = interrupts;
 			this.memory = memory;
 		}
 
@@ -40,7 +40,7 @@ namespace MyNes.Core
 		private int int_temp;
 		private int int_temp1;
 		private byte dummy;
-		private readonly NesEmu core;
+		private readonly Interrupts interrupts;
 		private readonly Memory memory;
 
 		public void HardReset()
@@ -61,17 +61,17 @@ namespace MyNes.Core
 			registers.i = true;
 			registers.ea = 0;
 			//interrupts
-			this.core.NMI_Current = false;
-			this.core.NMI_Old = false;
-			this.core.NMI_Detected = false;
-			NesEmu.IRQFlags = 0;
-			this.core.IRQ_Detected = false;
-			this.core.interrupt_vector = 0;
-			this.core.interrupt_suspend = false;
-			this.core.nmi_enabled = false;
-			this.core.nmi_old = false;
-			this.core.vbl_flag = false;
-			this.core.vbl_flag_temp = false;
+			this.interrupts.NMI_Current = false;
+			this.interrupts.NMI_Old = false;
+			this.interrupts.NMI_Detected = false;
+			Interrupts.IRQFlags = 0;
+			this.interrupts.IRQ_Detected = false;
+			this.interrupts.interrupt_vector = 0;
+			this.interrupts.interrupt_suspend = false;
+			this.interrupts.nmi_enabled = false;
+			this.interrupts.nmi_old = false;
+			this.interrupts.vbl_flag = false;
+			this.interrupts.vbl_flag_temp = false;
 			//others
 			opcode = 0;
 		}
@@ -1586,13 +1586,13 @@ namespace MyNes.Core
 			}
 			#endregion
 			// Handle interrupts...
-			if (this.core.NMI_Detected)
+			if (this.interrupts.NMI_Detected)
 			{
 				Interrupt();
 
-				this.core.NMI_Detected = false;// NMI handled !
+				this.interrupts.NMI_Detected = false;// NMI handled !
 			}
-			else if (this.core.IRQ_Detected)
+			else if (this.interrupts.IRQ_Detected)
 			{
 				Interrupt();
 			}
@@ -1889,14 +1889,14 @@ namespace MyNes.Core
 
 			Push(registers.p);
 			// the vector is detected during φ2 of previous cycle (before push about 2 ppu cycles)
-			int_temp = this.core.interrupt_vector;
+			int_temp = this.interrupts.interrupt_vector;
 
-			this.core.interrupt_suspend = true;
+			this.interrupts.interrupt_suspend = true;
 			registers.pcl = this.memory.Read(int_temp);
 			int_temp++;
 			registers.i = true;
 			registers.pch = this.memory.Read(int_temp);
-			this.core.interrupt_suspend = false;
+			this.interrupts.interrupt_suspend = false;
 		}
 		private void Branch(bool condition)
 		{
@@ -1905,10 +1905,10 @@ namespace MyNes.Core
 
 			if (condition)
 			{
-				this.core.interrupt_suspend = true;
+				this.interrupts.interrupt_suspend = true;
 				this.memory.Read(registers.pc);
 				registers.pcl += byte_temp;
-				this.core.interrupt_suspend = false;
+				this.interrupts.interrupt_suspend = false;
 				if (byte_temp >= 0x80)
 				{
 					if (registers.pcl >= byte_temp)
@@ -2034,14 +2034,14 @@ namespace MyNes.Core
 
 			Push(registers.pb());
 			// the vector is detected during φ2 of previous cycle (before push about 2 ppu cycles)
-			int_temp = this.core.interrupt_vector;
+			int_temp = this.interrupts.interrupt_vector;
 
-			this.core.interrupt_suspend = true;
+			this.interrupts.interrupt_suspend = true;
 			registers.pcl = this.memory.Read(int_temp);
 			int_temp++;
 			registers.i = true;
 			registers.pch = this.memory.Read(int_temp);
-			this.core.interrupt_suspend = false;
+			this.interrupts.interrupt_suspend = false;
 		}
 		private void CMP()
 		{

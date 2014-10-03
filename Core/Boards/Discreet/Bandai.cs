@@ -77,7 +77,7 @@ namespace MyNes.Core
                     }
                 case 0xA:
                     {
-                        irq_enable = (data & 0x1) == 0x1; NesEmu.IRQFlags &= ~NesEmu.IRQ_BOARD;
+                        irq_enable = (data & 0x1) == 0x1; Interrupts.IRQFlags &= ~Interrupts.IRQ_BOARD;
                         break;
                     }
                 case 0xB:
@@ -104,7 +104,7 @@ namespace MyNes.Core
                 irq_counter--;
                 if (irq_counter == 0)
                 {
-                    NesEmu.IRQFlags |= NesEmu.IRQ_BOARD;
+                    Interrupts.IRQFlags |= Interrupts.IRQ_BOARD;
                 }
                 if (irq_counter < 0)
                 {

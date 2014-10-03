@@ -55,13 +55,13 @@ namespace MyNes.Core
                         if (irq_enable)
                             irq_counter = irq_reload;
 
-                        NesEmu.IRQFlags &= ~NesEmu.IRQ_BOARD;
+                        Interrupts.IRQFlags &= ~Interrupts.IRQ_BOARD;
                         break;
                     }
                 case 0xD000:
                     {
                         irq_enable = irq_enable_on_ak;
-                        NesEmu.IRQFlags &= ~NesEmu.IRQ_BOARD;
+                        Interrupts.IRQFlags &= ~Interrupts.IRQ_BOARD;
                         break;
                     }
                 case 0xF000: Switch16KPRG(data & 0xF, 0x8000, true); break;
@@ -77,7 +77,7 @@ namespace MyNes.Core
                     irq_counter = irq_counter & 0xFF00 | (byte)((irq_counter & 0xFF) + 1);
                     if ((byte)(irq_counter & 0xFF) == 0xFF)
                     {
-                        NesEmu.IRQFlags |= NesEmu.IRQ_BOARD;
+                        Interrupts.IRQFlags |= Interrupts.IRQ_BOARD;
                         irq_counter = (irq_counter & 0xFF00) | (irq_reload & 0xFF);
                     }
                 }
@@ -86,7 +86,7 @@ namespace MyNes.Core
                     irq_counter++;
                     if (irq_counter == 0xFFFF)
                     {
-                        NesEmu.IRQFlags |= NesEmu.IRQ_BOARD;
+                        Interrupts.IRQFlags |= Interrupts.IRQ_BOARD;
                         irq_counter = irq_reload;
                     }
                 }

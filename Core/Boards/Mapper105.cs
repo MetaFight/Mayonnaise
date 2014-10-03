@@ -114,7 +114,7 @@ namespace MyNes.Core
                         {
                             initialized = true;
                             irq_counter = 0;
-                            NesEmu.IRQFlags &= ~NesEmu.IRQ_BOARD;
+                            Interrupts.IRQFlags &= ~Interrupts.IRQ_BOARD;
                         }
                         else
                             Switch32KPRG(0, true);
@@ -171,7 +171,7 @@ namespace MyNes.Core
                 if (irq_counter == dipswitches)
                 {
                     irq_counter = 0;
-                    NesEmu.IRQFlags |= NesEmu.IRQ_BOARD;
+                    Interrupts.IRQFlags |= Interrupts.IRQ_BOARD;
                 }
             }
         }

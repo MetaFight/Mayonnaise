@@ -155,13 +155,13 @@ namespace MyNes.Core
                 #endregion
                 case 0x5000:
                     {
-                        NesEmu.IRQFlags &= ~NesEmu.IRQ_BOARD;
+                        Interrupts.IRQFlags &= ~Interrupts.IRQ_BOARD;
                         irq_counter = (irq_counter & 0x7F00) | data;
                         break;
                     }
                 case 0x5800:
                     {
-                        NesEmu.IRQFlags &= ~NesEmu.IRQ_BOARD;
+                        Interrupts.IRQFlags &= ~Interrupts.IRQ_BOARD;
                         irq_counter = (irq_counter & 0x00FF) | ((data & 0x7F) << 8);
                         irq_enable = (data & 0x80) == 0x80;
                         break;
@@ -179,8 +179,8 @@ namespace MyNes.Core
                             soundReg = (byte)(((soundReg + 1) & 0x7F) | 0x80);
                         return temp_val;
                     }
-                case 0x5000: NesEmu.IRQFlags &= ~NesEmu.IRQ_BOARD; return (byte)(irq_counter & 0x00FF);
-                case 0x5800: NesEmu.IRQFlags &= ~NesEmu.IRQ_BOARD; return (byte)((irq_enable ? 0x80 : 0x00) | ((irq_counter & 0x7F00) >> 8));
+                case 0x5000: Interrupts.IRQFlags &= ~Interrupts.IRQ_BOARD; return (byte)(irq_counter & 0x00FF);
+                case 0x5800: Interrupts.IRQFlags &= ~Interrupts.IRQ_BOARD; return (byte)((irq_enable ? 0x80 : 0x00) | ((irq_counter & 0x7F00) >> 8));
             }
             return 0;
         }
@@ -330,7 +330,7 @@ namespace MyNes.Core
             {
                 if (irq_counter == 0x7FFF)
                 {
-                    NesEmu.IRQFlags |= NesEmu.IRQ_BOARD; irq_counter = 0;
+                    Interrupts.IRQFlags |= Interrupts.IRQ_BOARD; irq_counter = 0;
                 }
                 else
                 {
