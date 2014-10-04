@@ -38,7 +38,7 @@ namespace MyNes.Core
 		[Obsolete("Mega-hack until I can figure out how Memory and sound channel classes should interact.")]
 		public readonly DmcSoundChannel dmcChannel;
 
-		public Apu(NesEmu core, Dma dma, Memory memory)
+		public Apu(Emulator emulator, Dma dma, Memory memory)
 		{
 			this.noiseChannel = new NoiseSoundChannel(this);
 			this.pulse1Channel = new PulseSoundChannel(this, 0x4000);
@@ -46,7 +46,7 @@ namespace MyNes.Core
 			this.triangleChannel = new TriangleSoundChannel(this);
 			this.dmcChannel = new DmcSoundChannel(this, dma, memory);
 
-			this.core = core;
+			this.emulator = emulator;
 			this.memory = memory;
 		}
 
@@ -94,12 +94,12 @@ namespace MyNes.Core
         private static double x, x_1, y, y_1;
         private const double R = 1;// 0.995 for 44100 Hz
         private static double amplitude = 160;
-		private readonly NesEmu core;
+		private readonly Emulator emulator;
 		private readonly Memory memory;
 
         public void HardReset()
         {
-            switch (this.core.TVFormat)
+            switch (this.emulator.TVFormat)
             {
                 case TVSystem.NTSC: SystemIndex = 0; audio_playback_samplePeriod = 1789772.67f; break;
                 case TVSystem.PALB: SystemIndex = 1; audio_playback_samplePeriod = 1662607f; break;

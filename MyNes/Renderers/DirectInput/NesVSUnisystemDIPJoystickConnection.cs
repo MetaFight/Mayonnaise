@@ -26,7 +26,7 @@ namespace MyNes
 {
     class NesVSUnisystemDIPJoystickConnection : IVSUnisystemDIPConnecter
     {
-        public NesVSUnisystemDIPJoystickConnection(IntPtr handle, string guid, IInputSettingsVSUnisystemDIP settings, NesEmu emulator)
+		public NesVSUnisystemDIPJoystickConnection(IntPtr handle, string guid, IInputSettingsVSUnisystemDIP settings, EmulationState emulationState)
         {
             DirectInput di = new DirectInput();
             joystick = new Joystick(di, Guid.Parse(guid));
@@ -54,7 +54,7 @@ namespace MyNes
                 CreditLeftCoinSlot = ParseKey(settings.CreditLeftCoinSlot);
             if (settings.CreditRightCoinSlot != "")
                 CreditRightCoinSlot = ParseKey(settings.CreditRightCoinSlot);
-            emulator.EMUShutdown += NesEmu_EMUShutdown;
+            emulationState.EMUShutdown += NesEmu_EMUShutdown;
         }
         private int CreditServiceButton = 0;
         private int DIPSwitch1 = 0;

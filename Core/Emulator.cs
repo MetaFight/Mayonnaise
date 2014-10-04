@@ -33,9 +33,9 @@ namespace MyNes.Core
 	/// The nes emulation engine.
 	/// </summary>
 	[Obsolete("Reminder to not inject this class into other classes.  When refactorying is complete there should be very little logic left in here.")]
-	public partial class NesEmu
+	public class Emulator
 	{
-		public NesEmu(TVSystem tvFormat)
+		public Emulator(TVSystem tvFormat)
 		{
 			this.TVFormat = tvFormat;
 
@@ -45,9 +45,23 @@ namespace MyNes.Core
 				out this.memory,
 				out this.dma,
 				out this.apu,
-				out this.cpu);
+				out this.cpu,
+				out this.input,
+				out this.legacyNesEmu);
 
-			this.InitializeInput();
+			this.input.InitializeInput();
+
+			this.emulationState = 
+				new EmulationState(
+					this,
+					this.ppu,
+					this.interrupts,
+					this.memory,
+					this.dma,
+					this.apu,
+					this.cpu,
+					this.input,
+					this.ppu.videoOut);
 
 			switch (TVFormat)
 			{
@@ -70,11 +84,13 @@ namespace MyNes.Core
 				FramePeriod = (1.0 / (FPS = 50.0));
 		}
 
-		private void InitializeComponents(out Ppu ppu, out Interrupts interrupts, out Memory memory, out Dma dma, out Apu apu, out Cpu cpu)
+		private void InitializeComponents(out Ppu ppu, out Interrupts interrupts, out Memory memory, out Dma dma, out Apu apu, out Cpu cpu, out Input input, out LegacyNesEmu legacy)
 		{
 			var ppuWip = new Ppu(this);
+			var legacyWip = new LegacyNesEmu(ppuWip);
 			var interruptsWip = new Interrupts(ppuWip);
-			var memoryWip = new Memory(this, ppuWip, interruptsWip);
+			var inputWip = new Input(legacyWip);
+			var memoryWip = new Memory(this, ppuWip, interruptsWip, inputWip, legacyWip);
 			var dmaWip = new Dma(this, memoryWip);
 			var apuWip = new Apu(this, dmaWip, memoryWip);
 			var cpuWip = new Cpu(interruptsWip, memoryWip);
@@ -92,13 +108,13 @@ namespace MyNes.Core
 			dma = dmaWip;
 			apu = apuWip;
 			cpu = cpuWip;
+			input = inputWip;
+			legacy = legacyWip;
 		}
 
 		public TVSystemSetting TVFormatSetting;
 		public TVSystem TVFormat;
 		public Thread EmulationThread;
-		public bool EmulationON;
-		public bool EmulationPaused;
 		public string GAMEFILE;
 		public bool DoPalAdditionalClock;
 		public byte palCyc;
@@ -107,10 +123,6 @@ namespace MyNes.Core
 		public bool SaveSRAMAtShutdown;
 		public string SRAMFileName;
 		private string SRAMFolder;
-		/*STATE*/
-		private string STATEFileName;
-		private string STATEFolder;
-		public int STATESlot;
 		/*Snapshot*/
 		private string SNAPSFolder;
 		private string SNAPSFileName;
@@ -125,27 +137,34 @@ namespace MyNes.Core
 		private double FramePeriod = (1.0 / 60.0988);
 		private double FPS = 0;
 		// Requests !
-		private bool request_pauseAtFrameFinish;
+		[Obsolete("I'm not to keen on handling requests with bool flags.  Consider redesigning this.")]
+		public bool request_pauseAtFrameFinish;
+		[Obsolete("I'm not to keen on handling requests with bool flags.  Consider redesigning this.")]
 		private bool request_hardReset;
+		[Obsolete("I'm not to keen on handling requests with bool flags.  Consider redesigning this.")]
 		private bool request_softReset;
-		private bool request_state_save;
-		private bool request_state_load;
+		[Obsolete("I'm not to keen on handling requests with bool flags.  Consider redesigning this.")]
+		public bool request_state_save;
+		[Obsolete("I'm not to keen on handling requests with bool flags.  Consider redesigning this.")]
+		public bool request_state_load;
+		[Obsolete("I'm not to keen on handling requests with bool flags.  Consider redesigning this.")]
 		private bool request_snapshot;
+		[Obsolete("I'm not to keen on handling requests with bool flags.  Consider redesigning this.")]
 		private bool request_save_sram;
-		// Events !
-		/// <summary>
-		/// Raised when the emu engine finished shutdown.
-		/// </summary>
-		[Obsolete("Nothing ever seems to unsubscribe from this.  Check for leaks.")]
-		public event EventHandler EMUShutdown;
-
+		
 		private readonly Dma dma;
 		private readonly Memory memory;
 		[Obsolete("Mega-hack until I can figure out how PPU and other classes should interact.")]
 		public readonly Ppu ppu;
 		private readonly Cpu cpu;
+		[Obsolete("Mega-hack until I can figure out how APU and other classes should interact.")]
 		public readonly Apu apu;
 		private readonly Interrupts interrupts;
+		[Obsolete("Mega-hack until the current input class is split into two.")]
+		public readonly Input input;
+		public EmulationState emulationState;
+		[Obsolete("Temporary field.  To be removed after all code is moved out of the original NesEmu (now LegacyNesEmu) class")]
+		private readonly LegacyNesEmu legacyNesEmu;
 
 		/// <summary>
 		/// Call this at application start up to set nes default stuff
@@ -212,12 +231,14 @@ namespace MyNes.Core
 			known_issues = "";
 			return false;
 		}
+
 		/// <summary>
 		/// Create new emulation engine
 		/// </summary>
 		/// <param name="fileName">The rom complete path. Not compressed</param>
 		/// <param name="tvsetting">The tv system setting to use</param>
 		/// <param name="makeThread">Indicates if the emulation engine should make an internal thread and run through it. Otherwise you should make a thread and use EMUClock to run the loop.</param>
+		[Obsolete("Move this out of emulator class.  Spawning a thread for the GameLoop should happen outside of the Emulator")]
 		public void CreateNew(string fileName, TVSystemSetting tvsetting, bool makeThread)
 		{
 			switch (Path.GetExtension(fileName).ToLower())
@@ -230,11 +251,11 @@ namespace MyNes.Core
 						{
 							initialized = false;
 							GAMEFILE = fileName;
-							CheckGameVSUnisystem(header.SHA1, header.IsVSUnisystem, header.MapperNumber);
+							this.legacyNesEmu.CheckGameVSUnisystem(header.SHA1, header.IsVSUnisystem, header.MapperNumber);
 							// Make SRAM file name
 							SRAMFileName = Path.Combine(SRAMFolder, Path.GetFileNameWithoutExtension(fileName) + ".srm");
-							STATESlot = 0;
-							UpdateStateSlot(STATESlot);
+							this.emulationState.STATESlot = 0;
+							this.emulationState.UpdateStateSlot(this.emulationState.STATESlot);
 							// Make snapshots file name
 							SNAPSFileName = Path.GetFileNameWithoutExtension(fileName);
 							// Initialzie
@@ -245,12 +266,12 @@ namespace MyNes.Core
 							// Hard reset
 							HardReset();
 							// Run emu
-							EmulationPaused = true;
-							EmulationON = true;
+							this.emulationState.EmulationPaused = true;
+							this.emulationState.EmulationON = true;
 							// Let's go !
 							if (makeThread)
 							{
-								EmulationThread = new Thread(new ThreadStart(EMUClock));
+								EmulationThread = new Thread(new ThreadStart(GameLoop));
 								EmulationThread.Start();
 							}
 							// Done !
@@ -270,7 +291,7 @@ namespace MyNes.Core
 		{
 			SaveSRAMAtShutdown = saveSramOnSutdown;
 			SRAMFolder = sramFolder;
-			STATEFolder = stateFolder;
+			this.emulationState.STATEFolder = stateFolder;
 			SNAPSFolder = snapshotsFolder;
 			SNAPSFormat = snapFormat;
 			SNAPSReplace = replaceSnap;
@@ -278,11 +299,11 @@ namespace MyNes.Core
 		/// <summary>
 		/// Run the emulation loop while EmulationON is true.
 		/// </summary>
-		public void EMUClock()
+		public void GameLoop()
 		{
-			while (EmulationON)
+			while (this.emulationState.EmulationON)
 			{
-				if (!EmulationPaused)
+				if (!this.emulationState.EmulationPaused)
 				{
 					this.cpu.Clock();
 				}
@@ -297,37 +318,37 @@ namespace MyNes.Core
 					{
 						request_save_sram = false;
 						this.memory.SaveSRAM();
-						EmulationPaused = false;
+						this.emulationState.EmulationPaused = false;
 					}
 					if (request_hardReset)
 					{
 						request_hardReset = false;
 						HardReset();
-						EmulationPaused = false;
+						this.emulationState.EmulationPaused = false;
 					}
 					if (request_softReset)
 					{
 						request_softReset = false;
 						SoftReset();
-						EmulationPaused = false;
+						this.emulationState.EmulationPaused = false;
 					}
 					if (request_state_save)
 					{
 						request_state_save = false;
-						SaveStateAs(STATEFileName);
-						EmulationPaused = false;
+						this.emulationState.SaveStateAs(this.emulationState.STATEFileName);
+						this.emulationState.EmulationPaused = false;
 					}
 					if (request_state_load)
 					{
 						request_state_load = false;
-						LoadStateAs(STATEFileName);
-						EmulationPaused = false;
+						this.emulationState.LoadStateAs(this.emulationState.STATEFileName);
+						this.emulationState.EmulationPaused = false;
 					}
 					if (request_snapshot)
 					{
 						request_snapshot = false;
 						this.ppu.videoOut.TakeSnapshot(SNAPSFolder, SNAPSFileName, SNAPSFormat, SNAPSReplace);
-						EmulationPaused = false;
+						this.emulationState.EmulationPaused = false;
 					}
 					Thread.Sleep(100);
 				}
@@ -359,7 +380,7 @@ namespace MyNes.Core
 		{
 			if (!initialized)
 				return;
-			EmulationON = false;
+			this.emulationState.EmulationON = false;
 			this.memory.MEMShutdown();
 			if (this.ppu.videoOut != null)
 				this.ppu.videoOut.ShutDown();
@@ -373,11 +394,11 @@ namespace MyNes.Core
 			this.ppu.Shutdown();
 			this.apu.Shutdown();
 
-			if (EMUShutdown != null)
-				EMUShutdown(null, new EventArgs());
+			this.emulationState.RaiseEMUShutdown();
 
 			initialized = false;
 		}
+
 		/// <summary>
 		/// Take game snapshot
 		/// </summary>
@@ -455,7 +476,7 @@ namespace MyNes.Core
 		[Obsolete("Refactor this as a subscription to a this.ppu.FrameFinished event")]
 		public void OnFinishFrame()
 		{
-			InputFinishFrame();
+			this.input.FinishFrame();
 			// Sound
 			if (this.apu.SoundEnabled)
 			{
@@ -486,7 +507,7 @@ namespace MyNes.Core
 			if (request_pauseAtFrameFinish)
 			{
 				request_pauseAtFrameFinish = false;
-				EmulationPaused = true;
+				this.emulationState.EmulationPaused = true;
 			}
 		}
 

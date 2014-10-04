@@ -33,17 +33,21 @@ namespace MyNes
 {
     public partial class GameInfoViewer : UserControl
     {
-        public GameInfoViewer(NesEmu emulator)
+		private string currentID;
+		private MyNesDetectEntryInfo[] images;
+		private int fileIndex;
+		public event EventHandler RatingChanged;
+		private readonly Emulator emulator;
+		private readonly EmulationState emulationState;
+
+		public GameInfoViewer(Emulator emulator)
         {
 			this.emulator = emulator;
+			this.emulationState = this.emulator.emulationState;
+
             InitializeComponent();
             Clear();
         }
-        private string currentID;
-        private MyNesDetectEntryInfo[] images;
-        private int fileIndex;
-        public event EventHandler RatingChanged;
-		private readonly NesEmu emulator;
 
         private void Clear()
         {
@@ -188,7 +192,7 @@ namespace MyNes
         {
             if (!Program.Settings.LauncherAutoCycleImagesInGameTab)
             { timer1.Stop(); return; }
-            if (this.emulator.EmulationON)
+            if (this.emulationState.EmulationON)
             { timer1.Stop(); return; }
             if (images == null)
             { timer1.Stop(); return; }

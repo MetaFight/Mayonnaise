@@ -27,7 +27,7 @@ namespace MyNes
     public class ZapperConnecter : IZapperConnecter
     {
         // TODO: Zapper with "Wild Gun Man" - The Gang Mode is not working !
-        public ZapperConnecter(IntPtr handle, int winPosX, int winPosY, int videoW, int videoH, NesEmu emulator)
+		public ZapperConnecter(IntPtr handle, int winPosX, int winPosY, int videoW, int videoH, Emulator emulator)
         {
             this.scanlinesCount = 240;
             this.videoW = videoW;
@@ -56,7 +56,7 @@ namespace MyNes
         private byte r;
         private byte g;
         private byte b;
-		private readonly NesEmu emulator;
+		private readonly Emulator emulator;
 
         public override void Update()
         {

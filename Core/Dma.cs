@@ -28,9 +28,9 @@ namespace MyNes.Core
     {
 		public event EventHandler DmcDma;
 
-		public Dma(NesEmu core, Memory memory)
+		public Dma(Emulator emulator, Memory memory)
 		{
-			this.core = core;
+			this.emulator = emulator;
 			this.memory = memory;
 		}
 
@@ -52,7 +52,7 @@ namespace MyNes.Core
         public int dmaOamaddress;
         private int OAMCYCLE;
         private byte latch;
-		private readonly NesEmu core;
+		private readonly Emulator emulator;
 		private readonly Memory memory;
 		[Obsolete("Mega-hack until I can figure out how DMA and APU classes should interact.")]
 		public Apu apu;
@@ -174,7 +174,7 @@ namespace MyNes.Core
 
                             while (dmaDMCDMAWaitCycles > 0)
                             {
-                                this.core.ClockComponents();
+                                this.emulator.ClockComponents();
                                 dmaDMCDMAWaitCycles--;
                             }
                         }
@@ -210,7 +210,7 @@ namespace MyNes.Core
 
                             while (dmaOAMDMAWaitCycles > 0)
                             {
-								this.core.ClockComponents();
+								this.emulator.ClockComponents();
                                 dmaOAMDMAWaitCycles--;
                             }
                         }

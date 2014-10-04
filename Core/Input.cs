@@ -19,9 +19,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 /*Input section*/
+using System;
 namespace MyNes.Core
 {
-    public partial class NesEmu
+	[Obsolete("Reminder to split this into two classes:  1) Emulated NES input logic; 2) Bridging emulator input with real input devices")]
+    public class Input
     {
         // TODO: controllers for zapper and vsunisystem
         public int PORT0;
@@ -32,11 +34,19 @@ namespace MyNes.Core
         public IJoypadConnecter joypad3;
         public IJoypadConnecter joypad4;
         public IZapperConnecter zapper;
+		[Obsolete("Should this be moved the the (eventual) VSUnisystem class?")]
         public IVSUnisystemDIPConnecter VSUnisystemDIP;
         public bool IsFourPlayers;
         public bool IsZapperConnected;
 
-        private void InputFinishFrame()
+		private readonly LegacyNesEmu legacy;
+
+		public Input(LegacyNesEmu legacy)
+		{
+			this.legacy = legacy;
+		}
+
+        public void FinishFrame()
         {
             joypad1.Update();
             joypad2.Update();
@@ -47,10 +57,10 @@ namespace MyNes.Core
             }
             if (IsZapperConnected)
                 zapper.Update();
-            if (IsVSUnisystem)
+            if (this.legacy.IsVSUnisystem)
                 VSUnisystemDIP.Update();
         }
-        private void InitializeInput()
+        public void InitializeInput()
         {
             // Initialize all controllers to blank
             joypad1 = new BlankJoypad();
@@ -83,5 +93,12 @@ namespace MyNes.Core
         {
             VSUnisystemDIP = vsUnisystemDIP;
         }
-    }
+
+		internal void LoadState(System.IO.BinaryReader bin)
+		{
+			this.PORT0 = bin.ReadInt32();
+			this.PORT1 = bin.ReadInt32();
+			this.inputStrobe = bin.ReadInt32();
+		}
+	}
 }

@@ -32,15 +32,18 @@ namespace MyNes
 {
     public partial class FormGameGenie : Form
     {
-		private GameGenie gameGenie;
-		private NesEmu emulator;
+		private readonly Emulator emulator;
+		private readonly EmulationState emulationState;
 
-        public FormGameGenie(NesEmu emulator)
+		private GameGenie gameGenie;
+
+		public FormGameGenie(Emulator emulator)
         {
 			this.emulator = emulator;
+			this.emulationState = this.emulator.emulationState;
 
             InitializeComponent();
-			if (!emulator.EmulationON)
+			if (!emulationState.EmulationON)
             {
                 MessageBox.Show(Program.ResourceManager.GetString("Message_NesIsOff"));
                 Close();

@@ -35,23 +35,25 @@ namespace MyNes
 {
 	public partial class FormMain : Form
 	{
-		public FormMain(NesEmu emulator)
-		{
-			this.emulator = emulator;
-
-			InitializeComponent();
-			LoadSettings();
-			InitializeVideoRenderer();
-			InitializeSoundRenderer();
-			InitializeInputRenderer();
-
-			this.emulator.EMUShutdown += NesEmu_EMUShutdown;
-		}
-
 		public DirectXVideo video;
 		public DirectSoundRenderer audio;
 		public ZapperConnecter zapper;
-		private NesEmu emulator;
+		private readonly Emulator emulator;
+		private readonly EmulationState emulationState;
+
+		public FormMain(Emulator emulator)
+		{
+			this.emulator = emulator;
+			this.emulationState = this.emulator.emulationState;
+
+			this.InitializeComponent();
+			this.LoadSettings();
+			this.InitializeVideoRenderer();
+			this.InitializeSoundRenderer();
+			this.InitializeInputRenderer();
+
+			this.emulationState.EMUShutdown += this.NesEmu_EMUShutdown;
+		}
 
 		private void LoadSettings()
 		{
@@ -103,8 +105,10 @@ namespace MyNes
 		public void OpenRom(string fileName)
 		{
 			// Pause emulation
-			if (this.emulator.EmulationON)
-				this.emulator.EmulationPaused = true;
+			if (this.emulationState.EmulationON)
+			{
+				this.emulationState.EmulationPaused = true;
+			}
 			switch (Path.GetExtension(fileName).ToLower())
 			{
 				case ".7z":
@@ -158,7 +162,7 @@ namespace MyNes
 			}
 			try
 			{
-				this.emulator.EmulationPaused = true;// Make sure it's still paused !
+				this.emulationState.EmulationPaused = true;// Make sure it's still paused !
 				bool is_supported_mapper;
 				bool has_issues;
 				string issues;
@@ -182,7 +186,7 @@ namespace MyNes
 							Program.ResourceManager.GetString("Text_AlwaysWarnAboutIssues"));
 						Program.Settings.ShowRomIssuesIfHave = res.Checked;
 					}
-					this.emulator.EmulationON = false;
+					this.emulationState.EmulationON = false;
 					// Kill the original thread
 					if (this.emulator.EmulationThread != null)
 						// while (this.emulator.EmulationThread.IsAlive)
@@ -220,20 +224,20 @@ namespace MyNes
 					{
 						this.Text = Path.GetFileName(this.emulator.GAMEFILE) + " - My Nes";
 					}
-					this.emulator.EmulationPaused = false;
+					this.emulationState.EmulationPaused = false;
 				}
 				else
 				{
 					ManagedMessageBox.ShowErrorMessage("My Nes can't run this game.", "My Nes");
-					if (this.emulator.EmulationON)
-						this.emulator.EmulationPaused = false;
+					if (this.emulationState.EmulationON)
+						this.emulationState.EmulationPaused = false;
 				}
 			}
 			catch (Exception ex)
 			{
 				ManagedMessageBox.ShowErrorMessage(ex.Message, "My Nes");
-				if (this.emulator.EmulationON)
-					this.emulator.EmulationPaused = false;
+				if (this.emulationState.EmulationON)
+					this.emulationState.EmulationPaused = false;
 			}
 		}
 		public void InitializeInputRenderer()
@@ -374,7 +378,7 @@ namespace MyNes
 				}
 			}
 			#endregion
-			this.emulator.SetupJoypads(joy1, joy2, joy3, joy4);
+			this.emulator.input.SetupJoypads(joy1, joy2, joy3, joy4);
 			#region VSUnisystem DIP
 			foreach (DeviceInstance dev in devices)
 			{
@@ -391,12 +395,12 @@ namespace MyNes
 							{
 								case DeviceType.Keyboard:
 									{
-										this.emulator.SetupVSUnisystemDIP(new NesVSUnisystemDIPKeyboardConnection(this.Handle, con, this.emulator));
+										this.emulator.input.SetupVSUnisystemDIP(new NesVSUnisystemDIPKeyboardConnection(this.Handle, con, this.emulationState));
 										break;
 									}
 								case DeviceType.Joystick:
 									{
-										this.emulator.SetupVSUnisystemDIP(new NesVSUnisystemDIPJoystickConnection(this.Handle, dev.InstanceGuid.ToString(), con, this.emulator));
+										this.emulator.input.SetupVSUnisystemDIP(new NesVSUnisystemDIPJoystickConnection(this.Handle, dev.InstanceGuid.ToString(), con, this.emulationState));
 										break;
 									}
 							}
@@ -409,7 +413,7 @@ namespace MyNes
 			#endregion
 			// ZAPPER
 			this.zapper = new ZapperConnecter(this.Handle, this.Location.X, this.Location.Y + menuStrip1.Height, panel_surface.Width, panel_surface.Height, this.emulator);
-			this.emulator.SetupZapper(this.zapper);
+			this.emulator.input.SetupZapper(this.zapper);
 			video.SetupZapperBounds();
 		}
 		public void InitializeVideoRenderer()
@@ -573,26 +577,26 @@ namespace MyNes
 		}
 		private void openToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (this.emulator.EmulationON)
-				this.emulator.EmulationPaused = true;
+			if (this.emulationState.EmulationON)
+				this.emulationState.EmulationPaused = true;
 			OpenFileDialog op = new OpenFileDialog();
 			op.Title = Program.ResourceManager.GetString("Title_OpenRom");
 			op.Filter = Program.ResourceManager.GetString("Filter_Rom");
 			if (op.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
 			{
 				OpenRom(op.FileName);
-				if (this.emulator.EmulationON)
+				if (this.emulationState.EmulationON)
 					AddRecent(op.FileName);
 			}
 			else
 			{
-				if (this.emulator.EmulationON)
-					this.emulator.EmulationPaused = false;
+				if (this.emulationState.EmulationON)
+					this.emulationState.EmulationPaused = false;
 			}
 		}
 		private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			this.emulator.EmulationON = false;
+			this.emulationState.EmulationON = false;
 			video.CloseThread();
 			if (audio != null)
 				audio.Dispose();
@@ -608,19 +612,19 @@ namespace MyNes
 		}
 		private void audioSettingsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (this.emulator.EmulationON)
-				this.emulator.EmulationPaused = true;
+			if (this.emulationState.EmulationON)
+				this.emulationState.EmulationPaused = true;
 			FormAudioSettings set = new FormAudioSettings();
 			if (set.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
 			{
 				InitializeSoundRenderer();
 			}
-			if (this.emulator.EmulationON)
-				this.emulator.EmulationPaused = false;
+			if (this.emulationState.EmulationON)
+				this.emulationState.EmulationPaused = false;
 		}
 		private void togglePauseToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			this.emulator.EmulationPaused = !this.emulator.EmulationPaused;
+			this.emulationState.EmulationPaused = !this.emulationState.EmulationPaused;
 		}
 		private void launcherToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -637,19 +641,19 @@ namespace MyNes
 		}
 		private void shutdownToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (this.emulator.EmulationON)
-				this.emulator.EmulationON = false;
+			if (this.emulationState.EmulationON)
+				this.emulationState.EmulationON = false;
 		}
 		private void romInfoToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (this.emulator.EmulationON)
+			if (this.emulationState.EmulationON)
 			{
-				this.emulator.EmulationPaused = true;
+				this.emulationState.EmulationPaused = true;
 
 				FormRomInfo frm = new FormRomInfo(this.emulator.GAMEFILE);
 				frm.ShowDialog(this);
 
-				this.emulator.EmulationPaused = false;
+				this.emulationState.EmulationPaused = false;
 			}
 			else
 			{
@@ -665,80 +669,80 @@ namespace MyNes
 		}
 		private void pathsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (this.emulator.EmulationON)
-				this.emulator.EmulationPaused = true;
+			if (this.emulationState.EmulationON)
+				this.emulationState.EmulationPaused = true;
 			FormPathsSettings set = new FormPathsSettings();
 			if (set.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
 			{
-				if (this.emulator.EmulationON)
+				if (this.emulationState.EmulationON)
 				{
 					ApplyEmuSettings();
 				}
 			}
-			if (this.emulator.EmulationON)
-				this.emulator.EmulationPaused = false;
+			if (this.emulationState.EmulationON)
+				this.emulationState.EmulationPaused = false;
 		}
 		private void preferencesToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (this.emulator.EmulationON)
-				this.emulator.EmulationPaused = true;
+			if (this.emulationState.EmulationON)
+				this.emulationState.EmulationPaused = true;
 			FormPreferences set = new FormPreferences();
 			if (set.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
 			{
-				if (this.emulator.EmulationON)
+				if (this.emulationState.EmulationON)
 				{
 					ApplyEmuSettings();
 				}
 			}
-			if (this.emulator.EmulationON)
-				this.emulator.EmulationPaused = false;
+			if (this.emulationState.EmulationON)
+				this.emulationState.EmulationPaused = false;
 		}
 		private void toolStripMenuItem8_Click(object sender, EventArgs e)
 		{
-			this.emulator.UpdateStateSlot(0);
+			this.emulationState.UpdateStateSlot(0);
 		}
 		private void toolStripMenuItem7_Click(object sender, EventArgs e)
 		{
-			this.emulator.UpdateStateSlot(1);
+			this.emulationState.UpdateStateSlot(1);
 		}
 		private void toolStripMenuItem6_Click(object sender, EventArgs e)
 		{
-			this.emulator.UpdateStateSlot(2);
+			this.emulationState.UpdateStateSlot(2);
 		}
 		private void toolStripMenuItem5_Click(object sender, EventArgs e)
 		{
-			this.emulator.UpdateStateSlot(3);
+			this.emulationState.UpdateStateSlot(3);
 		}
 		private void toolStripMenuItem4_Click(object sender, EventArgs e)
 		{
-			this.emulator.UpdateStateSlot(4);
+			this.emulationState.UpdateStateSlot(4);
 		}
 		private void toolStripMenuItem3_Click(object sender, EventArgs e)
 		{
-			this.emulator.UpdateStateSlot(5);
+			this.emulationState.UpdateStateSlot(5);
 		}
 		private void toolStripMenuItem2_Click(object sender, EventArgs e)
 		{
-			this.emulator.UpdateStateSlot(6);
+			this.emulationState.UpdateStateSlot(6);
 		}
 		private void toolStripMenuItem1_Click(object sender, EventArgs e)
 		{
-			this.emulator.UpdateStateSlot(7);
+			this.emulationState.UpdateStateSlot(7);
 		}
 		private void toolStripMenuItem10_Click(object sender, EventArgs e)
 		{
-			this.emulator.UpdateStateSlot(8);
+			this.emulationState.UpdateStateSlot(8);
 		}
 		private void toolStripMenuItem9_Click(object sender, EventArgs e)
 		{
-			this.emulator.UpdateStateSlot(9);
+			this.emulationState.UpdateStateSlot(9);
 		}
 		private void stateToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
 		{
 			for (int i = 0; i < stateToolStripMenuItem.DropDownItems.Count; i++)
 				if (stateToolStripMenuItem.DropDownItems[i] is ToolStripMenuItem)
 					((ToolStripMenuItem)stateToolStripMenuItem.DropDownItems[i]).Checked = false;
-			switch (this.emulator.STATESlot)
+			switch (this.emulationState.STATESlot)
 			{
 				case 0:
 					toolStripMenuItem8.Checked = true;
@@ -774,59 +778,59 @@ namespace MyNes
 		}
 		private void saveStateToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (this.emulator.EmulationON)
-				this.emulator.SaveState();
+			if (this.emulationState.EmulationON)
+				this.emulationState.SaveState();
 		}
 		private void loadStateToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (this.emulator.EmulationON)
-				this.emulator.LoadState();
+			if (this.emulationState.EmulationON)
+				this.emulationState.LoadState();
 		}
 		private void saveStateAsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (this.emulator.EmulationON)
+			if (this.emulationState.EmulationON)
 			{
-				this.emulator.EmulationPaused = true;
+				this.emulationState.EmulationPaused = true;
 				try
 				{
 					SaveFileDialog sav = new SaveFileDialog();
 					sav.Title = Program.ResourceManager.GetString("Title_SaveStateAs");
 					sav.Filter = Program.ResourceManager.GetString("Filter_MyNesState");
 					if (sav.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
-						this.emulator.SaveStateAs(sav.FileName);
+						this.emulationState.SaveStateAs(sav.FileName);
 				}
 				catch (Exception ex)
 				{
 					ManagedMessageBox.ShowErrorMessage(ex.Message);
 				}
-				this.emulator.EmulationPaused = false;
+				this.emulationState.EmulationPaused = false;
 			}
 		}
 		private void loadStateAsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (this.emulator.EmulationON)
+			if (this.emulationState.EmulationON)
 			{
-				this.emulator.EmulationPaused = true;
+				this.emulationState.EmulationPaused = true;
 				try
 				{
 					OpenFileDialog op = new OpenFileDialog();
 					op.Title = Program.ResourceManager.GetString("Title_LoadStateAs");
 					op.Filter = Program.ResourceManager.GetString("Filter_MyNesState");
 					if (op.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
-						this.emulator.LoadStateAs(op.FileName);
+						this.emulationState.LoadStateAs(op.FileName);
 				}
 				catch (Exception ex)
 				{
 					ManagedMessageBox.ShowErrorMessage(ex.Message);
 				}
-				this.emulator.EmulationPaused = false;
+				this.emulationState.EmulationPaused = false;
 			}
 		}
 		private void FormMain_ResizeBegin(object sender, EventArgs e)
 		{
-			if (this.emulator.EmulationON)
+			if (this.emulationState.EmulationON)
 			{
-				this.emulator.EmulationPaused = true;
+				this.emulationState.EmulationPaused = true;
 
 				this.emulator.ppu.videoOut.OnResizeBegin();
 			}
@@ -838,13 +842,13 @@ namespace MyNes
 		}
 		private void FormMain_ResizeEnd(object sender, EventArgs e)
 		{
-			if (this.emulator.EmulationON)
+			if (this.emulationState.EmulationON)
 			{
-				this.emulator.EmulationPaused = true;
+				this.emulationState.EmulationPaused = true;
 
 				this.emulator.ppu.videoOut.OnResizeEnd();
 
-				this.emulator.EmulationPaused = false;
+				this.emulationState.EmulationPaused = false;
 			}
 			else
 			{
@@ -853,13 +857,13 @@ namespace MyNes
 		}
 		private void fullscreenToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (this.emulator.EmulationON)
+			if (this.emulationState.EmulationON)
 			{
-				this.emulator.EmulationPaused = true;
+				this.emulationState.EmulationPaused = true;
 
 				this.emulator.ppu.videoOut.SwitchFullscreen();
 
-				this.emulator.EmulationPaused = false;
+				this.emulationState.EmulationPaused = false;
 			}
 			else
 			{
@@ -868,12 +872,12 @@ namespace MyNes
 		}
 		private void videoToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (this.emulator.EmulationON)
-				this.emulator.EmulationPaused = true;
+			if (this.emulationState.EmulationON)
+				this.emulationState.EmulationPaused = true;
 			FormVideoSettings set = new FormVideoSettings();
 			if (set.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
 			{
-				if (this.emulator.EmulationON)
+				if (this.emulationState.EmulationON)
 				{
 					video.threadPAUSED = true;
 					// Apply video stretch
@@ -882,83 +886,83 @@ namespace MyNes
 						video.Reset();
 				}
 			}
-			if (this.emulator.EmulationON)
-				this.emulator.EmulationPaused = false;
+			if (this.emulationState.EmulationON)
+				this.emulationState.EmulationPaused = false;
 		}
 		private void settingsToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
 		{
 			fullscreenToolStripMenuItem.Checked = Program.Settings.Video_StartFullscreen;
 			turboToolStripMenuItem.Checked = !this.emulator.SpeedLimitterON;
-			connect4PlayersToolStripMenuItem.Checked = this.emulator.IsFourPlayers;
-			connectZapperToolStripMenuItem.Checked = this.emulator.IsZapperConnected;
+			connect4PlayersToolStripMenuItem.Checked = this.emulator.input.IsFourPlayers;
+			connectZapperToolStripMenuItem.Checked = this.emulator.input.IsZapperConnected;
 		}
 		private void FormMain_Activated(object sender, EventArgs e)
 		{
-			if (this.emulator.EmulationON && Program.Settings.PauseAtFocusLost)
-				this.emulator.EmulationPaused = false;
+			if (this.emulationState.EmulationON && Program.Settings.PauseAtFocusLost)
+				this.emulationState.EmulationPaused = false;
 		}
 		private void FormMain_Deactivate(object sender, EventArgs e)
 		{
-			if (this.emulator.EmulationON && Program.Settings.PauseAtFocusLost)
-				this.emulator.EmulationPaused = true;
+			if (this.emulationState.EmulationON && Program.Settings.PauseAtFocusLost)
+				this.emulationState.EmulationPaused = true;
 		}
 		private void takesnapshotToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (this.emulator.EmulationON)
+			if (this.emulationState.EmulationON)
 				this.emulator.TakeSnapshot();
 		}
 		private void inputsToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (this.emulator.EmulationON)
-				this.emulator.EmulationPaused = true;
+			if (this.emulationState.EmulationON)
+				this.emulationState.EmulationPaused = true;
 			FormInputSettings set = new FormInputSettings();
 			if (set.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
 			{
-				if (this.emulator.EmulationON)
+				if (this.emulationState.EmulationON)
 				{
 					InitializeInputRenderer();
 				}
 			}
-			if (this.emulator.EmulationON)
-				this.emulator.EmulationPaused = false;
+			if (this.emulationState.EmulationON)
+				this.emulationState.EmulationPaused = false;
 		}
 		private void palettesToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (this.emulator.EmulationON)
-				this.emulator.EmulationPaused = true;
+			if (this.emulationState.EmulationON)
+				this.emulationState.EmulationPaused = true;
 			FormPaletteSettings frm = new FormPaletteSettings();
 			if (frm.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
 			{
 				InitializePalette();
 			}
-			if (this.emulator.EmulationON)
-				this.emulator.EmulationPaused = false;
+			if (this.emulationState.EmulationON)
+				this.emulationState.EmulationPaused = false;
 		}
 		private void fileToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
 		{
-			recordSoundToolStripMenuItem.Enabled = this.emulator.EmulationON;
+			recordSoundToolStripMenuItem.Enabled = this.emulationState.EmulationON;
 			recordSoundToolStripMenuItem.Text = audio.IsRecording ?
 				Program.ResourceManager.GetString("Button_StopSoundRecording") :
 				Program.ResourceManager.GetString("Button_RecordSound");
 			openRecentToolStripMenuItem.Enabled = Program.Settings.RecentPlayed.Count > 0;
-			takesnapshotToolStripMenuItem.Enabled = this.emulator.EmulationON;
+			takesnapshotToolStripMenuItem.Enabled = this.emulationState.EmulationON;
 		}
 		private void recordSoundToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (!this.emulator.EmulationON)
+			if (!this.emulationState.EmulationON)
 				return;
 			if (audio.IsRecording)
 				audio.RecordStop();
 			else
 			{
-				this.emulator.EmulationPaused = true;
+				this.emulationState.EmulationPaused = true;
 				SaveFileDialog sav = new SaveFileDialog();
 				sav.Title = Program.ResourceManager.GetString("Title_SaveWavFile");
 				sav.Filter = Program.ResourceManager.GetString("Filter_Wav");
 				if (sav.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
 				{
 					audio.Record(sav.FileName);
-					this.emulator.EmulationPaused = false;
+					this.emulationState.EmulationPaused = false;
 				}
 			}
 		}
@@ -1088,41 +1092,41 @@ namespace MyNes
 		private void aUTOToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Program.Settings.TVSystemSetting = TVSystemSetting.AUTO;
-			if (this.emulator.EmulationON)
+			if (this.emulationState.EmulationON)
 			{
-				this.emulator.EmulationPaused = true;
+				this.emulationState.EmulationPaused = true;
 				ManagedMessageBox.ShowMessage(Program.ResourceManager.GetString("Message_YouNeedToHardResetCurrentGameToApplyRegionSettings"));
-				this.emulator.EmulationPaused = false;
+				this.emulationState.EmulationPaused = false;
 			}
 		}
 		private void nTSCToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Program.Settings.TVSystemSetting = TVSystemSetting.NTSC;
-			if (this.emulator.EmulationON)
+			if (this.emulationState.EmulationON)
 			{
-				this.emulator.EmulationPaused = true;
+				this.emulationState.EmulationPaused = true;
 				ManagedMessageBox.ShowMessage(Program.ResourceManager.GetString("Message_YouNeedToHardResetCurrentGameToApplyRegionSettings"));
-				this.emulator.EmulationPaused = false;
+				this.emulationState.EmulationPaused = false;
 			}
 		}
 		private void pALBToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Program.Settings.TVSystemSetting = TVSystemSetting.PALB;
-			if (this.emulator.EmulationON)
+			if (this.emulationState.EmulationON)
 			{
-				this.emulator.EmulationPaused = true;
+				this.emulationState.EmulationPaused = true;
 				ManagedMessageBox.ShowMessage(Program.ResourceManager.GetString("Message_YouNeedToHardResetCurrentGameToApplyRegionSettings"));
-				this.emulator.EmulationPaused = false;
+				this.emulationState.EmulationPaused = false;
 			}
 		}
 		private void dENDYToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Program.Settings.TVSystemSetting = TVSystemSetting.DENDY;
-			if (this.emulator.EmulationON)
+			if (this.emulationState.EmulationON)
 			{
-				this.emulator.EmulationPaused = true;
+				this.emulationState.EmulationPaused = true;
 				ManagedMessageBox.ShowMessage(Program.ResourceManager.GetString("Message_YouNeedToHardResetCurrentGameToApplyRegionSettings"));
-				this.emulator.EmulationPaused = false;
+				this.emulationState.EmulationPaused = false;
 			}
 		}
 		private void openRecentToolStripMenuItem_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -1131,7 +1135,7 @@ namespace MyNes
 			if (File.Exists(path))
 			{
 				OpenRom(path);
-				if (this.emulator.EmulationON)
+				if (this.emulationState.EmulationON)
 					AddRecent(path);
 			}
 			else
@@ -1154,19 +1158,19 @@ namespace MyNes
 		}
 		private void gameGenieToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (!this.emulator.EmulationON)
+			if (!this.emulationState.EmulationON)
 			{
 				ManagedMessageBox.ShowErrorMessage(Program.ResourceManager.GetString("Message_GameGenieCantBeUSedWhileEmuOf"));
 				return;
 			}
-			this.emulator.EmulationPaused = true;
+			this.emulationState.EmulationPaused = true;
 			FormGameGenie frm = new FormGameGenie(this.emulator);
 			frm.ShowDialog(this);
-			this.emulator.EmulationPaused = false;
+			this.emulationState.EmulationPaused = false;
 		}
 		private void languageToolStripMenuItem_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
 		{
-			this.emulator.EmulationPaused = true;
+			this.emulationState.EmulationPaused = true;
 			int i = 0;
 			int index = 0;
 			foreach (ToolStripMenuItem item in languageToolStripMenuItem.DropDownItems)
@@ -1184,15 +1188,15 @@ namespace MyNes
 			Program.Settings.Save();
 			ManagedMessageBox.ShowMessage(Program.ResourceManager.GetString("Message_YouMustRestartTheProgramToApplyLanguage"),
 				Program.ResourceManager.GetString("MessageCaption_ApplyLanguage"));
-			this.emulator.EmulationPaused = false;
+			this.emulationState.EmulationPaused = false;
 		}
 		private void menuStrip1_MenuActivate(object sender, EventArgs e)
 		{
-			this.emulator.EmulationPaused = true;
+			this.emulationState.EmulationPaused = true;
 		}
 		private void menuStrip1_MenuDeactivate(object sender, EventArgs e)
 		{
-			this.emulator.EmulationPaused = false;
+			this.emulationState.EmulationPaused = false;
 		}
 		private void visitWebsiteToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -1227,12 +1231,12 @@ namespace MyNes
 		}
 		private void aboutMyNesToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			this.emulator.EmulationPaused = true;
+			this.emulationState.EmulationPaused = true;
 
 			FormAbout frm = new FormAbout();
 			frm.ShowDialog(this);
 
-			this.emulator.EmulationPaused = false;
+			this.emulationState.EmulationPaused = false;
 		}
 		private void codeprojectArticleToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -1246,11 +1250,11 @@ namespace MyNes
 		}
 		private void connect4PlayersToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			this.emulator.IsFourPlayers = !this.emulator.IsFourPlayers;
+			this.emulator.input.IsFourPlayers = !this.emulator.input.IsFourPlayers;
 		}
 		private void connectZapperToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			this.emulator.IsZapperConnected = !this.emulator.IsZapperConnected;
+			this.emulator.input.IsZapperConnected = !this.emulator.input.IsZapperConnected;
 		}
 		private void statusToolStripMenuItem_Click(object sender, EventArgs e)
 		{

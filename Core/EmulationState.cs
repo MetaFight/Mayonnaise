@@ -21,38 +21,73 @@
 using System.Text;
 using System.IO;
 using System.Drawing;
+using System;
 
 namespace MyNes.Core
 {
     /*State section*/
-    public partial class NesEmu
+	public class EmulationState
     {
+		[Obsolete("Nothing ever seems to unsubscribe from this.  Check for leaks.")]
+		public event EventHandler EMUShutdown;
+
         private const byte state_version = 6;// The state version.
         private static bool state_is_saving_state;
         private static bool state_is_loading_state;
+
+		public bool EmulationON;
+		public bool EmulationPaused;
+		public string STATEFileName;
+		public string STATEFolder;
+		public int STATESlot;
+		
+		private readonly Emulator emulator;
+		private readonly Ppu ppu;
+		private readonly Interrupts interrupts;
+		private readonly Memory memory;
+		private readonly Dma dma;
+		private readonly Apu apu;
+		private readonly Cpu cpu;
+		private readonly Input input;
+		private readonly IVideoProvider view;
+
+		public EmulationState(Emulator emulator, Ppu ppu, Interrupts interrupts, Memory memory, Dma dma, Apu apu, Cpu cpu, Input input, IVideoProvider videoProvider)
+		{
+			this.emulator = emulator;
+
+			this.ppu = ppu;
+			this.interrupts = interrupts;
+			this.memory = memory;
+			this.dma = dma;
+			this.apu = apu;
+			this.cpu = cpu;
+			this.input = input;
+
+			this.view = videoProvider;
+		}
 
         public void UpdateStateSlot(int slot)
         {
             // Reset state
             STATESlot = slot;
             // Make STATE file name
-            STATEFileName = Path.Combine(STATEFolder, Path.GetFileNameWithoutExtension(GAMEFILE) + "_" + STATESlot + "_.mns");
+            STATEFileName = Path.Combine(STATEFolder, Path.GetFileNameWithoutExtension(this.emulator.GAMEFILE) + "_" + STATESlot + "_.mns");
         }
         /// <summary>
         /// Request a state save at specified slot.
         /// </summary>
         public void SaveState()
         {
-            request_pauseAtFrameFinish = true;
-            request_state_save = true;
+			this.emulator.request_pauseAtFrameFinish = true;
+			this.emulator.request_state_save = true;
         }
         /// <summary>
         /// Request a state load at specified slot.
         /// </summary>
         public void LoadState()
         {
-            request_pauseAtFrameFinish = true;
-            request_state_load = true;
+            this.emulator.request_pauseAtFrameFinish = true;
+			this.emulator.request_state_load = true;
         }
         /// <summary>
         /// Save current game state as
@@ -62,14 +97,14 @@ namespace MyNes.Core
         {
             if (state_is_loading_state)
             {
-                EmulationPaused = false;
-				this.ppu.videoOut.WriteNotification("Can't save state while loading a state !", 120, Color.Red);
+				this.EmulationPaused = false;
+				this.view.WriteNotification("Can't save state while loading a state !", 120, Color.Red);
                 return;
             } 
             if (state_is_saving_state)
             {
-                EmulationPaused = false;
-				this.ppu.videoOut.WriteNotification("Already saving state !!", 120, Color.Red);
+                this.EmulationPaused = false;
+				this.view.WriteNotification("Already saving state !!", 120, Color.Red);
                 return;
             }
             state_is_saving_state = true;
@@ -87,7 +122,7 @@ namespace MyNes.Core
             }
             // Write data
             #region General
-            bin.Write(palCyc);
+            bin.Write(this.emulator.palCyc);
             #endregion
             #region APU
 			this.apu.SaveState(bin);
@@ -102,9 +137,9 @@ namespace MyNes.Core
 			this.apu.dmcChannel.SaveState(bin);
             #endregion
             #region Input
-            bin.Write(PORT0);
-            bin.Write(PORT1);
-            bin.Write(inputStrobe);
+            bin.Write(this.input.PORT0);
+			bin.Write(this.input.PORT1);
+			bin.Write(this.input.inputStrobe);
             #endregion
             #region Interrupts
 			this.interrupts.SaveState(bin);
@@ -135,7 +170,7 @@ namespace MyNes.Core
             Stream fileStream = new FileStream(fileName, FileMode.Create, FileAccess.Write);
             fileStream.Write(outData, 0, outData.Length);
             // Save snapshot
-            this.ppu.videoOut.TakeSnapshot(STATEFolder, Path.GetFileNameWithoutExtension(fileName), ".jpg", true);
+            this.view.TakeSnapshot(STATEFolder, Path.GetFileNameWithoutExtension(fileName), ".jpg", true);
 
             // Finished !
             bin.Flush();
@@ -143,9 +178,10 @@ namespace MyNes.Core
             fileStream.Flush();
             fileStream.Close();
             state_is_saving_state = false;
-            EmulationPaused = false;
-            this.ppu.videoOut.WriteNotification("State saved at slot " + STATESlot, 120, Color.Green);
+			this.EmulationPaused = false;
+            this.view.WriteNotification("State saved at slot " + STATESlot, 120, Color.Green);
         }
+
         /// <summary>
         /// Load current game state from file
         /// </summary>
@@ -154,14 +190,14 @@ namespace MyNes.Core
         {
             if (state_is_saving_state)
             {
-                EmulationPaused = false;
-				this.ppu.videoOut.WriteNotification("Can't load state while it's saving state !", 120, Color.Red);
+                this.EmulationPaused = false;
+				this.view.WriteNotification("Can't load state while it's saving state !", 120, Color.Red);
                 return;
             } 
             if (state_is_loading_state)
             {
-                EmulationPaused = false;
-				this.ppu.videoOut.WriteNotification("Already loading a state !", 120, Color.Red);
+                this.EmulationPaused = false;
+				this.view.WriteNotification("Already loading a state !", 120, Color.Red);
                 return;
             } 
             state_is_loading_state = true;
@@ -181,16 +217,16 @@ namespace MyNes.Core
             bin.Read(header, 0, header.Length);
             if (Encoding.ASCII.GetString(header) != "MNS")
             {
-                EmulationPaused = false;
-				this.ppu.videoOut.WriteNotification("Unable load state at slot " + STATESlot + "; Not My Nes State File !", 120, Color.Red);
+                this.EmulationPaused = false;
+				this.view.WriteNotification("Unable load state at slot " + STATESlot + "; Not My Nes State File !", 120, Color.Red);
                 state_is_loading_state = false; 
                 return;
             }
             // Read version
             if (bin.ReadByte() != state_version)
             {
-                EmulationPaused = false;
-				this.ppu.videoOut.WriteNotification("Unable load state at slot " + STATESlot + "; Not compatible state file version !", 120, Color.Red);
+                this.EmulationPaused = false;
+				this.view.WriteNotification("Unable load state at slot " + STATESlot + "; Not compatible state file version !", 120, Color.Red);
                 state_is_loading_state = false; 
                 return;
             }
@@ -201,14 +237,14 @@ namespace MyNes.Core
             }
 			if (sha1.ToLower() != this.memory.board.RomSHA1.ToLower())
             {
-                EmulationPaused = false;
-				this.ppu.videoOut.WriteNotification("Unable load state at slot " + STATESlot + "; This state file is not for this game; not same SHA1 !", 120, Color.Red);
+                this.EmulationPaused = false;
+				this.view.WriteNotification("Unable load state at slot " + STATESlot + "; This state file is not for this game; not same SHA1 !", 120, Color.Red);
                 state_is_loading_state = false; 
                 return;
             }
             // Read data
             #region General
-            palCyc = bin.ReadByte();
+            this.emulator.palCyc = bin.ReadByte();
             #endregion
             #region APU
 			this.apu.LoadState(bin);
@@ -223,9 +259,7 @@ namespace MyNes.Core
 			this.apu.dmcChannel.LoadState(bin);
             #endregion
             #region Input
-            PORT0 = bin.ReadInt32();
-            PORT1 = bin.ReadInt32();
-            inputStrobe = bin.ReadInt32();
+			this.input.LoadState(bin);
             #endregion
             #region Interrupts
 			this.interrupts.LoadState(bin);
@@ -249,9 +283,20 @@ namespace MyNes.Core
 
             // Finished !
             bin.Close();
-            EmulationPaused = false;
+
+            this.EmulationPaused = false;
             state_is_loading_state = false; 
-            this.ppu.videoOut.WriteNotification("State loaded from slot " + STATESlot, 120, Color.Green);
+            this.view.WriteNotification("State loaded from slot " + STATESlot, 120, Color.Green);
         }
+
+		public void RaiseEMUShutdown()
+		{
+			var handler = this.EMUShutdown;
+
+			if (handler != null)
+			{
+				handler(null, new EventArgs());
+			}
+		}
     }
 }

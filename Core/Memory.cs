@@ -45,17 +45,21 @@ namespace MyNes.Core
 
 		[Obsolete("Mega-hack until I can figure out which bits of DMA and Memory code need to switch classes.")]
 		public Dma dma;
-		private readonly NesEmu core;
+		private readonly Emulator emulator;
 		private readonly Ppu ppu;
 		[Obsolete("Mega-hack until I can figure out which bits of DMA and Memory code need to switch classes.")]
 		public Apu apu;
 		private readonly Interrupts interrupts;
+		private readonly Input input;
+		private readonly LegacyNesEmu legacy;
 
-		public Memory(NesEmu core, Ppu ppu, Interrupts interrupts)
+		public Memory(Emulator emulator, Ppu ppu, Interrupts interrupts, Input input, LegacyNesEmu legacyNesEmu)
 		{
-			this.core = core;
+			this.emulator = emulator;
 			this.ppu = ppu;
 			this.interrupts = interrupts;
+			this.input = input;
+			this.legacy = legacyNesEmu;
 		}
 
 		public void MEMInitialize(IRom rom)
@@ -103,9 +107,9 @@ namespace MyNes.Core
 			BUS_RW_P = false;
 			// Read SRAM if found
 			Trace.WriteLine("Reading SRAM");
-			if (File.Exists(this.core.SRAMFileName))
+			if (File.Exists(this.emulator.SRAMFileName))
 			{
-				Stream str = new FileStream(this.core.SRAMFileName, FileMode.Open, FileAccess.Read);
+				Stream str = new FileStream(this.emulator.SRAMFileName, FileMode.Open, FileAccess.Read);
 				byte[] inData = new byte[str.Length];
 				str.Read(inData, 0, inData.Length);
 				str.Flush();
@@ -136,13 +140,13 @@ namespace MyNes.Core
 		public void SaveSRAM()
 		{
 			if (board != null)
-				if (this.core.SaveSRAMAtShutdown && board.SRAMSaveRequired)
+				if (this.emulator.SaveSRAMAtShutdown && board.SRAMSaveRequired)
 				{
 					Trace.WriteLine("Saving SRAM ...");
 					byte[] sramBuffer = new byte[0];
 					ZlipWrapper.CompressData(board.GetSRAMBuffer(), out sramBuffer);
 
-					Stream str = new FileStream(this.core.SRAMFileName, FileMode.Create, FileAccess.Write);
+					Stream str = new FileStream(this.emulator.SRAMFileName, FileMode.Create, FileAccess.Write);
 					str.Write(sramBuffer, 0, sramBuffer.Length);
 
 					str.Flush();
@@ -166,13 +170,13 @@ namespace MyNes.Core
 			this.interrupts.PollInterruptStatus();
 			this.ppu.Clock();
 			this.ppu.Clock();
-			if (this.core.DoPalAdditionalClock)// In pal system ..
+			if (this.emulator.DoPalAdditionalClock)// In pal system ..
 			{
-				this.core.palCyc++;
-				if (this.core.palCyc == 5)
+				this.emulator.palCyc++;
+				if (this.emulator.palCyc == 5)
 				{
 					this.ppu.Clock();
-					this.core.palCyc = 0;
+					this.emulator.palCyc = 0;
 				}
 			}
 			this.apu.Clock();
@@ -303,28 +307,28 @@ namespace MyNes.Core
 						}
 					case 0x4016:
 						{
-							temp_4016 = (byte)(this.core.PORT0 & 1);
+							temp_4016 = (byte)(this.input.PORT0 & 1);
 
-							this.core.PORT0 >>= 1;
+							this.input.PORT0 >>= 1;
 
-							if (this.core.IsZapperConnected)
-								temp_4016 |= this.core.zapper.GetData();
+							if (this.input.IsZapperConnected)
+								temp_4016 |= this.input.zapper.GetData();
 
-							if (this.core.IsVSUnisystem)
-								temp_4016 |= this.core.VSUnisystemDIP.GetData4016();
+							if (this.legacy.IsVSUnisystem)
+								temp_4016 |= this.input.VSUnisystemDIP.GetData4016();
 
 							return temp_4016;
 						}
 					case 0x4017:
 						{
-							temp_4017 = (byte)(this.core.PORT1 & 1);
+							temp_4017 = (byte)(this.input.PORT1 & 1);
 
-							this.core.PORT1 >>= 1;
+							this.input.PORT1 >>= 1;
 
-							if (this.core.IsZapperConnected)
-								temp_4017 |= this.core.zapper.GetData();
-							if (this.core.IsVSUnisystem)
-								temp_4017 |= this.core.VSUnisystemDIP.GetData4017();
+							if (this.input.IsZapperConnected)
+								temp_4017 |= this.input.zapper.GetData();
+							if (this.legacy.IsVSUnisystem)
+								temp_4017 |= this.input.VSUnisystemDIP.GetData4017();
 
 							return temp_4017;
 						}
@@ -361,13 +365,13 @@ namespace MyNes.Core
 			this.interrupts.PollInterruptStatus();
 			this.ppu.Clock();
 			this.ppu.Clock();
-			if (this.core.DoPalAdditionalClock)// In pal system ..
+			if (this.emulator.DoPalAdditionalClock)// In pal system ..
 			{
-				this.core.palCyc++;
-				if (this.core.palCyc == 5)
+				this.emulator.palCyc++;
+				if (this.emulator.palCyc == 5)
 				{
 					this.ppu.Clock();
-					this.core.palCyc = 0;
+					this.emulator.palCyc = 0;
 				}
 			}
 			this.apu.Clock();
@@ -595,22 +599,22 @@ namespace MyNes.Core
 						}
 					case 0x4016:
 						{
-							if (this.core.inputStrobe > (value & 0x01))
+							if (this.input.inputStrobe > (value & 0x01))
 							{
-								if (this.core.IsFourPlayers)
+								if (this.input.IsFourPlayers)
 								{
-									this.core.PORT0 = this.core.joypad3.GetData() << 8 | this.core.joypad1.GetData() | 0x01010000;
-									this.core.PORT1 = this.core.joypad4.GetData() << 8 | this.core.joypad2.GetData() | 0x02020000;
+									this.input.PORT0 = this.input.joypad3.GetData() << 8 | this.input.joypad1.GetData() | 0x01010000;
+									this.input.PORT1 = this.input.joypad4.GetData() << 8 | this.input.joypad2.GetData() | 0x02020000;
 								}
 								else
 								{
-									this.core.PORT0 = this.core.joypad1.GetData() | 0x01010100;// What is this ? see *
-									this.core.PORT1 = this.core.joypad2.GetData() | 0x02020200;
+									this.input.PORT0 = this.input.joypad1.GetData() | 0x01010100;// What is this ? see *
+									this.input.PORT1 = this.input.joypad2.GetData() | 0x02020200;
 								}
 							}
-							if (this.core.IsVSUnisystem)
+							if (this.legacy.IsVSUnisystem)
 								board.VSUnisystem4016RW(ref value);
-							this.core.inputStrobe = value & 0x01;
+							this.input.inputStrobe = value & 0x01;
 							break;
 							// * The data port is 24 bits length
 							// Each 8 bits indicates device, if that device is connected, then device data set on it normally...
@@ -661,8 +665,8 @@ namespace MyNes.Core
 			}
 			else if (address < 0x6000)// Cartridge Expansion Area almost 8K
 			{
-				if (this.core.IsVSUnisystem && address == 0x4020)
-					this.core.VSUnisystemDIP.Write4020(ref value);
+				if (this.legacy.IsVSUnisystem && address == 0x4020)
+					this.input.VSUnisystemDIP.Write4020(ref value);
 				board.WriteEXP(ref address, ref value);
 			}
 			else if (address < 0x8000)// Cartridge SRAM Area 8K

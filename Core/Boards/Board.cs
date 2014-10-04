@@ -1005,7 +1005,7 @@ namespace MyNes.Core
         }
 
 		[Obsolete("Poor man's DI.  Update Mapper base class to take a NesEmu as a dependency.  I would have done this right away but 255 classes will need to be updated!")]
-		public NesEmu Nes
+		public Emulator Nes
 		{
 			get;
 			set;

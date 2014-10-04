@@ -39,9 +39,13 @@ namespace MyNes
 {
     public partial class FormLauncher : Form
     {
-        public FormLauncher(NesEmu emulator)
+		private readonly Emulator emulator;
+		private readonly EmulationState emulationState;
+
+		public FormLauncher(Emulator emulator)
         {
 			this.emulator = emulator;
+			this.emulationState = this.emulator.emulationState;
 
             InitializeComponent();
             this.Tag = "Launcher";
@@ -49,7 +53,7 @@ namespace MyNes
             LoadSettings();
             LoadDatabase();
 
-			this.emulator.EMUShutdown += NesEmu_EMUShutdown;
+			this.emulationState.EMUShutdown += NesEmu_EMUShutdown;
 
             if (Program.Settings.LauncherRememberLastSelection)
             {
@@ -97,7 +101,6 @@ namespace MyNes
         private bool doSort = false;
         private string sortColumnName;
         private bool sortAZ;
-		private NesEmu emulator;
 
         private void InitializeControls()
         {
@@ -196,8 +199,8 @@ namespace MyNes
         }
         private void GenerateDatabase()
         {
-            if (this.emulator.EmulationON)
-				this.emulator.EmulationPaused = true;
+			if (this.emulationState.EmulationON)
+				this.emulationState.EmulationPaused = true;
             FormCreateDatabase frm = new FormCreateDatabase();
             if (frm.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {
@@ -311,8 +314,8 @@ namespace MyNes
         #region Assign and add files
         private void AssignFiles()
         {
-            if (this.emulator.EmulationON)
-                this.emulator.EmulationPaused = true;
+			if (this.emulationState.EmulationON)
+				this.emulationState.EmulationPaused = true;
             FormAssignFilesToDB frm = new FormAssignFilesToDB();
             if (frm.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {
@@ -864,8 +867,8 @@ namespace MyNes
                 ManagedMessageBox.ShowErrorMessage(Program.ResourceManager.GetString("Message_NoDbLoadedYet"));
                 return;
             }
-            if (this.emulator.EmulationON)
-                this.emulator.EmulationPaused = true;
+            if (this.emulationState.EmulationON)
+                this.emulationState.EmulationPaused = true;
             FormDetectSelection frm = new FormDetectSelection();
             if (frm.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
             {
@@ -1174,7 +1177,7 @@ namespace MyNes
             }
             if (File.Exists(tempFile))
             {
-                if (this.emulator.EmulationON)
+                if (this.emulationState.EmulationON)
                     UpdatePlayStatus();
                 // Play it !
                 currentPlayedGameIndex = managedListView1.Items.IndexOf(managedListView1.SelectedItems[0]);
@@ -1182,7 +1185,7 @@ namespace MyNes
                 Program.FormMain.OpenRom(tempFile);
                 Program.FormMain.Activate();
 
-                if (this.emulator.EmulationON)
+                if (this.emulationState.EmulationON)
                 {
                     isPlayingGame = true;
                     playTime = 0;
@@ -1810,14 +1813,14 @@ namespace MyNes
             }
             if (File.Exists(tempFile))
             {
-                if (this.emulator.EmulationON)
-                    this.emulator.EmulationPaused = true;
+                if (this.emulationState.EmulationON)
+                    this.emulationState.EmulationPaused = true;
 
                 FormRomInfo form = new FormRomInfo(tempFile);
                 form.ShowDialog(this);
 
-                if (this.emulator.EmulationON)
-                    this.emulator.EmulationPaused = false;
+                if (this.emulationState.EmulationON)
+                    this.emulationState.EmulationPaused = false;
             }
             else
             {

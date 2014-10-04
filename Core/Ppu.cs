@@ -122,15 +122,15 @@ namespace MyNes.Core
 		private int spr_evaluation_i;
 		private int spr_render_temp_pixel;
 
-		private readonly NesEmu core;
+		private readonly Emulator emulator;
 		[Obsolete("Mega-hack until I can figure out which bits of PPU and Memory code need to switch classes.")]
 		public Memory memory;
 		[Obsolete("Mega-hack until I can figure out which bits of PPU and Interrupts code need to switch classes.")]
 		public Interrupts interrupts;
 
-		public Ppu(NesEmu core)
+		public Ppu(Emulator emulator)
 		{
-			this.core = core;
+			this.emulator = emulator;
 		}
 
 		public bool IsRenderingOn()
@@ -143,7 +143,7 @@ namespace MyNes.Core
 		}
 		public void PPUHardReset()
 		{
-			switch (this.core.TVFormat)
+			switch (this.emulator.TVFormat)
 			{
 				case TVSystem.NTSC:
 					{
@@ -825,7 +825,7 @@ namespace MyNes.Core
 						videoOut.SubmitBuffer(ref screen);
 					}
 
-					this.core.OnFinishFrame();
+					this.emulator.OnFinishFrame();
 					#endregion
 				}
 			}
